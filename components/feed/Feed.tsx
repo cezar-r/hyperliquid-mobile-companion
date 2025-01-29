@@ -3,10 +3,10 @@ import { View, Text, StyleSheet } from 'react-native';
 
 import styles from "../../styles/constants";
 
-export const Profile = () => (
+export const Feed = () => (
     <View style={styles.background}>
-      <Text>Profile Page</Text>
+      <Text>Feed Page</Text>
     </View>
 );
 
-export default Profile;
+export default Feed;

@@ -1,0 +1,5 @@
+make navbar the logo
+
+try adding fradient to background ?
+
+use better icons
