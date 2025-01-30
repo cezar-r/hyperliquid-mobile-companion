@@ -1,5 +1,29 @@
 make navbar the logo
 
-try adding fradient to background ?
+try adding gradient to background ?
 
-use better icons
+use better icons on bottom nav
+
+include %'s in home page cell
+    move leverage next to ticker, margin $ where lev is
+    
+place order page
+
+profile page
+    address (w/ copy field)
+    secret shown as stars w copy field
+    sign out 
+
+no onboarding help page yet
+
+feed page
+    filter button that shows list of accounts
+        can check/uncheck/remove accounts or add a new username
+    
+tap on balance on home page to hide $ amounts
+
+add haptics
+
+inter font
+
+multiple accounts

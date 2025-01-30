@@ -1,36 +1,40 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, TextInput, TouchableOpacity, ScrollView, TouchableWithoutFeedback, Keyboard } from 'react-native';
+import { 
+    View, 
+    Text, 
+    TextInput, 
+    TouchableOpacity, 
+    ScrollView, 
+    TouchableWithoutFeedback, 
+    Keyboard 
+} from 'react-native';
+import { LinearGradient } from 'expo-linear-gradient';
 import { Ionicons } from '@expo/vector-icons';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { getPerpsMeta } from "../../services/hyperliquid/get_perps_meta.cjs";
-import { PerpsMeta, TickerData } from "../../common/types";
+import { useGlobalState } from '../../context/GlobalStateContext';
+import { TickerData } from "../../common/types";
 import styles from "../../styles/constants";
 import searchStyles from "../../styles/search_page";
 import { Colors } from "../../styles/colors";
 import { AssetCtx } from 'hyperliquid/dist';
 
-export const Search = () => {
-    const [perpsMeta, setPerpsMeta] = useState<PerpsMeta | null>(null);
+export const Search = ({ navigation }: { navigation: any }) => {
+    const { globalState } = useGlobalState();
     const [perpsTickerList, setPerpsTickerList] = useState<TickerData[]>([]);
     const [searchQuery, setSearchQuery] = useState('');
     const [recentSearches, setRecentSearches] = useState<string[]>([]);
 
-    const updatePerpsState = async () => {
-        const state = await getPerpsMeta();
-        setPerpsMeta(state);
-    };
-
     const updateTickerList = () => {
-        if (perpsMeta) {
+        if (globalState.perpsMeta) {
             const tickers: TickerData[] = [];
-            for (let index = 0; index < perpsMeta.perpsMeta[0].universe.length; index++) {
-                const tickerObj = perpsMeta.perpsMeta[0].universe[index];
+            for (let index = 0; index < globalState.perpsMeta.perpsMeta[0].universe.length; index++) {
+                const tickerObj = globalState.perpsMeta.perpsMeta[0].universe[index];
                 tickers.push({
                     maxLev: Number(tickerObj.maxLeverage),
-                    volume24h: Number((perpsMeta.perpsMeta[1][index] as unknown as AssetCtx).dayNtlVlm),
+                    volume24h: Number((globalState.perpsMeta.perpsMeta[1][index] as unknown as AssetCtx).dayNtlVlm),
                     ticker: tickerObj.name,
                     szDecimals: Number(tickerObj.szDecimals),
-                    price: Number((perpsMeta.perpsMeta[1][index] as unknown as AssetCtx).markPx)
+                    price: Number((globalState.perpsMeta.perpsMeta[1][index] as unknown as AssetCtx).markPx)
                 });
             }
             setPerpsTickerList(tickers);
@@ -63,13 +67,12 @@ export const Search = () => {
 
 
     useEffect(() => {
-        updatePerpsState();
         loadRecentSearches();
     }, []);
 
     useEffect(() => {
         updateTickerList();
-    }, [perpsMeta]);
+    }, [globalState.perpsMeta]);
 
     const formatNumber = (num: number) => {
         return Number(num).toLocaleString(undefined, {
@@ -89,7 +92,10 @@ export const Search = () => {
         <TouchableOpacity 
             key={item.ticker}
             style={searchStyles.tickerCell}
-            onPress={() => addToRecentSearches(item.ticker)}
+            onPress={() => {
+                addToRecentSearches(item.ticker);
+                navigation.navigate('Trade', { ticker: item.ticker });
+            }}
         >
             <View style={searchStyles.tickerInfo}>
                 <Text style={searchStyles.tickerSymbol}>{item.ticker}</Text>
@@ -98,11 +104,17 @@ export const Search = () => {
         </TouchableOpacity>
     );
 
-    if (!perpsMeta) return null;
+    if (!globalState.perpsMeta) return null;
 
     return (
         <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-            <View style={styles.background}>
+            <LinearGradient
+                        colors={[Colors.DARK_DARK_GREEN, Colors.DARK_GREEN, Colors.GREEN]}
+                        locations={[0, 0.5, .99]}
+                        start={{ x: .5, y: 0 }}
+                        end={{ x: .5, y: 1 }}
+                        style={styles.background}
+                    >
                 <View style={searchStyles.searchBarContainer}>
                     <Ionicons name="search" size={20} color={Colors.BRIGHT_GREEN} style={searchStyles.searchIcon} />
                     <TextInput
@@ -131,7 +143,7 @@ export const Search = () => {
                         getFilteredTickers().map(item => renderTickerCell(item))
                     )}
                 </ScrollView>
-            </View>
+            </LinearGradient>
         </TouchableWithoutFeedback>
     );
 }

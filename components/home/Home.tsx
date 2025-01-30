@@ -1,46 +1,59 @@
 import React, { useState, useEffect } from 'react';
 
-import { View, Text, ScrollView, RefreshControl } from 'react-native';
-
-import { getUserState } from "../../services/hyperliquid/get_user_state.cjs";
+import { View, Text, ScrollView, RefreshControl, Animated, TouchableOpacity } from 'react-native';
+import { LinearGradient } from 'expo-linear-gradient';
+import { useGlobalState } from '../../context/GlobalStateContext';
 import styles from "../../styles/constants";
 import homeStyles from "../../styles/home_page";
 import Colors from "../../styles/colors";
-import { UserState } from "../../common/types";
 
-export const Home = () => {
-    const [userState, setUserState] = useState<UserState | null>(null);
+export const Home = ({ navigation }: { navigation: any }) => {
+    const { globalState, refreshData } = useGlobalState();
+    const [previousBalance, setPreviousBalance] = useState<number | null>(null);
     const [refreshing, setRefreshing] = useState(false);
-
-    const updateUserState = async () => {
-        const state = await getUserState();
-        setUserState(state);
-    };
+    const [colorAnim] = useState(new Animated.Value(0));
+    const [isIncrease, setIsIncrease] = useState<boolean | null>(null);
 
     const onRefresh = async () => {
         setRefreshing(true);
-        await updateUserState();
+        await refreshData();
         setRefreshing(false);
     };
 
     useEffect(() => {
-        // Initial load
-        updateUserState();
+        if (globalState.userState) {
+            const currentBalance = globalState.userState.perps.marginSummary.accountValue;
+            if (previousBalance === null) {
+                setPreviousBalance(currentBalance);
+                return;
+            }
+            if (currentBalance !== previousBalance) {
+                setIsIncrease(currentBalance > previousBalance);
+                // Reset animation value
+                colorAnim.setValue(0);
+                // Start animation
+                Animated.sequence([
+                    Animated.timing(colorAnim, {
+                        toValue: 1,
+                        duration: 500,
+                        useNativeDriver: false,
+                    }),
+                    Animated.timing(colorAnim, {
+                        toValue: 0,
+                        duration: 500,
+                        useNativeDriver: false,
+                    })
+                ]).start();
+                setPreviousBalance(currentBalance);
+            }
+        }
+    }, [globalState.userState]);
 
-        // Set up interval for auto-refresh every 5 seconds
-        const interval = setInterval(() => {
-            updateUserState();
-        }, 10000);
+    if (!globalState.userState) return null;
 
-        // Cleanup interval on component unmount
-        return () => clearInterval(interval);
-    }, []);
-
-    if (!userState) return null;
-
-    const balance = userState.perps.marginSummary.accountValue;
-    const availableBalance = userState.perps.withdrawable;
-    const positions = userState.perps.assetPositions;
+    const balance = globalState.userState.perps.marginSummary.accountValue;
+    const availableBalance = globalState.userState.perps.withdrawable;
+    const positions = globalState.userState.perps.assetPositions;
 
     const formatNumber = (num: number) => {
         return Number(num).toLocaleString(undefined, {
@@ -67,8 +80,19 @@ export const Home = () => {
 
     const dynamicFontSize = getFontSize(balanceString);
 
+    const textColor = colorAnim.interpolate({
+        inputRange: [0, 1],
+        outputRange: [Colors.WHITE, isIncrease ? Colors.BRIGHT_GREEN : Colors.RED]
+    });
+
     return (
-        <View style={styles.background}>
+        <LinearGradient
+            colors={[Colors.DARK_DARK_GREEN, Colors.DARK_GREEN, Colors.GREEN]}
+            locations={[0, 0.5, .99]}
+            start={{ x: .5, y: 0 }}
+            end={{ x: .5, y: 1 }}
+            style={styles.background}
+        >
             <ScrollView 
                 style={homeStyles.scrollView}
                 showsVerticalScrollIndicator={false}
@@ -83,10 +107,13 @@ export const Home = () => {
             >
                 {/* Balance Section */}
                 <View style={homeStyles.balanceContainer}>
-                    <Text style={[
+                    <Animated.Text style={[
                         homeStyles.balanceAmount,
-                        { fontSize: dynamicFontSize }
-                    ]}>${balanceString}</Text>
+                        { 
+                            fontSize: dynamicFontSize,
+                            color: textColor
+                        }
+                    ]}>${balanceString}</Animated.Text>
                 </View>
 
                 <View style={homeStyles.availableBalanceContainer}>
@@ -104,7 +131,11 @@ export const Home = () => {
                     const isLong = position.szi > 0;
 
                     return (
-                        <View key={index} style={homeStyles.positionCell}>
+                        <TouchableOpacity
+                            key={index}
+                            style={homeStyles.positionCell}
+                            onPress={() => navigation.navigate('Trade', { ticker })}
+                        >
                             <View style={homeStyles.leftSide}>
                                 <Text style={homeStyles.ticker}>{ticker}</Text>
                                 <Text style={homeStyles.size}>{size + ' ' + ticker}</Text>
@@ -123,11 +154,11 @@ export const Home = () => {
                                     }
                                 ]}>${formatNumber(pnl)}</Text>
                             </View>
-                        </View>
+                        </TouchableOpacity>
                     );
                 })}
             </ScrollView>
-        </View>
+        </LinearGradient>
     );
 };
 

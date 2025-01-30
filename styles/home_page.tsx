@@ -41,8 +41,9 @@ export const homeStyles = StyleSheet.create({
     positionCell: {
         backgroundColor: Colors.DARK_GREEN,
         borderRadius: 6,
-        padding: 15,
-        marginBottom: 18,
+        paddingHorizontal: 13,
+        paddingVertical: 8,
+        marginBottom: 12,
         width: '100%',
         flexDirection: 'row',
         justifyContent: 'space-between',
