@@ -4,7 +4,7 @@ const { Hyperliquid } = require('hyperliquid/dist');
 
 
 export const getUserState = async () => {
-    const secretKey = await AsyncStorage.getItem('secret');
+    const secretKey = await AsyncStorage.getItem('secretKey');
     const address = await AsyncStorage.getItem('address');
     const sdk = new Hyperliquid({
         privateKey: secretKey

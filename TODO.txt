@@ -1,29 +1,24 @@
-make navbar the logo
+use the big blob as background on onboarding page
 
-try adding gradient to background ?
+make placeordersheet smoother
 
-use better icons on bottom nav
+try to get on testflight
 
-include %'s in home page cell
-    move leverage next to ticker, margin $ where lev is
-    
-place order page
+onboarding help page
 
-profile page
-    address (w/ copy field)
-    secret shown as stars w copy field
-    sign out 
+tos
 
-no onboarding help page yet
+tap on balance on home page to hide $ amounts
 
 feed page
     filter button that shows list of accounts
         can check/uncheck/remove accounts or add a new username
-    
-tap on balance on home page to hide $ amounts
 
-add haptics
+use websocket
 
-inter font
+add spot options
+
+add perps <-> swap funcyionality
 
 multiple accounts
+    add account name field to onboarding page

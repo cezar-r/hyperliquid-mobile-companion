@@ -1,11 +1,12 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { View, Text, TouchableOpacity, StyleSheet, Animated, PanResponder, TouchableWithoutFeedback } from 'react-native';
+import { View, Text, TouchableOpacity, ActivityIndicator, Animated, PanResponder, TouchableWithoutFeedback } from 'react-native';
 import Slider from '@react-native-community/slider';
 import Colors from "../../styles/colors";
 import styles from "../../styles/place_order_sheet";
 import { placeOrder } from '../../services/hyperliquid/place_order.cjs';
 
 import { useGlobalState } from '../../context/GlobalStateContext';
+import * as Haptics from 'expo-haptics';
 
 interface PlaceOrderSheetProps {
     visible: boolean;
@@ -32,12 +33,13 @@ const PlaceOrderSheet: React.FC<PlaceOrderSheetProps> = ({
     maxLev,
     szDecimals
 }) => {
-  const { globalState } = useGlobalState();
+  const { globalState, refreshData } = useGlobalState();
   const [leverage, setLeverage] = useState(position?.leverage.value || 1);
   const [dollarAmount, setDollarAmount] = useState(0);
   const [holdProgress] = useState(new Animated.Value(0));
   const pan = useRef(new Animated.Value(0)).current;
   const [isValidOrder, setIsValidOrder] = useState(false);
+  const [isPlacing, setIsPlacing] = useState(false);
   const tradeableBalance = globalState.userState?.perps.withdrawable;
 
   const panResponder = useRef(
@@ -86,10 +88,22 @@ const PlaceOrderSheet: React.FC<PlaceOrderSheetProps> = ({
 
   const cancelHold = async () => {
     holdProgress.setValue(0);
+    setIsPlacing(true);
     console.log("Placing order");
-    placeOrder(ticker, isBuy, orderSize, currentPrice, leverage)
-    // console.log('Order placed!');
-  };
+    const orderResponse = await placeOrder(ticker, isBuy, orderSize, leverage);
+    setIsPlacing(false);
+    console.log(orderResponse)
+    if (orderResponse === 200) {
+        await Haptics.notificationAsync(
+            Haptics.NotificationFeedbackType.Success
+        );
+        await refreshData();
+        visible = false;
+    } else {
+        console.log("XX")
+    }
+    console.log('Order placed!');
+};
 
   return (
     <TouchableWithoutFeedback onPress={onClose}>
@@ -117,7 +131,12 @@ const PlaceOrderSheet: React.FC<PlaceOrderSheetProps> = ({
                 maximumValue={maxLev}
                 step={1} // Changed from 0.1 to 1
                 value={leverage}
-                onValueChange={(value) => setLeverage(Math.round(value))} // Round to nearest integer
+                onValueChange={(value) => {
+                    setLeverage(Math.round(value))
+                    Haptics.impactAsync(
+                        Haptics.ImpactFeedbackStyle.Light
+                    );
+                }} // Round to nearest integer
                 minimumTrackTintColor={isBuy ? Colors.BRIGHT_GREEN : Colors.RED}
                 maximumTrackTintColor={Colors.GRAY}
                 />
@@ -132,7 +151,10 @@ const PlaceOrderSheet: React.FC<PlaceOrderSheetProps> = ({
               maximumValue={tradeableBalance * 0.99}
               step={.01}
               value={dollarAmount}
-              onValueChange={setDollarAmount}
+              onValueChange={async (value) => {
+                setDollarAmount(value);
+                Haptics.selectionAsync();
+            }}
               minimumTrackTintColor={isBuy ? Colors.BRIGHT_GREEN : Colors.RED}
               maximumTrackTintColor={Colors.GRAY}
             />
@@ -145,28 +167,34 @@ const PlaceOrderSheet: React.FC<PlaceOrderSheetProps> = ({
           </View>
 
           <TouchableOpacity 
-            style={[
-              styles.confirmButton, 
-              { backgroundColor: isValidOrder 
-                    ? Colors.BRIGHT_GREEN : Colors.GREEN }
-            ]}
-            onPressIn={startHold}
-            onPressOut={cancelHold}
-            activeOpacity={0.8}
-          >
-            <Animated.View 
-              style={[
-                styles.progressBar,
-                { width: holdProgress.interpolate({
-                  inputRange: [0, 1],
-                  outputRange: ['0%', '100%']
-                })}
-              ]}
-            />
-            <Text style={styles.confirmButtonText}>
-              Place Order
-            </Text>
-          </TouchableOpacity>
+                style={[
+                    styles.confirmButton, 
+                    { backgroundColor: isBuy 
+                        ? isValidOrder ? Colors.BRIGHT_GREEN : Colors.GREEN
+                        : isValidOrder ? Colors.RED : Colors.DARK_RED}
+                ]}
+                onPressIn={startHold}
+                onPressOut={cancelHold}
+                activeOpacity={0.8}
+                disabled={isPlacing}
+            >
+                <Animated.View 
+                    style={[
+                        styles.progressBar,
+                        { width: holdProgress.interpolate({
+                            inputRange: [0, 1],
+                            outputRange: ['0%', '100%']
+                        })}
+                    ]}
+                />
+                {isPlacing ? (
+                    <ActivityIndicator color={isBuy ? Colors.BLACK : Colors.WHITE} size="small" />
+                ) : (
+                    <Text style={[styles.confirmButtonText, {color: isBuy ? Colors.BLACK : Colors.WHITE}]}>
+                        Place Order
+                    </Text>
+                )}
+            </TouchableOpacity>
         </Animated.View>
       </View>
     </TouchableWithoutFeedback>

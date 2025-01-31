@@ -1,6 +1,10 @@
 import React from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createStackNavigator } from '@react-navigation/stack';
+import { Pressable, View, Image } from 'react-native';
+import { MaterialCommunityIcons } from '@expo/vector-icons';
+import FontAwesome6 from '@expo/vector-icons/FontAwesome6';
+import * as Haptics from 'expo-haptics';
 
 import { Ionicons } from '@expo/vector-icons';
 import Home from './home/Home';
@@ -9,9 +13,38 @@ import Feed from './feed/Feed';
 import Trade from './trade/Trade';
 import Profile from './profile/Profile';
 import { Colors } from '../styles/colors';
+import { NAVBAR_HEIGHT } from '../common/constants';
+
+import { styles } from "../styles/constants";
+
 
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
+
+type TabBarButtonProps = {
+    [key: string]: any;  // This will accept any additional props
+  }
+  
+  const TabButton = (props: TabBarButtonProps) => {
+      const { children, accessibilityState, onPress } = props;
+      const focused = accessibilityState?.selected;
+      
+      const handlePress = async (e: any) => {
+        await Haptics.impactAsync(
+            Haptics.ImpactFeedbackStyle.Medium
+        );
+        onPress?.(e);
+    };
+    
+    return (
+        <Pressable {...props} onPress={handlePress} style={styles.tabButton}>
+            <View style={styles.tabIconContainer}>
+                {focused && <View style={styles.activeLine} />}
+                {children}
+            </View>
+        </Pressable>
+    );
+  };
 
 const TabNavigator = () => (
     <Tab.Navigator initialRouteName="Home" screenOptions={{
@@ -19,7 +52,7 @@ const TabNavigator = () => (
             backgroundColor: Colors.DARK_DARK_GREEN,
             borderTopWidth: 1,
             borderTopColor: Colors.GRAY,
-            height: 80,
+            height: NAVBAR_HEIGHT,
             position: 'absolute',
             bottom: 0,
             borderRadius: 5,
@@ -38,23 +71,29 @@ const TabNavigator = () => (
           elevation: 0,
         },
         headerTintColor: Colors.WHITE,
-        headerTitleStyle: {
-            // fontWeight: 'bold',
-            fontSize: 22,
-          },
-        headerTitle: 'Hyperliquid',
+        headerTitle: () => (
+            <Image 
+                source={require('../assets/blob_green.gif')}
+                style={{ 
+                    width: 50,
+                    height: 50,
+                    resizeMode: 'contain'
+                }}
+            />
+        ),
+        tabBarButton: (props) => <TabButton {...props} />,
       }}>
         <Tab.Screen 
           name="Home" 
           component={Home}
           options={{
-            tabBarIcon: ({ focused, color, size }) => (
-              <Ionicons 
-                name={focused ? 'home' : 'home-outline'} 
-                size={26} 
-                color={color}
-              />
-            ),
+            tabBarIcon: ({ focused, color }) => (
+                <MaterialCommunityIcons 
+                  name={focused ? 'home' : 'home-outline'} 
+                  size={28}  // slightly bigger
+                  color={color}
+                />
+            )
           }}
         />
         <Tab.Screen 
@@ -74,23 +113,23 @@ const TabNavigator = () => (
           name="X Feed" 
           component={Feed}
           options={{
-            tabBarIcon: ({ focused, color, size }) => (
-              <Ionicons 
-                name={focused ? 'newspaper' : 'newspaper-outline'} 
-                size={26} 
-                color={color}
-              />
-            ),
+            tabBarIcon: ({ focused, color }) => (
+                <FontAwesome6 
+                  name={'x-twitter'} 
+                  size={26}  // slightly bigger
+                  color={color}
+                />
+            )
           }}
         />
          <Tab.Screen 
           name="Profile" 
           component={Profile}
           options={{
-            tabBarIcon: ({ focused, color, size }) => (
-              <Ionicons 
-                name={focused ? 'person' : 'person-outline'} 
-                size={26} 
+            tabBarIcon: ({ focused, color }) => (
+            <MaterialCommunityIcons 
+                name={focused ? 'account' : 'account'} 
+                size={28}  // slightly bigger
                 color={color}
               />
             ),

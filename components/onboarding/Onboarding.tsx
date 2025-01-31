@@ -8,20 +8,30 @@ import {
     TouchableWithoutFeedback,
     Keyboard 
 } from 'react-native';
+import { Video, ResizeMode } from 'expo-av';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import Octicons from '@expo/vector-icons/Octicons';
 
+import { useGlobalState } from '../../context/GlobalStateContext';
 import * as Clipboard from 'expo-clipboard';
 import styles from "../../styles/constants";
 import Colors from "../../styles/colors";
+import * as Haptics from 'expo-haptics';
 
 const Onboarding = ({navigation}: {navigation: any}) => {
+    const { globalState, refreshData } = useGlobalState();
     const [address, setAddress] = useState('');
     const [secretKey, setSecretKey] = useState('');
+
 
     const handleSubmit = async () => {
         await AsyncStorage.setItem('address', address);
         await AsyncStorage.setItem('secretKey', secretKey);
-        navigation.repalce('MainApp');
+        await Haptics.notificationAsync(
+            Haptics.NotificationFeedbackType.Success
+        );
+        await refreshData();
+        navigation.replace('MainApp');
     }
 
     const pasteFromClipboard = async (field: 'address' | 'secret') => {
@@ -36,7 +46,7 @@ const Onboarding = ({navigation}: {navigation: any}) => {
     useEffect(() => {
         const checkLocalStorage = async () => {
             const storedAddress = await AsyncStorage.getItem('address');
-            if (storedAddress) navigation.replace('MainApp');
+            if (storedAddress) navigation.replace('Splash');
         }
         checkLocalStorage();
     }, []);
@@ -47,19 +57,35 @@ const Onboarding = ({navigation}: {navigation: any}) => {
     return (
         <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
             <View style={styles.background}>
+                <Video
+                    source={require('../../assets/blob.mp4')}
+                    style={StyleSheet.absoluteFill}
+                    resizeMode={ResizeMode.COVER}
+                    shouldPlay
+                    isLooping
+                    isMuted
+                />
+                <Text style={styles.logoText}>
+                        Hyperliquid
+                    </Text>
                 <View style={styles.inputContainer}>
                     <TextInput
                         style={styles.input}
-                        placeholder="Address"
+                        placeholder="Wallet Address"
                         placeholderTextColor={Colors.WHITE}
                         value={address}
                         onChangeText={setAddress}
                     />
                     <TouchableOpacity 
                         style={styles.pasteButton}
-                        onPress={() => pasteFromClipboard('address')}
+                        onPress={async () => {
+                            Haptics.impactAsync(
+                                Haptics.ImpactFeedbackStyle.Light
+                            );
+                            pasteFromClipboard('address')
+                        }}
                     >
-                        <Text style={styles.pasteButtonText}>Paste</Text>
+                        <Octicons name="copy" size={18} color={Colors.BRIGHT_GREEN} />
                     </TouchableOpacity>
                 </View>
 
@@ -73,9 +99,14 @@ const Onboarding = ({navigation}: {navigation: any}) => {
                     />
                     <TouchableOpacity 
                         style={styles.pasteButton}
-                        onPress={() => pasteFromClipboard('secret')}
+                        onPress={async () => {
+                            Haptics.impactAsync(
+                                Haptics.ImpactFeedbackStyle.Light
+                            );
+                            pasteFromClipboard('secret')
+                        }}
                     >
-                        <Text style={styles.pasteButtonText}>Paste</Text>
+                        <Octicons name="copy" size={18} color={Colors.BRIGHT_GREEN} />
                     </TouchableOpacity>
                 </View>
 
@@ -87,12 +118,21 @@ const Onboarding = ({navigation}: {navigation: any}) => {
                     onPress={handleSubmit}
                     disabled={!isFormValid}
                 >
-                    <Text style={styles.submitButtonText}>Submit</Text>
+                    <Text style={styles.submitButtonText}>Connect</Text>
 
                 </TouchableOpacity>
             </View>
         </TouchableWithoutFeedback>
     );
 }
+
+const onboardingStyles = StyleSheet.create({
+    content: {
+        flex: 1,
+        justifyContent: 'center',
+        padding: 20,
+        backgroundColor: 'rgba(0, 0, 0, 0.5)', // Optional: adds a dark overlay
+    }
+});
 
 export default Onboarding;

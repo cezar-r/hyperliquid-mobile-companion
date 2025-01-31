@@ -1,22 +1,27 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, TouchableOpacity, Animated } from 'react-native';
+import { View, Text, TouchableOpacity, Animated, ActivityIndicator } from 'react-native';
 import { Ionicons } from '@expo/vector-icons'; // Import Ionicons for back arrow
 import { useGlobalState } from '../../context/GlobalStateContext';
 import { LinearGradient } from 'expo-linear-gradient';
 import tradeStyles from "../../styles/trade_page";
 import PlaceOrderSheet from './PlaceOrderSheet';
+import { closeOrder } from '../../services/hyperliquid/close_order.cjs';
+import * as Haptics from 'expo-haptics';
+
 
 
 import Colors from "../../styles/colors";
 
 const Trade = ({ route, navigation }: any) => {
-    const { globalState } = useGlobalState();
+    const { globalState, refreshData } = useGlobalState();
     const { ticker } = route.params;
     const [previousPrice, setPreviousPrice] = useState<number | null>(null);
     const [isIncrease, setIsIncrease] = useState<boolean | null>(null);
     const [colorAnim] = useState(new Animated.Value(0));
     const [isOrderSheetVisible, setIsOrderSheetVisible] = useState(false);
     const [isBuyOrder, setIsBuyOrder] = useState(true);
+    const [isClosing, setIsClosing] = useState(false);
+
 
     // Find position data if exists
     const position = globalState.userState?.perps.assetPositions.find(
@@ -111,7 +116,6 @@ const Trade = ({ route, navigation }: any) => {
                     </Text>
                 </View>
             </View>
-            {/* <View style={tradeStyles.headerSplit}></View> */}
             
             {position ? (
                 <>
@@ -165,6 +169,23 @@ const Trade = ({ route, navigation }: any) => {
                             <Text style={tradeStyles.label}>Margin Used</Text>
                             <Text style={tradeStyles.value}>${formatNumber(Number(position.marginUsed))}</Text>
                         </View>
+
+                        <TouchableOpacity 
+                            style={tradeStyles.closeButton}
+                            onPress={async () => {
+                                await Haptics.impactAsync()
+                                setIsClosing(true);
+                                await closeOrder(ticker);
+                                await refreshData();
+                                setIsClosing(false);
+                            }}
+                        >
+                            {isClosing ? (
+                                <ActivityIndicator color={Colors.WHITE} size="small" />
+                            ) : (
+                                <Text style={tradeStyles.closeButtonText}>Market Close</Text>
+                            )}
+                        </TouchableOpacity>
                     </View>
                 </>
             ) : (
@@ -175,7 +196,11 @@ const Trade = ({ route, navigation }: any) => {
             <View style={tradeStyles.buttonContainer}>
             <TouchableOpacity 
                 style={[tradeStyles.button, { backgroundColor: Colors.RED }]}
-                onPress={() => {
+                onPress={async () => {
+                    await Haptics.impactAsync(
+                        Haptics.ImpactFeedbackStyle.Medium
+                    );
+
                     setIsBuyOrder(false);
                     setIsOrderSheetVisible(true);
                 }}
@@ -184,7 +209,10 @@ const Trade = ({ route, navigation }: any) => {
             </TouchableOpacity>
             <TouchableOpacity 
                 style={[tradeStyles.button, { backgroundColor: Colors.BRIGHT_GREEN }]}
-                onPress={() => {
+                onPress={async () => {
+                    await Haptics.impactAsync(
+                        Haptics.ImpactFeedbackStyle.Medium
+                    );
                     setIsBuyOrder(true);
                     setIsOrderSheetVisible(true);
                 }}

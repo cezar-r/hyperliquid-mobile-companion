@@ -6,6 +6,8 @@ import { useGlobalState } from '../../context/GlobalStateContext';
 import styles from "../../styles/constants";
 import homeStyles from "../../styles/home_page";
 import Colors from "../../styles/colors";
+import * as Haptics from 'expo-haptics';
+
 
 export const Home = ({ navigation }: { navigation: any }) => {
     const { globalState, refreshData } = useGlobalState();
@@ -18,6 +20,10 @@ export const Home = ({ navigation }: { navigation: any }) => {
         setRefreshing(true);
         await refreshData();
         setRefreshing(false);
+    };
+
+    const formatPercent = (num: number) => {
+        return (num * 100).toFixed(2) + '%';
     };
 
     useEffect(() => {
@@ -80,6 +86,12 @@ export const Home = ({ navigation }: { navigation: any }) => {
 
     const dynamicFontSize = getFontSize(balanceString);
 
+    const tickerIndex = (ticker: string) => {
+        return globalState.perpsMeta?.perpsMeta[0].universe.findIndex(
+            (asset: any) => asset.name === ticker
+        );
+    }
+
     const textColor = colorAnim.interpolate({
         inputRange: [0, 1],
         outputRange: [Colors.WHITE, isIncrease ? Colors.BRIGHT_GREEN : Colors.RED]
@@ -129,30 +141,38 @@ export const Home = ({ navigation }: { navigation: any }) => {
                     const leverage = position.leverage.value;
                     const pnl = Number(position.unrealizedPnl);
                     const isLong = position.szi > 0;
+                    const pctGain = formatPercent(Number(position.returnOnEquity))
+                    const price = Number(globalState.perpsMeta?.perpsMeta[1][tickerIndex(ticker)].markPx);
 
                     return (
                         <TouchableOpacity
                             key={index}
                             style={homeStyles.positionCell}
-                            onPress={() => navigation.navigate('Trade', { ticker })}
+                            onPress={async () => {
+                                await Haptics.selectionAsync();
+                                navigation.navigate('Trade', { ticker });
+                            }}
                         >
                             <View style={homeStyles.leftSide}>
-                                <Text style={homeStyles.ticker}>{ticker}</Text>
+                                <View style={homeStyles.tickerContainer}>
+                                    <Text style={homeStyles.ticker}>{ticker}</Text>
+                                    <Text style={[
+                                        homeStyles.leverage,
+                                        { color: isLong ? Colors.BRIGHT_GREEN : Colors.RED }
+                                    ]}>{leverage}x</Text>
+                                </View>
                                 <Text style={homeStyles.size}>{size + ' ' + ticker}</Text>
                             </View>
                             <View style={homeStyles.rightSide}>
-                                <Text style={[
-                                    homeStyles.leverage,
-                                    { color: isLong ? Colors.BRIGHT_GREEN : Colors.RED }
-                                ]}>{leverage}x</Text>
+                                <Text style={homeStyles.price}>${formatNumber(price)}</Text>
                                 <Text style={[
                                     homeStyles.pnl,
                                     { 
                                         color: pnl > 0 ? Colors.BRIGHT_GREEN : 
-                                               pnl < 0 ? Colors.RED : 
-                                               Colors.WHITE 
+                                            pnl < 0 ? Colors.RED : 
+                                            Colors.WHITE 
                                     }
-                                ]}>${formatNumber(pnl)}</Text>
+                                ]}>{pnl > 0 ? '+' : '-'}${formatNumber(Math.abs(pnl))}</Text>
                             </View>
                         </TouchableOpacity>
                     );

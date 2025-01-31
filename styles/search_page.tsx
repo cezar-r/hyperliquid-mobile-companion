@@ -55,6 +55,12 @@ export const searchStyles = StyleSheet.create({
         color: Colors.BRIGHT_GREEN,
         fontSize: 16,
     },
+    recentHeaderContainer: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        paddingRight: 10,
+    },
 });
 
 export default searchStyles;

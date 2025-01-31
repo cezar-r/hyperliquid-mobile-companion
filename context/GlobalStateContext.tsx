@@ -2,6 +2,7 @@ import React, { createContext, useContext, useEffect, useState } from 'react';
 import { getUserState } from '../services/hyperliquid/get_user_state.cjs';
 import { getPerpsMeta } from '../services/hyperliquid/get_perps_meta.cjs';
 import { UserState, PerpsMeta } from '../common/types';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 interface GlobalState {
     userState: UserState | null;
@@ -24,6 +25,9 @@ export const GlobalStateProvider: React.FC<{ children: React.ReactNode }> = ({ c
     });
 
     const updateGlobalState = async () => {
+        if (await AsyncStorage.getItem("address") === null) {
+            return;
+        }
         try {
             const [userState, perpsMeta] = await Promise.all([
                 getUserState(),
@@ -43,7 +47,7 @@ export const GlobalStateProvider: React.FC<{ children: React.ReactNode }> = ({ c
     // Initial load and setup interval
     useEffect(() => {
         updateGlobalState();
-        const interval = setInterval(updateGlobalState, 10000);
+        const interval = setInterval(updateGlobalState, 3500);
         return () => clearInterval(interval);
     }, []);
 

@@ -1,6 +1,7 @@
 import { StyleSheet } from 'react-native';
 
 import { Colors } from "./colors";
+import { NAVBAR_HEIGHT } from '../common/constants';
 
 export const homeStyles = StyleSheet.create({
     balanceContainer: {
@@ -37,13 +38,14 @@ export const homeStyles = StyleSheet.create({
     },
     scrollView: {
         paddingHorizontal: 10,
+        marginBottom: NAVBAR_HEIGHT,
     },
     positionCell: {
         backgroundColor: Colors.DARK_GREEN,
         borderRadius: 6,
-        paddingHorizontal: 13,
+        paddingHorizontal: 12,
         paddingVertical: 8,
-        marginBottom: 12,
+        marginBottom: 8,
         width: '100%',
         flexDirection: 'row',
         justifyContent: 'space-between',
@@ -58,10 +60,10 @@ export const homeStyles = StyleSheet.create({
         justifyContent: 'space-between',
     },
     ticker: {
-        color: Colors.BRIGHT_GREEN,
+        color: Colors.WHITE,
         fontSize: 18,
         fontWeight: 'bold',
-        marginBottom: 5,
+        marginBottom: 0,
     },
     size: {
         color: Colors.WHITE,
@@ -69,12 +71,24 @@ export const homeStyles = StyleSheet.create({
     },
     leverage: {
         fontSize: 18,
-        marginBottom: 5,
+        marginBottom: 0,
         fontWeight: 'bold',
     },
     pnl: {
         fontSize: 14,
-    }
+    },
+    tickerContainer: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        gap: 8,
+        marginBottom: 5,
+    },
+    price: {
+        color: Colors.WHITE,
+        fontSize: 18,
+        marginBottom: 0,
+        fontWeight: 'bold'
+    },
 });
 
 export default homeStyles;

@@ -25,11 +25,11 @@ const tradeStyles = StyleSheet.create({
         color: Colors.WHITE,
         fontSize: 42,
         fontWeight: 700,
-        // marginBottom: 2,
+        marginBottom: 0,
     },
     price: {
         fontSize: 32,
-        marginBottom: 2,
+        marginBottom: 3,
     },
     sectionTitle: {
         color: Colors.WHITE,
@@ -47,7 +47,8 @@ const tradeStyles = StyleSheet.create({
     row: {
         flexDirection: 'row',
         justifyContent: 'space-between',
-        paddingVertical: 12,
+        paddingVertical: 10,
+        // paddingHorizontal: 3,
         // borderBottomWidth: 1,
         // borderBottomColor: Colors.GRAY,
     },
@@ -61,6 +62,17 @@ const tradeStyles = StyleSheet.create({
     label: {
         color: Colors.LIGHT_GRAY,
         fontSize: 16,
+    },
+    closeButton: {
+        alignSelf: 'center',
+        marginTop: 16,
+        paddingVertical: 10,
+        paddingHorizontal: 20,
+    },
+    closeButtonText: {
+        color: Colors.BRIGHT_GREEN,
+        fontSize: 16,
+        fontWeight: '600',
     },
     value: {
         color: Colors.WHITE,

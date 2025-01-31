@@ -17,6 +17,7 @@ import styles from "../../styles/constants";
 import searchStyles from "../../styles/search_page";
 import { Colors } from "../../styles/colors";
 import { AssetCtx } from 'hyperliquid/dist';
+import AntDesign from '@expo/vector-icons/AntDesign';
 
 export const Search = ({ navigation }: { navigation: any }) => {
     const { globalState } = useGlobalState();
@@ -127,21 +128,33 @@ export const Search = ({ navigation }: { navigation: any }) => {
                 </View>
 
                 <ScrollView style={searchStyles.resultsContainer}>
-                    {searchQuery === '' ? (
-                        <>
+                {searchQuery === '' ? (
+                    <>
+                        <View style={searchStyles.recentHeaderContainer}>
                             <Text style={searchStyles.sectionTitle}>Recent Searches</Text>
-                            {recentSearches.map(ticker => {
-                                const tickerData = perpsTickerList.find(item => item.ticker === ticker);
-                                if (tickerData) {
-                                    return renderTickerCell(tickerData);
-                                }
-                                return null;
-                            })}
-                        </>
-                    ) : (
-                        // Show search results
-                        getFilteredTickers().map(item => renderTickerCell(item))
-                    )}
+                            {recentSearches.length > 0 && (
+                                <TouchableOpacity 
+                                    onPress={async () => {
+                                        await AsyncStorage.removeItem('recentSearches');
+                                        setRecentSearches([]);
+                                    }}
+                                >
+                                    <AntDesign name="closecircle" size={16} color={Colors.LIGHT_GRAY} />
+                                </TouchableOpacity>
+                            )}
+                        </View>
+                        {recentSearches.map(ticker => {
+                            const tickerData = perpsTickerList.find(item => item.ticker === ticker);
+                            if (tickerData) {
+                                return renderTickerCell(tickerData);
+                            }
+                            return null;
+                        })}
+                    </>
+                ) : (
+                    // Show search results
+                    getFilteredTickers().map(item => renderTickerCell(item))
+                )}
                 </ScrollView>
             </LinearGradient>
         </TouchableWithoutFeedback>

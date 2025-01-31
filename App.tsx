@@ -4,6 +4,8 @@ import { createStackNavigator } from '@react-navigation/stack';
 import { GlobalStateProvider } from './context/GlobalStateContext';
 import Onboarding from './components/onboarding/Onboarding';
 import MainApp from './components/MainApp';
+import Splash from './components/Splash';
+
 
 const Stack = createStackNavigator();
 
@@ -11,6 +13,7 @@ const App = () => (
   <GlobalStateProvider>
     <NavigationContainer>
       <Stack.Navigator screenOptions={{ headerShown: false }}>
+        <Stack.Screen name="Splash" component={Splash} />
         <Stack.Screen name="Onboarding" component={Onboarding} />
         <Stack.Screen name="MainApp" component={MainApp} />
       </Stack.Navigator>

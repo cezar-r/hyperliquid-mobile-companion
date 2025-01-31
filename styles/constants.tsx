@@ -18,12 +18,20 @@ export const styles = StyleSheet.create({
         marginVertical: 10,
         position: 'relative',
     },
+    logoText: {
+        fontWeight: 200,
+        color: Colors.WHITE,
+        marginBottom: 80,
+        fontSize: 42,
+    },
     input: {
-        backgroundColor: Colors.GRAY,
+        backgroundColor: Colors.DARK_DARK_GREEN,
         color: Colors.WHITE,
         padding: 15,
         borderRadius: 5,
         paddingRight: 70,
+        borderWidth: 2,
+        borderColor: Colors.BRIGHT_GREEN
     },
     pasteButton: {
         position: 'absolute',
@@ -37,21 +45,40 @@ export const styles = StyleSheet.create({
         fontSize: 14,
     },
     submitButton: {
-        backgroundColor: Colors.GRAY,
+        backgroundColor: Colors.GREEN,
         padding: 15,
         borderRadius: 5,
         width: '80%',
         alignItems: 'center',
-        marginTop: 20,
+        marginTop: 25,
+        marginBottom: 180,
     },
     submitButtonActive: {
         backgroundColor: Colors.BRIGHT_GREEN,
     },
     submitButtonText: {
-        color: Colors.WHITE,
+        color: Colors.BLACK,
         fontSize: 16,
         fontWeight: 'bold',
     },
+    tabButton: {
+        flex: 1,
+        alignItems: 'center',
+    },
+    tabIconContainer: {
+        flex: 1,
+        alignItems: 'center',
+        justifyContent: 'center',
+        width: '100%',
+    },
+    activeLine: {
+        position: 'absolute',
+        top: -4,
+        width: '67%',
+        height: 3,
+        backgroundColor: Colors.BRIGHT_GREEN,
+        borderRadius: 3,
+    }
 })
 
 export default styles;
