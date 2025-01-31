@@ -1,8 +1,8 @@
 {
   "expo": {
-    "name": "HyperliquidMobileCompanion",
+    "name": "Hyperliquid",
     "slug": "HyperliquidMobileCompanion",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "automatic",
@@ -14,7 +14,12 @@
     },
     "ios": {
       "userInterfaceStyle": "automatic",
-      "supportsTablet": true
+      "bundleIdentifier": "com.cezarrr.HyperliquidMobileCompanion",
+      "supportsTablet": true,
+      "buildNumber": "1",
+      "infoPlist": {
+        "ITSAppUsesNonExemptEncryption": false
+      }
     },
     "android": {
       "userInterfaceStyle": "automatic",
@@ -25,7 +30,11 @@
     },
     "web": {
       "favicon": "./assets/favicon.png"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "8826bc51-4838-4411-8190-e70e2a947934"
+      }
     }
-
   }
 }

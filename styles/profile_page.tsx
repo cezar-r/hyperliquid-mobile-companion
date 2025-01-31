@@ -14,7 +14,7 @@ const profileStyles = StyleSheet.create({
         gap: 8,
     },
     credContainer: {
-        marginTop: 50,
+        marginTop: 20,
         marginBottom: 80,
     },
     label: {
@@ -35,15 +35,17 @@ const profileStyles = StyleSheet.create({
         fontSize: 16,
     },
     signOutButton: {
-        backgroundColor: Colors.RED,
+        backgroundColor: Colors.BRIGHT_GREEN,
         margin: 20,
         padding: 15,
         borderRadius: 8,
         alignItems: 'center',
         width: '80%',
+        position: 'absolute',
+        bottom: 120,
     },
     signOutText: {
-        color: Colors.WHITE,
+        color: Colors.BLACK,
         fontSize: 16,
         fontWeight: 'bold',
     },

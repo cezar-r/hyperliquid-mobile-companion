@@ -119,7 +119,7 @@ const Trade = ({ route, navigation }: any) => {
             
             {position ? (
                 <>
-                    <Text style={tradeStyles.sectionTitle}>Open Position</Text>
+                    <Text style={tradeStyles.sectionTitle}>Position</Text>
                     <View style={tradeStyles.tableContainer}>
                         <View style={tradeStyles.row}>
                             <Text style={tradeStyles.label}>Leverage</Text>
@@ -189,7 +189,7 @@ const Trade = ({ route, navigation }: any) => {
                     </View>
                 </>
             ) : (
-                <Text style={tradeStyles.noPositionText}>No open positions</Text>
+                <Text style={tradeStyles.noPositionText}>No open position</Text>
             )}
     
             {/* Trade Buttons */}

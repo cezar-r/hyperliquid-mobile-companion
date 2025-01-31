@@ -117,21 +117,32 @@ export const Home = ({ navigation }: { navigation: any }) => {
                     />
                 }
             >
-                {/* Balance Section */}
                 <View style={homeStyles.balanceContainer}>
-                    <Animated.Text style={[
-                        homeStyles.balanceAmount,
-                        { 
-                            fontSize: dynamicFontSize,
-                            color: textColor
-                        }
-                    ]}>${balanceString}</Animated.Text>
-                </View>
-
-                <View style={homeStyles.availableBalanceContainer}>
-                    <Text style={homeStyles.availableBalanceLabel}>USDC: </Text>
-                    <Text style={homeStyles.availableBalanceAmount}>${formatNumber(availableBalance)}</Text>
-                </View>
+                        <Animated.Text style={[
+                            homeStyles.balanceAmount,
+                            { 
+                                fontSize: dynamicFontSize,
+                                color: textColor
+                            }
+                        ]}>${balanceString}</Animated.Text>
+                    </View>
+                {/* Balance Section */}
+                {positions.length > 0 ? (
+                    <>
+                    <View style={homeStyles.availableBalanceContainer}>
+                        <Text style={homeStyles.availableBalanceLabel}>USDC: </Text>
+                        <Text style={homeStyles.availableBalanceAmount}>${formatNumber(availableBalance)}</Text>
+                    </View>)
+                    </>
+                ) : (
+                    <>
+                        <View>
+                            <Text style={homeStyles.noPositionText}>
+                                No open positions
+                            </Text>
+                        </View>
+                    </>
+                )}
 
                 {/* Positions Section */}
                 {positions.map((item: any, index: any) => {

@@ -1,5 +1,6 @@
 import React, {useState, useEffect } from 'react';
 import { View, Text, TouchableOpacity } from 'react-native';
+import { LinearGradient } from 'expo-linear-gradient';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import Octicons from '@expo/vector-icons/Octicons';
 import * as Clipboard from 'expo-clipboard';
@@ -42,7 +43,13 @@ export const Profile = () => {
     };
 
     return (
-        <View style={profileStyles.background}>
+        <LinearGradient
+            colors={[Colors.DARK_DARK_GREEN, Colors.DARK_GREEN, Colors.GREEN]}
+            locations={[0, 0.5, .99]}
+            start={{ x: .5, y: 0 }}
+            end={{ x: .5, y: 1 }}
+            style={profileStyles.background}
+        >
             <View style={profileStyles.credContainer}>
                 <View style={profileStyles.field}>
                     <Text style={profileStyles.label}>Wallet Address</Text>
@@ -69,9 +76,9 @@ export const Profile = () => {
                 style={profileStyles.signOutButton} 
                 onPress={handleSignOut}
             >
-                <Text style={profileStyles.signOutText}>Sign Out</Text>
+                <Text style={profileStyles.signOutText}>Disconnect</Text>
             </TouchableOpacity>
-        </View>
+        </LinearGradient>
     );
 };
 

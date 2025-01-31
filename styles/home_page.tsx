@@ -40,9 +40,16 @@ export const homeStyles = StyleSheet.create({
         paddingHorizontal: 10,
         marginBottom: NAVBAR_HEIGHT,
     },
+    noPositionText: {
+        textAlign: 'center',
+        color: Colors.LIGHT_GRAY,
+        fontSize: 14,
+        marginTop: 40,
+        fontWeight: 600,
+    },
     positionCell: {
-        backgroundColor: Colors.DARK_GREEN,
-        borderRadius: 6,
+        // backgroundColor: Colors.DARK_GREEN,
+        borderRadius: 5,
         paddingHorizontal: 12,
         paddingVertical: 8,
         marginBottom: 8,
@@ -61,21 +68,21 @@ export const homeStyles = StyleSheet.create({
     },
     ticker: {
         color: Colors.WHITE,
-        fontSize: 18,
+        fontSize: 16,
         fontWeight: 'bold',
         marginBottom: 0,
     },
     size: {
         color: Colors.WHITE,
-        fontSize: 14,
+        fontSize: 13,
     },
     leverage: {
-        fontSize: 18,
+        fontSize: 16,
         marginBottom: 0,
         fontWeight: 'bold',
     },
     pnl: {
-        fontSize: 14,
+        fontSize: 13,
     },
     tickerContainer: {
         flexDirection: 'row',
@@ -85,7 +92,7 @@ export const homeStyles = StyleSheet.create({
     },
     price: {
         color: Colors.WHITE,
-        fontSize: 18,
+        fontSize: 16,
         marginBottom: 0,
         fontWeight: 'bold'
     },

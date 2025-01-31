@@ -8,7 +8,7 @@ export const searchStyles = StyleSheet.create({
         backgroundColor: Colors.DARK_GREEN,
         margin: 10,
         paddingHorizontal: 15,
-        borderRadius: 10,
+        borderRadius: 5,
         // borderWidth: 1,
         // borderColor: Colors.GRAY,
     },
@@ -38,7 +38,7 @@ export const searchStyles = StyleSheet.create({
         padding: 15,
         width: '100%',
         marginBottom: 10,
-        borderRadius: 6,
+        borderRadius: 5,
         // borderWidth: 1,
         // borderColor: Colors.WHITE,
     },
@@ -48,7 +48,7 @@ export const searchStyles = StyleSheet.create({
     },
     tickerSymbol: {
         color: Colors.BRIGHT_GREEN,
-        fontSize: 18,
+        fontSize: 16,
         fontWeight: 'bold',
     },
     tickerPrice: {

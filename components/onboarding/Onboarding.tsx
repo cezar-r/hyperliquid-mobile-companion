@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { 
     View, 
     Text, 
@@ -23,6 +23,9 @@ const Onboarding = ({navigation}: {navigation: any}) => {
     const [address, setAddress] = useState('');
     const [secretKey, setSecretKey] = useState('');
 
+    const [isVideoReady, setIsVideoReady] = useState(false);
+    const [videoError, setVideoError] = useState<string | null>(null);
+    const videoRef = useRef<Video>(null);
 
     const handleSubmit = async () => {
         await AsyncStorage.setItem('address', address);
@@ -44,6 +47,17 @@ const Onboarding = ({navigation}: {navigation: any}) => {
     };
 
     useEffect(() => {
+        if (videoError) {
+            // Wait a short moment and try to reload the video
+            const retryTimer = setTimeout(() => {
+                videoRef.current?.loadAsync(require('../../assets/blob.mp4'), {}, false);
+            }, 1000);
+    
+            return () => clearTimeout(retryTimer);
+        }
+    }, [videoError]);
+
+    useEffect(() => {
         const checkLocalStorage = async () => {
             const storedAddress = await AsyncStorage.getItem('address');
             if (storedAddress) navigation.replace('Splash');
@@ -57,14 +71,35 @@ const Onboarding = ({navigation}: {navigation: any}) => {
     return (
         <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
             <View style={styles.background}>
-                <Video
-                    source={require('../../assets/blob.mp4')}
-                    style={StyleSheet.absoluteFill}
-                    resizeMode={ResizeMode.COVER}
-                    shouldPlay
-                    isLooping
-                    isMuted
-                />
+            <Video
+                ref={videoRef}
+                source={require('../../assets/blob.mp4')}
+                style={[
+                    StyleSheet.absoluteFill,
+                    // Optionally hide video until ready
+                    !isVideoReady && { opacity: 0 }
+                ]}
+                resizeMode={ResizeMode.COVER}
+                shouldPlay
+                isLooping
+                isMuted
+                onLoad={() => {
+                    setIsVideoReady(true);
+                    setVideoError(null);
+                }}
+                onError={(error) => {
+                    console.error('Video playback error:', error);
+                    setVideoError(error);
+                    // Attempt to recover
+                    videoRef.current?.playAsync();
+                }}
+                onPlaybackStatusUpdate={status => {
+                    if (!status.isLoaded && isVideoReady) {
+                        // If video stops playing but should be playing, restart it
+                        videoRef.current?.replayAsync();
+                    }
+                }}
+            />
                 <Text style={styles.logoText}>
                         Hyperliquid
                     </Text>

@@ -1,12 +1,21 @@
-use the big blob as background on onboarding page
-
 make placeordersheet smoother
+
+when keyboard is open, should still be able to select the search item
+
+tp/sl on orders
+
+export button for order
 
 try to get on testflight
 
-onboarding help page
+turn mp4 into gif ?
+    if video is unstable when using testflight app
+
+app icon
 
 tos
+
+convert mp4 to gif ?
 
 tap on balance on home page to hide $ amounts
 
@@ -22,3 +31,6 @@ add perps <-> swap funcyionality
 
 multiple accounts
     add account name field to onboarding page
+
+staking page alongside perps and spot
+

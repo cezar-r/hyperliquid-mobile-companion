@@ -20,10 +20,13 @@
     "axios": "^1.7.9",
     "events": "^3.3.0",
     "expo": "~52.0.28",
+    "expo-av": "~15.0.2",
     "expo-clipboard": "~7.0.1",
     "expo-font": "^13.0.3",
+    "expo-haptics": "~14.0.1",
     "expo-linear-gradient": "~14.0.2",
     "expo-status-bar": "~2.0.1",
+    "expo-video": "^2.0.5",
     "hyperliquid": "^1.5.8",
     "react": "18.3.1",
     "react-native": "0.76.6",
@@ -34,9 +37,7 @@
     "react-native-safe-area-context": "^5.1.0",
     "react-native-screens": "^4.5.0",
     "react-native-svg": "^15.11.1",
-    "react-native-vector-icons": "^10.2.0",
-    "expo-haptics": "~14.0.1",
-    "expo-av": "~15.0.2"
+    "react-native-vector-icons": "^10.2.0"
   },
   "devDependencies": {
     "@babel/core": "^7.25.2",
