@@ -28,12 +28,12 @@ export const homeStyles = StyleSheet.create({
         alignItems: 'center',
     },
     availableBalanceLabel: {
-        color: Colors.BRIGHT_GREEN,
-        fontSize: 16,
+        color: Colors.WHITE,
+        fontSize: 14,
     },
     availableBalanceAmount: {
-        color: Colors.BRIGHT_GREEN,
-        fontSize: 16,
+        color: Colors.WHITE,
+        fontSize: 15,
         fontWeight: 'bold',
     },
     scrollView: {
@@ -43,7 +43,7 @@ export const homeStyles = StyleSheet.create({
     noPositionText: {
         textAlign: 'center',
         color: Colors.LIGHT_GRAY,
-        fontSize: 14,
+        fontSize: 15,
         marginTop: 40,
         fontWeight: 600,
     },

@@ -1,12 +1,9 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { fetchWithTimeout } from '../fetch_with_timeout';
 
-export const placeOrder = async (
+export const cancelOrder = async (
     ticker,
-    isBuy,
-    sz,
-    leverage,
-    isCross
+    cloid
 ) => {
     const secretKey = await AsyncStorage.getItem('secretKey');
     const address = await AsyncStorage.getItem('address');
@@ -14,13 +11,10 @@ export const placeOrder = async (
     const url = "https://w54bqsqgyssyh5ptefjfsl2mvy0nnnsi.lambda-url.us-east-2.on.aws/";
 
     const payload = {
-        action: "place",
+        action: "cancel",
         args: {
             ticker: ticker,
-            isBuy: isBuy,
-            sz: Number(sz),
-            leverage: leverage,
-            isCross: isCross
+            cloid: cloid,
         },
         creds: {
             secret: secretKey,

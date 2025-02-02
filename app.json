@@ -16,7 +16,7 @@
       "userInterfaceStyle": "automatic",
       "bundleIdentifier": "com.cezarrr.HyperliquidMobileCompanion",
       "supportsTablet": true,
-      "buildNumber": "1",
+      "buildNumber": "2",
       "infoPlist": {
         "ITSAppUsesNonExemptEncryption": false
       }
@@ -35,6 +35,30 @@
       "eas": {
         "projectId": "8826bc51-4838-4411-8190-e70e2a947934"
       }
-    }
+    },
+    "fonts": [
+      {
+        "asset": "./assets/fonts/TeodorThin.otf",
+        "family": "TeodorThin"
+      },
+      {
+        "asset": "./assets/fonts/Teodor.otf",
+        "family": "Teodor"
+      },
+      {
+        "asset": "./assets/fonts/TeodorMed.otf",
+        "family": "TeodorMed"
+      }
+    ],
+    "plugins": [
+      [
+        "expo-media-library",
+        {
+          "photosPermission": "Allow $(PRODUCT_NAME) to save photos.",
+          "savePhotosPermission": "Allow $(PRODUCT_NAME) to save photos.",
+          "isAccessMediaLocationEnabled": true
+        }
+      ]
+    ]
   }
 }

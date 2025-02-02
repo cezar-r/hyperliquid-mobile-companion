@@ -102,7 +102,7 @@ const Onboarding = ({navigation}: {navigation: any}) => {
             />
                 <Text style={styles.logoText}>
                         Hyperliquid
-                    </Text>
+                </Text>
                 <View style={styles.inputContainer}>
                     <TextInput
                         style={styles.input}

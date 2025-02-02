@@ -21,6 +21,9 @@ export const searchStyles = StyleSheet.create({
         fontSize: 16,
         paddingVertical: 16,
     },
+    clearButton: {
+        padding: 8,
+    },
     resultsContainer: {
         paddingHorizontal: 20,
     },

@@ -4,18 +4,17 @@ when keyboard is open, should still be able to select the search item
 
 tp/sl on orders
 
-export button for order
+choose between cross and isolated
 
-try to get on testflight
+export button for order to take ss
 
-turn mp4 into gif ?
-    if video is unstable when using testflight app
+fix app icon
 
-app icon
+splash page
 
 tos
 
-convert mp4 to gif ?
+refactor
 
 tap on balance on home page to hide $ amounts
 
@@ -23,14 +22,18 @@ feed page
     filter button that shows list of accounts
         can check/uncheck/remove accounts or add a new username
 
-use websocket
-
 add spot options
+    text in top left
+    on top, bring up sheet that has options, show current highlighted
+        chaneg refresh logic to fetch spot data
 
 add perps <-> swap funcyionality
 
 multiple accounts
-    add account name field to onboarding page
+    user can remove each one from profile
+        if all are removed, take back to onboarding
+    onboarding page one is called "Default Account"
+    text in top right for account
 
 staking page alongside perps and spot
 

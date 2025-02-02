@@ -12,20 +12,22 @@ import Search from './search/Search';
 import Feed from './feed/Feed';
 import Trade from './trade/Trade';
 import Profile from './profile/Profile';
+import SharePosition from './trade/SharePosition';
 import { Colors } from '../styles/colors';
 import { NAVBAR_HEIGHT } from '../common/constants';
-
 import { styles } from "../styles/constants";
+import { RootStackParamList } from './navigation';
 
 
-const Stack = createStackNavigator();
+
+const Stack = createStackNavigator<RootStackParamList>();
 const Tab = createBottomTabNavigator();
 
 type TabBarButtonProps = {
-    [key: string]: any;  // This will accept any additional props
-  }
+    [key: string]: any;
+}
   
-  const TabButton = (props: TabBarButtonProps) => {
+const TabButton = (props: TabBarButtonProps) => {
       const { children, accessibilityState, onPress } = props;
       const focused = accessibilityState?.selected;
       
@@ -90,7 +92,7 @@ const TabNavigator = () => (
             tabBarIcon: ({ focused, color }) => (
                 <MaterialCommunityIcons 
                   name={focused ? 'home' : 'home-outline'} 
-                  size={28}  // slightly bigger
+                  size={28}
                   color={color}
                 />
             )
@@ -100,7 +102,7 @@ const TabNavigator = () => (
           name="Search" 
           component={Search}
           options={{
-            tabBarIcon: ({ focused, color, size }) => (
+            tabBarIcon: ({ focused, color }) => (
               <Ionicons 
                 name={focused ? 'search' : 'search-outline'} 
                 size={26} 
@@ -116,7 +118,7 @@ const TabNavigator = () => (
             tabBarIcon: ({ focused, color }) => (
                 <FontAwesome6 
                   name={'x-twitter'} 
-                  size={26}  // slightly bigger
+                  size={26}
                   color={color}
                 />
             )
@@ -129,7 +131,7 @@ const TabNavigator = () => (
             tabBarIcon: ({ focused, color }) => (
             <MaterialCommunityIcons 
                 name={focused ? 'account' : 'account'} 
-                size={28}  // slightly bigger
+                size={28}
                 color={color}
               />
             ),
@@ -142,6 +144,7 @@ const MainApp = () => (
     <Stack.Navigator screenOptions={{ headerShown: false }}>
         <Stack.Screen name="TabNavigator" component={TabNavigator} />
         <Stack.Screen name="Trade" component={Trade} />
+        <Stack.Screen name="SharePosition" component={SharePosition} />
     </Stack.Navigator>
 );
 

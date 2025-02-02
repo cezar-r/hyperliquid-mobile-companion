@@ -62,7 +62,7 @@ export const Search = ({ navigation }: { navigation: any }) => {
             setRecentSearches(updatedSearches);
             await AsyncStorage.setItem('recentSearches', JSON.stringify(updatedSearches));
         } catch (error) {
-            console.error('Error saving recent search:', error);
+            return;
         }
     };
 
@@ -108,26 +108,37 @@ export const Search = ({ navigation }: { navigation: any }) => {
     if (!globalState.perpsMeta) return null;
 
     return (
-        <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-            <LinearGradient
-                        colors={[Colors.DARK_DARK_GREEN, Colors.DARK_GREEN, Colors.GREEN]}
-                        locations={[0, 0.5, .99]}
-                        start={{ x: .5, y: 0 }}
-                        end={{ x: .5, y: 1 }}
-                        style={styles.background}
+        <LinearGradient
+            colors={[Colors.DARK_DARK_GREEN, Colors.DARK_GREEN, Colors.GREEN]}
+            locations={[0, 0.5, .99]}
+            start={{ x: .5, y: 0 }}
+            end={{ x: .5, y: 1 }}
+            style={styles.background}
+        >
+            <View style={searchStyles.searchBarContainer}>
+                <Ionicons name="search" size={20} color={Colors.BRIGHT_GREEN} style={searchStyles.searchIcon} />
+                <TextInput
+                    style={searchStyles.searchInput}
+                    value={searchQuery}
+                    onChangeText={setSearchQuery}
+                />
+                {searchQuery.length > 0 && (
+                    <TouchableOpacity 
+                        onPress={() => {
+                            Keyboard.dismiss();
+                            setSearchQuery('');
+                        }}
+                        style={searchStyles.clearButton}
                     >
-                <View style={searchStyles.searchBarContainer}>
-                    <Ionicons name="search" size={20} color={Colors.BRIGHT_GREEN} style={searchStyles.searchIcon} />
-                    <TextInput
-                        style={searchStyles.searchInput}
-                        // placeholder="Search"
-                        // placeholderTextColor={Colors.BRIGHT}
-                        value={searchQuery}
-                        onChangeText={setSearchQuery}
-                    />
-                </View>
+                        <AntDesign name="close" size={20} color={Colors.BRIGHT_GREEN} />
+                    </TouchableOpacity>
+                )}
+            </View>
 
-                <ScrollView style={searchStyles.resultsContainer}>
+            <ScrollView 
+                style={searchStyles.resultsContainer}
+                keyboardShouldPersistTaps="handled"  // This allows interaction with items while keyboard is open
+            >
                 {searchQuery === '' ? (
                     <>
                         <View style={searchStyles.recentHeaderContainer}>
@@ -152,12 +163,10 @@ export const Search = ({ navigation }: { navigation: any }) => {
                         })}
                     </>
                 ) : (
-                    // Show search results
                     getFilteredTickers().map(item => renderTickerCell(item))
                 )}
-                </ScrollView>
-            </LinearGradient>
-        </TouchableWithoutFeedback>
+            </ScrollView>
+        </LinearGradient>
     );
 }
 

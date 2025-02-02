@@ -5,6 +5,8 @@ export const enum Colors {
     LIGHT_GRAY = "#949e9c",
     RED = "#d35a71",
     DARK_RED = "#6a112f",
+    MAROON = "#812a41",
+    PINK = "#f3d3d8",
     GREEN = "#17453f",
     BRIGHT_GREEN = "#50d2c1",
     DARK_GREEN = "#03251f",

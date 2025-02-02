@@ -1,12 +1,16 @@
 import React, { useState, useEffect } from 'react';
 
-import { View, Text, ScrollView, RefreshControl, Animated, TouchableOpacity } from 'react-native';
+import { View, Text, ScrollView, RefreshControl, Animated, TouchableOpacity,ActivityIndicator } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { useGlobalState } from '../../context/GlobalStateContext';
 import styles from "../../styles/constants";
 import homeStyles from "../../styles/home_page";
 import Colors from "../../styles/colors";
 import * as Haptics from 'expo-haptics';
+import { deleteLimitOrder } from '../../services/delete_limit_order';
+
+import { closeOrder } from '../../services/hyperliquid/close_order.cjs';
+
 
 
 export const Home = ({ navigation }: { navigation: any }) => {
@@ -15,6 +19,8 @@ export const Home = ({ navigation }: { navigation: any }) => {
     const [refreshing, setRefreshing] = useState(false);
     const [colorAnim] = useState(new Animated.Value(0));
     const [isIncrease, setIsIncrease] = useState<boolean | null>(null);
+    const [isClosingAll, setIsClosingAll] = useState(false);
+
 
     const onRefresh = async () => {
         setRefreshing(true);
@@ -35,9 +41,7 @@ export const Home = ({ navigation }: { navigation: any }) => {
             }
             if (currentBalance !== previousBalance) {
                 setIsIncrease(currentBalance > previousBalance);
-                // Reset animation value
                 colorAnim.setValue(0);
-                // Start animation
                 Animated.sequence([
                     Animated.timing(colorAnim, {
                         toValue: 1,
@@ -61,17 +65,16 @@ export const Home = ({ navigation }: { navigation: any }) => {
     const availableBalance = globalState.userState.perps.withdrawable;
     const positions = globalState.userState.perps.assetPositions;
 
-    const formatNumber = (num: number) => {
+    const formatNumber = (num: number, maxDigits: number = 5) => {
         return Number(num).toLocaleString(undefined, {
             minimumFractionDigits: 2,
-            maximumFractionDigits: 2
+            maximumFractionDigits: maxDigits
         });
     };
 
-    const balanceString = formatNumber(balance);
+    const balanceString = formatNumber(balance, 2);
     const getFontSize = (str: string) => {
         const length = str.length;
-        // Linear interpolation between 68px at length 5 and 32px at length 15
         const maxSize = 68;
         const minSize = 32;
         const maxLength = 15;
@@ -116,7 +119,7 @@ export const Home = ({ navigation }: { navigation: any }) => {
                         colors={[Colors.BRIGHT_GREEN]}
                     />
                 }
-            >
+            >  
                 <View style={homeStyles.balanceContainer}>
                         <Animated.Text style={[
                             homeStyles.balanceAmount,
@@ -125,14 +128,42 @@ export const Home = ({ navigation }: { navigation: any }) => {
                                 color: textColor
                             }
                         ]}>${balanceString}</Animated.Text>
+
                     </View>
                 {/* Balance Section */}
                 {positions.length > 0 ? (
                     <>
-                    <View style={homeStyles.availableBalanceContainer}>
-                        <Text style={homeStyles.availableBalanceLabel}>USDC: </Text>
-                        <Text style={homeStyles.availableBalanceAmount}>${formatNumber(availableBalance)}</Text>
-                    </View>)
+                    <View style={{ flexDirection: 'row', justifyContent: 'space-between'}}>
+                        <View style={homeStyles.availableBalanceContainer}>
+                            <Text style={homeStyles.availableBalanceLabel}>USDC: </Text>
+                            <Text style={homeStyles.availableBalanceAmount}>${formatNumber(availableBalance, 2)}</Text>
+                        </View>
+                        <View>
+                        {isClosingAll ? (
+                                <ActivityIndicator color={Colors.WHITE} size="small" />
+                            ) : (
+                                <TouchableOpacity>
+                                    <Text style={{ 
+                                        color: Colors.BRIGHT_GREEN, fontSize: 14, fontWeight: 600, marginRight: 6 
+                                    }}
+                                    onPress={async () => {
+                                        setIsClosingAll(true);
+                                        positions.forEach(async (position: any) => {
+                                            const ticker = position.position.coin;
+                                            await closeOrder(ticker);
+                                            await deleteLimitOrder(ticker, true);
+                                            await deleteLimitOrder(ticker, false);
+                                        });
+                                        setIsClosingAll(false);
+                                        await Haptics.impactAsync()
+                                    }}
+                                    >
+                                        Close All
+                                    </Text>
+                                </TouchableOpacity>
+                        )}
+                        </View>
+                    </View>
                     </>
                 ) : (
                     <>
@@ -152,7 +183,6 @@ export const Home = ({ navigation }: { navigation: any }) => {
                     const leverage = position.leverage.value;
                     const pnl = Number(position.unrealizedPnl);
                     const isLong = position.szi > 0;
-                    const pctGain = formatPercent(Number(position.returnOnEquity))
                     const price = Number(globalState.perpsMeta?.perpsMeta[1][tickerIndex(ticker)].markPx);
 
                     return (
@@ -183,7 +213,7 @@ export const Home = ({ navigation }: { navigation: any }) => {
                                             pnl < 0 ? Colors.RED : 
                                             Colors.WHITE 
                                     }
-                                ]}>{pnl > 0 ? '+' : '-'}${formatNumber(Math.abs(pnl))}</Text>
+                                ]}>{pnl > 0 ? '+' : '-'}${formatNumber(Math.abs(pnl), 2)}</Text>
                             </View>
                         </TouchableOpacity>
                     );

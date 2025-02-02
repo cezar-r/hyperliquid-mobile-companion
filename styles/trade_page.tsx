@@ -7,9 +7,9 @@ const tradeStyles = StyleSheet.create({
         backgroundColor: Colors.DARK_GREEN,
     },
     header: {
-        marginTop: 60,
+        marginTop: 65,
         marginLeft: 20,
-        marginBottom: 20,
+        marginBottom: 10,
     },
     headerSplit: {
         borderBottomWidth: 2,
@@ -34,10 +34,11 @@ const tradeStyles = StyleSheet.create({
     },
     sectionTitle: {
         color: Colors.WHITE,
-        fontSize: 20,
+        fontSize: 24,
         marginTop: 30,
         marginLeft: 20,
-        marginBottom: 6,
+        marginRight: 10,
+        marginBottom: 3,
         fontWeight: 500,
     },
     tableContainer: {
@@ -48,10 +49,17 @@ const tradeStyles = StyleSheet.create({
     row: {
         flexDirection: 'row',
         justifyContent: 'space-between',
-        paddingVertical: 9,
-        // paddingHorizontal: 3,
+        paddingVertical: 8,
+        paddingHorizontal: 2,
         // borderBottomWidth: 1,
         // borderBottomColor: Colors.GRAY,
+    },
+    divider: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        paddingHorizontal: 3,
+        borderBottomWidth: 1,
+        borderBottomColor: Colors.WHITE,
     },
     bottomRow: {
         flexDirection: 'row',
@@ -66,7 +74,7 @@ const tradeStyles = StyleSheet.create({
     },
     closeButton: {
         alignSelf: 'center',
-        marginTop: 16,
+        marginTop: 22,
         paddingVertical: 10,
         paddingHorizontal: 20,
     },
@@ -123,7 +131,85 @@ const tradeStyles = StyleSheet.create({
         color: Colors.WHITE,
         marginLeft: 4,
         fontSize: 12,
-      }
+      },
+      valueContainer: {
+        flexDirection: 'row',
+        alignItems: 'center',
+      },
+      editIcon: {
+        marginLeft: 8,
+      },
+      modalContainer: {
+        position: 'absolute',
+        top: 0,
+        left: 0,
+        right: 0,
+        bottom: 0,
+        backgroundColor: 'rgba(0,0,0,0.7)',
+        justifyContent: 'center',
+        alignItems: 'center',
+      },
+      modalContent: {
+        backgroundColor: Colors.DARK_DARK_GREEN,
+        padding: 18,
+        paddingVertical: 20,
+        paddingBottom: 30,
+        borderRadius: 5,
+        width: '90%',
+      },
+      modalClose: {
+        alignSelf: 'flex-end',
+      },
+      tpslContainer: {
+        marginVertical: 16,
+      },
+      tpslRow: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        marginVertical: 8,
+      },
+      tpslHeaderRow: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        paddingHorizontal: 4,
+      },
+      headerTitle: {
+        color: Colors.WHITE,
+        fontSize: 20,
+        fontWeight: 500,
+      },
+      priceInput: {
+        flex: 1,
+        color: Colors.WHITE,
+        borderBottomWidth: 1,
+        borderBottomColor: Colors.GRAY,
+        padding: 8,
+      },
+      percentChange: {
+        marginHorizontal: 8,
+        minWidth: 60,
+        marginTop: 22,
+        fontSize: 12,
+      },
+      profitValue: {
+        minWidth: 80,
+        textAlign: 'right',
+        marginTop: 18,
+        marginLeft: 20,
+        fontSize: 16,
+      },
+      submitButton: {
+        backgroundColor: Colors.BRIGHT_GREEN,
+        borderRadius: 5,
+        padding: 16,
+        alignItems: 'center',
+        marginTop: 16,
+      },
+      submitButtonText: {
+        color: Colors.BLACK,
+        fontWeight: 600,
+        fontSize: 14,
+      },
 });
 
 export default tradeStyles

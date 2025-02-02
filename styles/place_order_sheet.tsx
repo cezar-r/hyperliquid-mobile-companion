@@ -4,15 +4,28 @@ import Colors from "./colors";
 const styles = StyleSheet.create({
   overlay: {
     ...StyleSheet.absoluteFillObject,
-    backgroundColor: 'rgba(0,0,0,0.5)',
     justifyContent: 'flex-end',
   },
+  overlayBackground: {
+    ...StyleSheet.absoluteFillObject,
+    // backgroundColor: 'rgba(0,0,0,0.5)',
+  },
+  dragIndicator: {
+    width: 40,
+    height: 4,
+    backgroundColor: '#FFFFFF40',
+    borderRadius: 2,
+    alignSelf: 'center',
+    marginBottom: 12
+},
   sheet: {
     backgroundColor: Colors.BLACK,
     borderTopLeftRadius: 16,
     borderTopRightRadius: 16,
-    padding: 20,
-    height: '60%',
+    paddingHorizontal: 20,
+    // paddingBottom: 60,
+    paddingTop: 10,
+    height: '75%',
   },
   sheetHeader: {
     borderBottomWidth: 1,
@@ -27,12 +40,20 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
   section: {
-    marginBottom: 20,
+    marginBottom: 6,
   },
+  bottomSection: {
+    marginBottom: 10,
+  },
+  
   label: {
     color: Colors.LIGHT_GRAY,
-    marginBottom: 6,
-    fontSize: 14,
+    marginBottom: 4,
+    fontSize: 12,
+  },
+  marginLabel: {
+    color: Colors.WHITE,
+    fontSize: 12,
   },
   detailsContainer: {
     marginVertical: 15,
@@ -72,6 +93,46 @@ const styles = StyleSheet.create({
     top: 0,
     bottom: 0,
     backgroundColor: 'rgba(255,255,255,0.3)',
+  },
+  marginTypeSection: {
+    flexDirection: 'row',
+    justifyContent: 'flex-start',
+    alignItems: 'center',
+    marginTop: 6,
+    marginBottom: 12,
+  },
+  
+  tpslContainer: {
+    marginBottom: 10,
+  },
+  
+  tpslRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    // marginTop: 5,
+  },
+  priceInput: {
+    backgroundColor: Colors.DARK_DARK_GREEN,
+    color: Colors.WHITE,
+    borderRadius: 5,
+    padding: 10,
+    width: '40%',
+    fontSize: 16,
+  },
+  
+  percentChange: {
+    color: Colors.LIGHT_GRAY,
+    width: '25%',
+    textAlign: 'right',
+    fontSize: 14,
+  },
+  
+  profitValue: {
+    width: '30%',
+    textAlign: 'right',
+    fontSize: 14,
+    fontWeight: 'bold',
   },
 });
 

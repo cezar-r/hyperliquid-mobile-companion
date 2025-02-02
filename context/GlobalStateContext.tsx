@@ -40,7 +40,7 @@ export const GlobalStateProvider: React.FC<{ children: React.ReactNode }> = ({ c
                 lastUpdated: Date.now()
             });
         } catch (error) {
-            console.error('Error updating global state:', error);
+            return;
         }
     };
 
