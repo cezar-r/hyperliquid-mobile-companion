@@ -58,7 +58,7 @@ export const Search = ({ navigation }: { navigation: any }) => {
             const updatedSearches = [
                 ticker,
                 ...recentSearches.filter(t => t !== ticker)
-            ].slice(0, 10); // Keep only last 10 searches
+            ].slice(0, 20); // Keep only last 10 searches
             setRecentSearches(updatedSearches);
             await AsyncStorage.setItem('recentSearches', JSON.stringify(updatedSearches));
         } catch (error) {
@@ -98,9 +98,16 @@ export const Search = ({ navigation }: { navigation: any }) => {
                 navigation.navigate('Trade', { ticker: item.ticker });
             }}
         >
-            <View style={searchStyles.tickerInfo}>
+            <View style={searchStyles.tickerContainer}>
                 <Text style={searchStyles.tickerSymbol}>{item.ticker}</Text>
+                <Text style={[
+                    searchStyles.leverage,
+                    { color: Colors.BRIGHT_GREEN  }
+                ]}>{item.maxLev}x</Text>
             </View>
+            {/* <View style={searchStyles.tickerInfo}>
+                <Text style={searchStyles.tickerSymbol}>{item.ticker}</Text>
+            </View> */}
             <Text style={searchStyles.tickerPrice}>${formatNumber(item.price)}</Text>
         </TouchableOpacity>
     );
@@ -108,11 +115,7 @@ export const Search = ({ navigation }: { navigation: any }) => {
     if (!globalState.perpsMeta) return null;
 
     return (
-        <LinearGradient
-            colors={[Colors.DARK_DARK_GREEN, Colors.DARK_GREEN, Colors.GREEN]}
-            locations={[0, 0.5, .99]}
-            start={{ x: .5, y: 0 }}
-            end={{ x: .5, y: 1 }}
+        <View
             style={styles.background}
         >
             <View style={searchStyles.searchBarContainer}>
@@ -150,23 +153,27 @@ export const Search = ({ navigation }: { navigation: any }) => {
                                         setRecentSearches([]);
                                     }}
                                 >
-                                    <AntDesign name="closecircle" size={16} color={Colors.LIGHT_GRAY} />
+                                    <AntDesign name="closecircle" size={15} color={Colors.LIGHT_GRAY} />
                                 </TouchableOpacity>
                             )}
                         </View>
-                        {recentSearches.map(ticker => {
-                            const tickerData = perpsTickerList.find(item => item.ticker === ticker);
-                            if (tickerData) {
-                                return renderTickerCell(tickerData);
-                            }
-                            return null;
-                        })}
+                       
+                            {recentSearches.map(ticker => {
+                                const tickerData = perpsTickerList.find(item => item.ticker === ticker);
+                                if (tickerData) {
+                                    return renderTickerCell(tickerData);
+                                }
+                                return null;
+                            })}
+              
                     </>
                 ) : (
-                    getFilteredTickers().map(item => renderTickerCell(item))
+                    <View style={searchStyles.searchResultContainer}>
+                        {getFilteredTickers().map(item => renderTickerCell(item))}
+                    </View>
                 )}
             </ScrollView>
-        </LinearGradient>
+        </View>
     );
 }
 

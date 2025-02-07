@@ -43,31 +43,37 @@ export const Profile = () => {
     };
 
     return (
-        <LinearGradient
-            colors={[Colors.DARK_DARK_GREEN, Colors.DARK_GREEN, Colors.GREEN]}
-            locations={[0, 0.5, .99]}
-            start={{ x: .5, y: 0 }}
-            end={{ x: .5, y: 1 }}
-            style={profileStyles.background}
-        >
+        <View style={profileStyles.background}>
             <View style={profileStyles.credContainer}>
                 <View style={profileStyles.field}>
-                    <Text style={profileStyles.label}>Wallet Address</Text>
                     <View style={profileStyles.box}>
-                        <Text style={profileStyles.value}>{address.slice(0,7)}...{address.slice(address.length-7, address.length)}</Text>
-                        <TouchableOpacity onPress={() => {copyToClipboard(address)}}>
-                            <Octicons name="copy" size={24} color={Colors.BRIGHT_GREEN} />
-                        </TouchableOpacity>
+                        <Text style={profileStyles.boxLabel}>Wallet Address</Text>
+                        <View style={profileStyles.containerRightSide}>
+                            <Text style={profileStyles.value}>
+                                {address.slice(0,6)}...{address.slice(address.length-4, address.length)}
+                            </Text>
+                            <TouchableOpacity 
+                                onPress={() => {copyToClipboard(address)}}
+                                style={profileStyles.copyButton}
+                            >
+                                <Octicons name="copy" size={18} color={Colors.BRIGHT_GREEN} />
+                            </TouchableOpacity>
+                        </View>
                     </View>
                 </View>
 
                 <View style={profileStyles.field}>
-                    <Text style={profileStyles.label}>Secret</Text>
                     <View style={profileStyles.box}>
-                        <Text style={profileStyles.value}>{'*'.repeat(address.length)}</Text>
-                        <TouchableOpacity onPress={() => copyToClipboard(secretKey)}>
-                            <Octicons name="copy" size={24} color={Colors.BRIGHT_GREEN} />
-                        </TouchableOpacity>
+                        <Text style={profileStyles.boxLabel}>Secret Key</Text>
+                        <View style={profileStyles.containerRightSide}>
+                            <Text style={profileStyles.value}>{'*'.repeat(16)}</Text>
+                            <TouchableOpacity 
+                                onPress={() => copyToClipboard(secretKey)}
+                                style={profileStyles.copyButton}
+                            >
+                                <Octicons name="copy" size={18} color={Colors.BRIGHT_GREEN} />
+                            </TouchableOpacity>
+                        </View>
                     </View>
                 </View>
             </View>
@@ -78,7 +84,7 @@ export const Profile = () => {
             >
                 <Text style={profileStyles.signOutText}>Disconnect</Text>
             </TouchableOpacity>
-        </LinearGradient>
+        </View>
     );
 };
 

@@ -1,6 +1,7 @@
 export const enum Colors {
     WHITE = "#e5e7eb",
     BLACK = "#1b262c",
+    DARK_BLACK = "#000000",
     GRAY = "#303030",
     LIGHT_GRAY = "#949e9c",
     RED = "#d35a71",

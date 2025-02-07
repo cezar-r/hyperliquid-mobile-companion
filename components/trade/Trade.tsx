@@ -68,6 +68,7 @@ const Trade = ({ route, navigation }: any) => {
     
     useEffect(() => {
         const fetchLimitOrders = async () => {
+            // setSetLimitOrder(false);
             try {
                 if (!setLimitOrder) {
                     const orders = await getLimitOrderTpSlPrice(ticker);
@@ -151,8 +152,8 @@ const Trade = ({ route, navigation }: any) => {
             await saveLimitOrderToStorage(ticker, tpInput, true, tpResponse.message);
         }
 
-        if (isLong && slInput && Number(slInput) < Number(position.entryPx) ||
-            !isLong && slInput && Number(slInput) > Number(position.entryPx) 
+        if (isLong && slInput && Number(slInput) < Number(currentPrice) ||
+            !isLong && slInput && Number(slInput) > Number(currentPrice) 
         ) {
             if (slPrice !== '--') {
                 const cloid = await getLimitOrderCloid(ticker, false)
@@ -365,6 +366,7 @@ const Trade = ({ route, navigation }: any) => {
                 <Text style={tradeStyles.buyButtonText}>BUY / LONG</Text>
             </TouchableOpacity>
             </View>
+
             {isTpSlModalVisible && (
                 <View style={tradeStyles.modalContainer}>
                     <View style={tradeStyles.modalContent}>
@@ -435,8 +437,8 @@ const Trade = ({ route, navigation }: any) => {
                         <TouchableOpacity
                             style={tradeStyles.submitButton}
                             onPress={async () => {
-                            await submitNewTpSlOrders();
-                            setIsTpSlModalVisible(false);
+                                await submitNewTpSlOrders();
+                                setIsTpSlModalVisible(false);
                             }}
                         >
                             <Text style={tradeStyles.submitButtonText}>Confirm</Text>

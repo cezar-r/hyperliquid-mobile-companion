@@ -15,7 +15,9 @@ interface GlobalContextType {
     refreshData: () => Promise<void>;
 }
 
+
 const GlobalStateContext = createContext<GlobalContextType | undefined>(undefined);
+
 
 export const GlobalStateProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
     const [globalState, setGlobalState] = useState<GlobalState>({
@@ -44,10 +46,11 @@ export const GlobalStateProvider: React.FC<{ children: React.ReactNode }> = ({ c
         }
     };
 
+
     // Initial load and setup interval
     useEffect(() => {
         updateGlobalState();
-        const interval = setInterval(updateGlobalState, 3500);
+        const interval = setInterval(updateGlobalState, 4100);
         return () => clearInterval(interval);
     }, []);
 

@@ -1,5 +1,5 @@
 import React, { useState, useRef } from 'react';
-import { View, Text, TouchableOpacity, Switch, Platform } from 'react-native';
+import { View, Text, TouchableOpacity, Switch, Platform, ActivityIndicator } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { Ionicons } from '@expo/vector-icons';
 import ViewShot from 'react-native-view-shot';
@@ -21,6 +21,14 @@ const SharePosition = ({ route, navigation }: SharePositionScreenProps) => {
     const [fontsLoaded] = useFonts({
             'Teodor': require('../../assets/fonts/Teodor.otf'),
         });
+
+    if (!fontsLoaded) {
+        return (
+            <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+                <ActivityIndicator size="large" color={Colors.BRIGHT_GREEN} />
+            </View>
+        );
+    }
 
     const saveToGallery = async () => {
         if (!viewShotRef.current) {

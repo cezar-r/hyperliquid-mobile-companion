@@ -18,8 +18,8 @@ export const homeStyles = StyleSheet.create({
         color: Colors.WHITE,
         fontSize: 48,
         fontWeight: 'bold',
-        paddingTop: 18,
-        paddingBottom: 12,
+        paddingTop: 12,
+        paddingBottom: 6,
     },
     availableBalanceContainer: {
         flexDirection: 'row',
@@ -50,14 +50,14 @@ export const homeStyles = StyleSheet.create({
     positionCell: {
         // backgroundColor: Colors.DARK_GREEN,
         borderRadius: 5,
-        paddingHorizontal: 12,
-        paddingVertical: 8,
+        paddingHorizontal: 10,
+        paddingVertical: 7,
         marginBottom: 8,
         width: '100%',
         flexDirection: 'row',
         justifyContent: 'space-between',
-        borderWidth: 1,
-        borderColor: Colors.BRIGHT_GREEN,
+        borderWidth: 2,
+        borderColor: Colors.BLACK,
     },
     leftSide: {
         justifyContent: 'space-between',
@@ -68,13 +68,12 @@ export const homeStyles = StyleSheet.create({
     },
     ticker: {
         color: Colors.WHITE,
-        fontSize: 16,
+        fontSize: 17,
         fontWeight: 'bold',
-        marginBottom: 0,
     },
     size: {
-        color: Colors.WHITE,
-        fontSize: 13,
+        color: Colors.LIGHT_GRAY,
+        fontSize: 12,
     },
     leverage: {
         fontSize: 16,
@@ -82,13 +81,25 @@ export const homeStyles = StyleSheet.create({
         fontWeight: 'bold',
     },
     pnl: {
-        fontSize: 13,
+        fontSize: 12,
     },
     tickerContainer: {
         flexDirection: 'row',
         alignItems: 'center',
         gap: 8,
         marginBottom: 5,
+    },
+    
+    priceContainer: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        gap: 8,
+        marginBottom: 0,
+    },
+    priceChange: {
+        // backgroundColor: Colors.DARK_DARK_GREEN,
+        fontSize: 10,
+        marginTop: 2,
     },
     price: {
         color: Colors.WHITE,

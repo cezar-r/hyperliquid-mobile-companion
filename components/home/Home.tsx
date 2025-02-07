@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 
 import { View, Text, ScrollView, RefreshControl, Animated, TouchableOpacity,ActivityIndicator } from 'react-native';
-import { LinearGradient } from 'expo-linear-gradient';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useGlobalState } from '../../context/GlobalStateContext';
 import styles from "../../styles/constants";
 import homeStyles from "../../styles/home_page";
@@ -10,6 +10,7 @@ import * as Haptics from 'expo-haptics';
 import { deleteLimitOrder } from '../../services/delete_limit_order';
 
 import { closeOrder } from '../../services/hyperliquid/close_order.cjs';
+import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
 
 
 
@@ -20,6 +21,41 @@ export const Home = ({ navigation }: { navigation: any }) => {
     const [colorAnim] = useState(new Animated.Value(0));
     const [isIncrease, setIsIncrease] = useState<boolean | null>(null);
     const [isClosingAll, setIsClosingAll] = useState(false);
+    const [isBalanceHidden, setIsBalanceHidden] = useState(false);
+
+
+    useEffect(() => {
+        // Load balance visibility preference
+        const loadBalancePreference = async () => {
+            try {
+                const hidden = await AsyncStorage.getItem("balanceHidden");
+                setIsBalanceHidden(hidden === 'true');
+            } catch (error) {
+                console.error('Error loading balance preference:', error);
+            }
+        };
+        loadBalancePreference();
+    }, []);
+
+    const toggleBalanceVisibility = async () => {
+        const newValue = !isBalanceHidden;
+        setIsBalanceHidden(newValue);
+        try {
+            await AsyncStorage.setItem("balanceHidden", String(newValue));
+            await Haptics.impactAsync();
+        } catch (error) {
+            console.error('Error saving balance preference:', error);
+        }
+    };
+
+    const navigateToBalancePage = async () => {
+        if (!isBalanceHidden) {
+            await Haptics.impactAsync();
+            navigation.navigate('Balance');
+        }
+    };
+
+    const hiddenNumber = '******';
 
 
     const onRefresh = async () => {
@@ -63,7 +99,10 @@ export const Home = ({ navigation }: { navigation: any }) => {
 
     const balance = globalState.userState.perps.marginSummary.accountValue;
     const availableBalance = globalState.userState.perps.withdrawable;
-    const positions = globalState.userState.perps.assetPositions;
+    const positions = [...globalState.userState.perps.assetPositions].sort((a, b) => 
+        b.position.positionValue - a.position.positionValue
+    );
+
 
     const formatNumber = (num: number, maxDigits: number = 5) => {
         return Number(num).toLocaleString(undefined, {
@@ -76,7 +115,7 @@ export const Home = ({ navigation }: { navigation: any }) => {
     const getFontSize = (str: string) => {
         const length = str.length;
         const maxSize = 68;
-        const minSize = 32;
+        const minSize = 46;
         const maxLength = 15;
         const minLength = 5;
         
@@ -101,13 +140,14 @@ export const Home = ({ navigation }: { navigation: any }) => {
     });
 
     return (
-        <LinearGradient
-            colors={[Colors.DARK_DARK_GREEN, Colors.DARK_GREEN, Colors.GREEN]}
-            locations={[0, 0.5, .99]}
-            start={{ x: .5, y: 0 }}
-            end={{ x: .5, y: 1 }}
-            style={styles.background}
-        >
+        // <LinearGradient
+        //     colors={[Colors.DARK_DARK_GREEN, Colors.DARK_GREEN, Colors.GREEN]}
+        //     locations={[0, 0.5, .99]}
+        //     start={{ x: .5, y: 0 }}
+        //     end={{ x: .5, y: 1 }}
+        //     style={styles.background}
+        // >
+        <View style={styles.background}>
             <ScrollView 
                 style={homeStyles.scrollView}
                 showsVerticalScrollIndicator={false}
@@ -120,23 +160,27 @@ export const Home = ({ navigation }: { navigation: any }) => {
                     />
                 }
             >  
-                <View style={homeStyles.balanceContainer}>
-                        <Animated.Text style={[
-                            homeStyles.balanceAmount,
-                            { 
-                                fontSize: dynamicFontSize,
-                                color: textColor
-                            }
-                        ]}>${balanceString}</Animated.Text>
-
-                    </View>
+                <TouchableWithoutFeedback 
+                    style={homeStyles.balanceContainer}
+                    onPress={navigateToBalancePage}
+                    onLongPress={toggleBalanceVisibility}
+                    delayLongPress={400}
+                >
+                    <Animated.Text style={[
+                        homeStyles.balanceAmount,
+                        { 
+                            fontSize: dynamicFontSize,
+                            color: textColor
+                        }
+                    ]}>{isBalanceHidden ? hiddenNumber : "$" + balanceString}</Animated.Text>
+                </TouchableWithoutFeedback>
                 {/* Balance Section */}
                 {positions.length > 0 ? (
                     <>
                     <View style={{ flexDirection: 'row', justifyContent: 'space-between'}}>
                         <View style={homeStyles.availableBalanceContainer}>
                             <Text style={homeStyles.availableBalanceLabel}>USDC: </Text>
-                            <Text style={homeStyles.availableBalanceAmount}>${formatNumber(availableBalance, 2)}</Text>
+                            <Text style={homeStyles.availableBalanceAmount}>{isBalanceHidden ? hiddenNumber : "$"+formatNumber(availableBalance, 2)}</Text>
                         </View>
                         <View>
                         {isClosingAll ? (
@@ -184,6 +228,11 @@ export const Home = ({ navigation }: { navigation: any }) => {
                     const pnl = Number(position.unrealizedPnl);
                     const isLong = position.szi > 0;
                     const price = Number(globalState.perpsMeta?.perpsMeta[1][tickerIndex(ticker)].markPx);
+                    const prevDayPrice = Number(globalState.perpsMeta?.perpsMeta[1][tickerIndex(ticker)].prevDayPx);
+                    const price24Change = price-prevDayPrice;
+                    const price24ChangePct = (((price24Change)/prevDayPrice));
+                    const margin = position.marginUsed;
+                    const positionValue = formatNumber(Number(position.positionValue), 2);
 
                     return (
                         <TouchableOpacity
@@ -202,24 +251,31 @@ export const Home = ({ navigation }: { navigation: any }) => {
                                         { color: isLong ? Colors.BRIGHT_GREEN : Colors.RED }
                                     ]}>{leverage}x</Text>
                                 </View>
-                                <Text style={homeStyles.size}>{size + ' ' + ticker}</Text>
-                            </View>
+                                <View style={homeStyles.priceContainer}>
+                                    <Text style={homeStyles.size}>${formatNumber(price)}</Text>
+                                    <Text style={[
+                                                homeStyles.priceChange,
+                                                { color: price24ChangePct > 0 ? Colors.BRIGHT_GREEN : Colors.RED }
+                                            ]}>{price24ChangePct > 0 ? "+" : "-"}{formatPercent(Math.abs(price24ChangePct))}</Text>
+                                    </View>
+                                </View>
                             <View style={homeStyles.rightSide}>
-                                <Text style={homeStyles.price}>${formatNumber(price)}</Text>
+                                <Text style={homeStyles.price}>{isBalanceHidden ? hiddenNumber : "$" + positionValue}</Text>
                                 <Text style={[
                                     homeStyles.pnl,
                                     { 
-                                        color: pnl > 0 ? Colors.BRIGHT_GREEN : 
-                                            pnl < 0 ? Colors.RED : 
-                                            Colors.WHITE 
+                                        color: isBalanceHidden ? Colors.WHITE : 
+                                            pnl > 0 ? Colors.BRIGHT_GREEN : 
+                                                pnl < 0 ? Colors.RED : 
+                                                Colors.WHITE 
                                     }
-                                ]}>{pnl > 0 ? '+' : '-'}${formatNumber(Math.abs(pnl), 2)}</Text>
+                                ]}>{isBalanceHidden ? hiddenNumber : pnl > 0 ? '+' : '-'}{isBalanceHidden ? "" : "$" + formatNumber(Math.abs(pnl), 2)}</Text>
                             </View>
                         </TouchableOpacity>
                     );
                 })}
             </ScrollView>
-        </LinearGradient>
+        </View>
     );
 };
 

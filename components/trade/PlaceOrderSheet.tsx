@@ -70,7 +70,7 @@ const PlaceOrderSheet: React.FC<PlaceOrderSheetProps> = ({
       if (visible) {
           dragY.setValue(0);
       }
-  }, [visible]);
+    }, [visible]);
     
     const toggleCrossMargin = async (value: boolean) => {
         setIsCross(value);
@@ -169,18 +169,18 @@ const PlaceOrderSheet: React.FC<PlaceOrderSheetProps> = ({
         const orderResponse = await placeOrder(ticker, isBuy, orderSize, leverage, isCross);
         setIsPlacing(false);
         if (orderResponse.status_code === 200) {
-            if (takeProfitPrice !== null && (
+            if (takeProfitPrice !== '' && (
                 isBuy && Number(takeProfitPrice) > currentPrice ||
                 !isBuy && Number(takeProfitPrice) < currentPrice
             )) {
-                const tpResponse = await limitTpOrSlOrder(ticker, takeProfitPrice, isBuy, orderSize, true);
+                const tpResponse = await limitTpOrSlOrder(ticker, Number(takeProfitPrice), isBuy, Number(orderSize), true);
                 await saveLimitOrderToStorage(ticker, takeProfitPrice, true, tpResponse.message);
             } 
-            if (stopLossPrice !== null && (
+            if (stopLossPrice !== '' && (
                 isBuy && Number(stopLossPrice) < currentPrice ||
                 !isBuy && Number(stopLossPrice) > currentPrice
             )) {
-                const slResponse = await limitTpOrSlOrder(ticker, stopLossPrice, isBuy, orderSize, false);
+                const slResponse = await limitTpOrSlOrder(ticker, Number(stopLossPrice), isBuy, Number(orderSize), false);
                 await saveLimitOrderToStorage(ticker, stopLossPrice, false, slResponse.message);
             }
             await Haptics.notificationAsync(

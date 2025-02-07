@@ -13,5 +13,6 @@ export const getUserState = async () => {
     return {
         perps: await sdk.info.perpetuals.getClearinghouseState(address, true),
         spot: await sdk.info.spot.getSpotClearinghouseState(address, true),
-    }
+        // historicalOrders: await sdk.info.getHistoricalOrders(address, true)
+    };
 }

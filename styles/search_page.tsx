@@ -28,42 +28,53 @@ export const searchStyles = StyleSheet.create({
         paddingHorizontal: 20,
     },
     sectionTitle: {
-        color: Colors.WHITE,
-        fontSize: 14,
-        marginBottom: 8,
+        color: Colors.LIGHT_GRAY,
+        fontSize: 15,
+        marginBottom: 1,
         marginTop: 8,
     },
     tickerCell: {
         flexDirection: 'row',
         justifyContent: 'space-between',
         alignItems: 'center',
-        backgroundColor: Colors.BLACK,
-        padding: 15,
+        paddingHorizontal: 8,
         width: '100%',
-        marginBottom: 10,
-        borderRadius: 5,
-        // borderWidth: 1,
-        // borderColor: Colors.WHITE,
+        marginBottom: 20,
+    },
+    leverage: {
+        fontSize: 15,
+        marginBottom: 0,
+        fontWeight: 'bold',
     },
     tickerInfo: {
         flexDirection: 'row',
         alignItems: 'center',
     },
+    tickerContainer: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        gap: 8,
+        marginBottom: 5,
+    },
     tickerSymbol: {
-        color: Colors.BRIGHT_GREEN,
-        fontSize: 16,
-        fontWeight: 'bold',
+        color: Colors.WHITE,
+        fontSize: 15,
+        fontWeight: 600,
     },
     tickerPrice: {
         color: Colors.BRIGHT_GREEN,
-        fontSize: 16,
+        fontSize: 15,
     },
     recentHeaderContainer: {
         flexDirection: 'row',
         justifyContent: 'space-between',
         alignItems: 'center',
         paddingRight: 10,
+        marginBottom: 16,
     },
+    searchResultContainer: {
+        marginTop: 10,
+    }
 });
 
 export default searchStyles;

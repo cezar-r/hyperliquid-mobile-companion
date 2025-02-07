@@ -3,6 +3,7 @@ import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
 export type RootStackParamList = {
   TabNavigator: undefined;
   Trade: { ticker: string };
+  Balance: undefined;
   SharePosition: {
     ticker: string;
     entryPrice: number;
