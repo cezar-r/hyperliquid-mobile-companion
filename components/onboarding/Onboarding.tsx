@@ -6,10 +6,6 @@ import {
 } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import * as Clipboard from 'expo-clipboard';
-
-import { useGlobalState } from '../../context/GlobalStateContext';
-import styles from "../../styles/onboarding";
-import { lightHaptic, successHaptic } from "../common/HapticTypes"
 import {
     InputFieldWithPaste,
     Logo,
@@ -17,8 +13,11 @@ import {
     ConnectButton
 } from './components';
 
+import styles from "../../styles/onboarding";
+import { useGlobalState } from '../../context/GlobalStateContext';
+import { lightHaptic, successHaptic } from "../common/HapticTypes"
 import { isFormValid } from './helpers';
-import { InputFieldLabels } from './constants';
+import { FieldLabels } from '../../common/constants';
 import { LocalStorageKey, PageName } from '../../common/constants';
 
 const Onboarding = ({navigation}: {navigation: any}) => {
@@ -61,14 +60,14 @@ const Onboarding = ({navigation}: {navigation: any}) => {
                 <Logo />
 
                 <InputFieldWithPaste 
-                    placeholderText={InputFieldLabels.WALLET}
+                    placeholderText={FieldLabels.WALLET_ADDRESS}
                     value={address}
                     setValue={setAddress}
                     onPastePress={() => handlePaste(LocalStorageKey.ADDRESS)}
                 />
 
                 <InputFieldWithPaste 
-                    placeholderText={InputFieldLabels.SECRET}
+                    placeholderText={FieldLabels.SECRET_KEY}
                     value={secretKey}
                     setValue={setSecretKey}
                     onPastePress={() => handlePaste(LocalStorageKey.SECRET)}

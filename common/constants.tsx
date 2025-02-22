@@ -25,5 +25,11 @@ export enum LocalStorageKey {
 
 export enum PageName {
     MAIN_APP_PAGE = "MainApp",
-    SPLASH_PAGE = "Splash"
+    SPLASH_PAGE = "Splash",
+    ONBOARDING = "Onboarding"
+}
+
+export enum FieldLabels {
+    WALLET_ADDRESS = "Wallet Address",
+    SECRET_KEY = "Secret Key"
 }

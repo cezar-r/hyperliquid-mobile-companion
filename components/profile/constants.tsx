@@ -1,0 +1,6 @@
+export const DISCONNECT_BUTTON_TEXT = "Disconnect";
+export const NUM_CHARS_REVEALED_ADDRESS = 4;
+
+export const SECRET_KEY_VALUE_LENGTH = 24;
+export const SECRET_VALUE_CHAR = '*';
+export const SECRET_KEY_VALUE = SECRET_VALUE_CHAR.repeat(SECRET_KEY_VALUE_LENGTH);

@@ -1,14 +1,17 @@
 import React, {useState, useEffect } from 'react';
-import { View, Text, TouchableOpacity } from 'react-native';
-import { LinearGradient } from 'expo-linear-gradient';
+import { View } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import Octicons from '@expo/vector-icons/Octicons';
 import * as Clipboard from 'expo-clipboard';
 import { useNavigation } from '@react-navigation/native';
-import profileStyles from "../../styles/profile_page";
 import * as Haptics from 'expo-haptics';
 
-import { Colors } from '../../styles/colors';
+import styles from "../../styles/profile_page";
+import { lightHaptic } from '../common/HapticTypes';
+import { CredentialField } from './components/CredentialField';
+import { DisonnectButton } from './components/DisconnetButton';
+import { SECRET_KEY_VALUE } from './constants';
+import { FieldLabels, LocalStorageKey, PageName } from '../../common/constants';
+import { trimAddress } from './helpers';
 
 export const Profile = () => {
     const [address, setAddress] = useState('');
@@ -20,69 +23,44 @@ export const Profile = () => {
     }, []);
 
     const loadData = async () => {
-        const storedAddress = await AsyncStorage.getItem('address');
-        const storedSecret = await AsyncStorage.getItem('secretKey');
+        const storedAddress = await AsyncStorage.getItem(LocalStorageKey.ADDRESS);
+        const storedSecret = await AsyncStorage.getItem(LocalStorageKey.SECRET);
         setAddress(storedAddress || '');
         setSecretKey(storedSecret || '');
     };
 
     const copyToClipboard = async (text: string) => {
         await Clipboard.setStringAsync(text);
-        Haptics.impactAsync(
-            Haptics.ImpactFeedbackStyle.Light
-        );
+        await lightHaptic();
     };
 
     const handleSignOut = async () => {
-        await AsyncStorage.multiRemove(['address', 'secretKey']);
+        await AsyncStorage.multiRemove([LocalStorageKey.ADDRESS, LocalStorageKey.SECRET]);
         navigation.reset({
             index: 0,
-            routes: [{ name: 'Onboarding' as never }],
+            routes: [{ name: PageName.ONBOARDING as never }],
         });
     };
 
     return (
-        <View style={profileStyles.background}>
-            <View style={profileStyles.credContainer}>
-                <View style={profileStyles.field}>
-                    <View style={profileStyles.box}>
-                        <Text style={profileStyles.boxLabel}>Wallet Address</Text>
-                        <View style={profileStyles.containerRightSide}>
-                            <Text style={profileStyles.value}>
-                                {address.slice(0,6)}...{address.slice(address.length-4, address.length)}
-                            </Text>
-                            <TouchableOpacity 
-                                onPress={() => {copyToClipboard(address)}}
-                                style={profileStyles.copyButton}
-                            >
-                                <Octicons name="copy" size={18} color={Colors.BRIGHT_GREEN} />
-                            </TouchableOpacity>
-                        </View>
-                    </View>
-                </View>
+        <View style={styles.background}>
+            <View style={styles.credContainer}>
+                <CredentialField
+                    onPress={() => {copyToClipboard(address)}}
+                    label={FieldLabels.WALLET_ADDRESS}
+                    value={trimAddress(address)}
+                />
 
-                <View style={profileStyles.field}>
-                    <View style={profileStyles.box}>
-                        <Text style={profileStyles.boxLabel}>Secret Key</Text>
-                        <View style={profileStyles.containerRightSide}>
-                            <Text style={profileStyles.value}>{'*'.repeat(16)}</Text>
-                            <TouchableOpacity 
-                                onPress={() => copyToClipboard(secretKey)}
-                                style={profileStyles.copyButton}
-                            >
-                                <Octicons name="copy" size={18} color={Colors.BRIGHT_GREEN} />
-                            </TouchableOpacity>
-                        </View>
-                    </View>
-                </View>
+                <CredentialField
+                    onPress={() => {copyToClipboard(secretKey)}}
+                    label={FieldLabels.SECRET_KEY}
+                    value={SECRET_KEY_VALUE}
+                />
             </View>
 
-            <TouchableOpacity 
-                style={profileStyles.signOutButton} 
-                onPress={handleSignOut}
-            >
-                <Text style={profileStyles.signOutText}>Disconnect</Text>
-            </TouchableOpacity>
+            < DisonnectButton 
+                handleSignOut={handleSignOut}
+            />
         </View>
     );
 };
