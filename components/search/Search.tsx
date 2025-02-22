@@ -13,7 +13,6 @@ import { Ionicons } from '@expo/vector-icons';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useGlobalState } from '../../context/GlobalStateContext';
 import { TickerData } from "../../common/types";
-import styles from "../../styles/constants";
 import searchStyles from "../../styles/search_page";
 import { Colors } from "../../styles/colors";
 import { AssetCtx } from 'hyperliquid/dist';
@@ -116,7 +115,7 @@ export const Search = ({ navigation }: { navigation: any }) => {
 
     return (
         <View
-            style={styles.background}
+            style={searchStyles.background}
         >
             <View style={searchStyles.searchBarContainer}>
                 <Ionicons name="search" size={20} color={Colors.BRIGHT_GREEN} style={searchStyles.searchIcon} />

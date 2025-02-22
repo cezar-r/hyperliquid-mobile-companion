@@ -5,7 +5,6 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import Octicons from '@expo/vector-icons/Octicons';
 import * as Clipboard from 'expo-clipboard';
 import { useNavigation } from '@react-navigation/native';
-import styles from "../../styles/constants";
 import profileStyles from "../../styles/profile_page";
 import * as Haptics from 'expo-haptics';
 

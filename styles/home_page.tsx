@@ -4,6 +4,12 @@ import { Colors } from "./colors";
 import { NAVBAR_HEIGHT } from '../common/constants';
 
 export const homeStyles = StyleSheet.create({
+    background: {
+        flex: 1,
+        backgroundColor: Colors.DARK_DARK_GREEN,
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
     balanceContainer: {
         alignItems: 'center',
         paddingTop: 20,

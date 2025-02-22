@@ -1,6 +1,6 @@
 import React from 'react';
 import { View, Text } from 'react-native';
-import styles from "../../styles/constants";
+import styles from "../../styles/onboarding";
 
 export const Feed = () => (
     <View

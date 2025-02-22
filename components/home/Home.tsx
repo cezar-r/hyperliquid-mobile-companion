@@ -3,7 +3,6 @@ import React, { useState, useEffect } from 'react';
 import { View, Text, ScrollView, RefreshControl, Animated, TouchableOpacity,ActivityIndicator } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useGlobalState } from '../../context/GlobalStateContext';
-import styles from "../../styles/constants";
 import homeStyles from "../../styles/home_page";
 import Colors from "../../styles/colors";
 import * as Haptics from 'expo-haptics';
@@ -147,7 +146,7 @@ export const Home = ({ navigation }: { navigation: any }) => {
         //     end={{ x: .5, y: 1 }}
         //     style={styles.background}
         // >
-        <View style={styles.background}>
+        <View style={homeStyles.background}>
             <ScrollView 
                 style={homeStyles.scrollView}
                 showsVerticalScrollIndicator={false}

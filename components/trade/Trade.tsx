@@ -341,30 +341,30 @@ const Trade = ({ route, navigation }: any) => {
     
             {/* Trade Buttons */}
             <View style={tradeStyles.buttonContainer}>
-            <TouchableOpacity 
-                style={[tradeStyles.button, { backgroundColor: Colors.RED }]}
-                onPress={async () => {
-                    await Haptics.impactAsync(
-                        Haptics.ImpactFeedbackStyle.Medium
-                    );
-                    setIsBuyOrder(false);
-                    setIsOrderSheetVisible(true);
-                }}
-                >
-                <Text style={tradeStyles.sellButtonText}>SELL / SHORT</Text>
-            </TouchableOpacity>
-            <TouchableOpacity 
-                style={[tradeStyles.button, { backgroundColor: Colors.BRIGHT_GREEN }]}
-                onPress={async () => {
-                    await Haptics.impactAsync(
-                        Haptics.ImpactFeedbackStyle.Medium
-                    );
-                    setIsBuyOrder(true);
-                    setIsOrderSheetVisible(true);
-                }}
-                >
-                <Text style={tradeStyles.buyButtonText}>BUY / LONG</Text>
-            </TouchableOpacity>
+                <TouchableOpacity 
+                    style={[tradeStyles.button, { backgroundColor: Colors.RED }]}
+                    onPress={async () => {
+                        await Haptics.impactAsync(
+                            Haptics.ImpactFeedbackStyle.Medium
+                        );
+                        setIsBuyOrder(false);
+                        setIsOrderSheetVisible(true);
+                    }}
+                    >
+                    <Text style={tradeStyles.sellButtonText}>SELL / SHORT</Text>
+                </TouchableOpacity>
+                <TouchableOpacity 
+                    style={[tradeStyles.button, { backgroundColor: Colors.BRIGHT_GREEN }]}
+                    onPress={async () => {
+                        await Haptics.impactAsync(
+                            Haptics.ImpactFeedbackStyle.Medium
+                        );
+                        setIsBuyOrder(true);
+                        setIsOrderSheetVisible(true);
+                    }}
+                    >
+                    <Text style={tradeStyles.buyButtonText}>BUY / LONG</Text>
+                </TouchableOpacity>
             </View>
 
             {isTpSlModalVisible && (

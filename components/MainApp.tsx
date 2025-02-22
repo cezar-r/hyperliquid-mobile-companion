@@ -15,7 +15,7 @@ import Profile from './profile/Profile';
 import SharePosition from './trade/SharePosition';
 import { Colors } from '../styles/colors';
 import { NAVBAR_HEIGHT } from '../common/constants';
-import { styles } from "../styles/constants";
+import { styles } from "../styles/main_app";
 import { RootStackParamList } from './navigation';
 import Balance from './home/Balance';
 import History from './history/History';

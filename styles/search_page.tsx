@@ -2,6 +2,12 @@ import { StyleSheet } from 'react-native';
 import { Colors } from "./colors";
 
 export const searchStyles = StyleSheet.create({
+    background: {
+        flex: 1,
+        backgroundColor: Colors.DARK_DARK_GREEN,
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
     searchBarContainer: {
         flexDirection: 'row',
         alignItems: 'center',

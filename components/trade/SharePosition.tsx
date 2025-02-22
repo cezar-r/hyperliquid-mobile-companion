@@ -11,7 +11,6 @@ import { RootStackParamList } from '../navigation';
 import { useFonts } from 'expo-font';
 
 
-
 type SharePositionScreenProps = NativeStackScreenProps<RootStackParamList, 'SharePosition'>;
 
 const SharePosition = ({ route, navigation }: SharePositionScreenProps) => {
