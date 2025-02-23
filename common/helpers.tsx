@@ -14,3 +14,17 @@ export const getTickerUniverseIndex = (ticker: string, universe: []) => {
         (asset: any) => asset.name === ticker
     );
 }
+
+export const calculateProfitLoss = (price: string, isTp: boolean, position: any) => {
+    if (!position || !Number(position.entryPx) || !price) return { percent: 0, value: 0 };
+    const priceNum = Number(price);
+    const size = Math.abs(Number(position.szi));
+    const percent = ((priceNum - Number(position.entryPx)) / Number(position.entryPx)) * 100 * position.leverage.value;
+    const value = (priceNum - Number(position.entryPx)) * size;
+    const isLong = Number(position.szi) > 0;
+
+    return { 
+      percent: isLong ? percent : -percent,
+      value: isLong ? value : -value
+    };
+};

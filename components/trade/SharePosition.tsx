@@ -106,7 +106,6 @@ const SharePosition = ({ route, navigation }: SharePositionScreenProps) => {
                 >
                     <View style={{ 
                         alignItems: 'flex-start',
-                        // justifyContent: 'center' ,
                         flex: 1,
                         backgroundColor: 'transparent'  // Important
                     }}>
@@ -120,7 +119,6 @@ const SharePosition = ({ route, navigation }: SharePositionScreenProps) => {
                                 fontSize: 30,
                                 color: Colors.WHITE,  // Use explicit white instead of Colors.WHITE
                                 fontWeight: 500,
-                                // marginBottom: 10,
                             }}>{ticker}</Text>
 
                             <View style={{
@@ -143,7 +141,6 @@ const SharePosition = ({ route, navigation }: SharePositionScreenProps) => {
                         <Text style={{ 
                             fontSize: 80,
                             color: pnlPercent >= 0 ? Colors.BRIGHT_GREEN : Colors.RED,
-                            // fontWeight: 'bold',
                             fontFamily: 'Teodor',
                             marginBottom: 30
                         }}>{showDollarPnl ? pnlStr : pnlPctStr}</Text>

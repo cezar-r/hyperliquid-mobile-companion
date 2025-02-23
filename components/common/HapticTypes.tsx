@@ -4,6 +4,10 @@ export const lightHaptic = async () => {
     await Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
 }
 
+export const mediumHaptic = async () => {
+    await Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
+}
+
 export const defaultHaptic = async () => {
     await Haptics.impactAsync();
 }

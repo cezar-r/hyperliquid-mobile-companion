@@ -54,6 +54,17 @@ const tradeStyles = StyleSheet.create({
         // borderBottomWidth: 1,
         // borderBottomColor: Colors.GRAY,
     },
+    positionHeader: {
+        flexDirection: 'row', 
+        alignItems: 'center', 
+        paddingHorizontal: 9,
+        paddingVertical: 8,
+        backgroundColor: Colors.DARK_GREEN,
+        borderRadius: 8,
+        marginRight: 16,
+        marginTop: 30,
+        marginBottom: 4,
+    },
     divider: {
         flexDirection: 'row',
         justifyContent: 'space-between',
