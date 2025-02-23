@@ -20,6 +20,7 @@ export const searchStyles = StyleSheet.create({
     },
     searchIcon: {
         marginRight: 10,
+        color: Colors.BRIGHT_GREEN,
     },
     searchInput: {
         flex: 1,
@@ -29,28 +30,38 @@ export const searchStyles = StyleSheet.create({
     },
     clearButton: {
         padding: 8,
+        color: Colors.BRIGHT_GREEN,
     },
     resultsContainer: {
-        paddingHorizontal: 20,
+        paddingHorizontal: 16,
+        marginBottom: 80,
     },
     sectionTitle: {
         color: Colors.LIGHT_GRAY,
         fontSize: 15,
-        marginBottom: 1,
         marginTop: 8,
+        marginBottom: 8,
     },
     tickerCell: {
         flexDirection: 'row',
         justifyContent: 'space-between',
         alignItems: 'center',
-        paddingHorizontal: 8,
+        paddingHorizontal: 4,
         width: '100%',
-        marginBottom: 20,
+        paddingBottom: 14,
+        paddingTop: 14,
+        backgroundColor: Colors.DARK_DARK_GREEN
+    },
+    separator: {
+        borderBottomColor: Colors.BLACK,
+        borderBottomWidth: 1,
+        width: '100%'
     },
     leverage: {
         fontSize: 15,
         marginBottom: 0,
         fontWeight: 'bold',
+        color: Colors.BRIGHT_GREEN
     },
     tickerInfo: {
         flexDirection: 'row',
@@ -59,7 +70,7 @@ export const searchStyles = StyleSheet.create({
     tickerContainer: {
         flexDirection: 'row',
         alignItems: 'center',
-        gap: 8,
+        gap: 6,
         marginBottom: 5,
     },
     tickerSymbol: {
@@ -68,18 +79,23 @@ export const searchStyles = StyleSheet.create({
         fontWeight: 600,
     },
     tickerPrice: {
-        color: Colors.BRIGHT_GREEN,
+        color: Colors.WHITE,
         fontSize: 15,
+        fontWeight: 600,
+        marginRight: 2
+    },
+    pctChange: {
+        fontSize: 12,
+        marginTop: 4,
     },
     recentHeaderContainer: {
         flexDirection: 'row',
         justifyContent: 'space-between',
         alignItems: 'center',
         paddingRight: 10,
-        marginBottom: 16,
     },
     searchResultContainer: {
-        marginTop: 10,
+        marginTop: 26,
     }
 });
 

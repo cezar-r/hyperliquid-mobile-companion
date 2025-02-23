@@ -1,38 +1,56 @@
-/**
- * 
- * <ScrollView 
-                style={searchStyles.resultsContainer}
-                keyboardShouldPersistTaps="handled"  // This allows interaction with items while keyboard is open
-            >
-                {searchQuery === '' ? (
-                    <>
-                        <View style={searchStyles.recentHeaderContainer}>
-                            <Text style={searchStyles.sectionTitle}>Recent Searches</Text>
-                            {recentSearches.length > 0 && (
-                                <TouchableOpacity 
-                                    onPress={async () => {
-                                        await AsyncStorage.removeItem('recentSearches');
-                                        setRecentSearches([]);
-                                    }}
-                                >
-                                    <AntDesign name="closecircle" size={15} color={Colors.LIGHT_GRAY} />
-                                </TouchableOpacity>
-                            )}
-                        </View>
-                       
-                            {recentSearches.map(ticker => {
-                                const tickerData = perpsTickerList.find(item => item.ticker === ticker);
-                                if (tickerData) {
-                                    return renderTickerCell(tickerData);
-                                }
-                                return null;
-                            })}
-              
-                    </>
-                ) : (
-                    <View style={searchStyles.searchResultContainer}>
-                        {getFilteredTickers().map(item => renderTickerCell(item))}
-                    </View>
-                )}
-            </ScrollView>
- */
+import { View, Text, ScrollView } from "react-native";
+
+import styles from "../../../styles/search_page";
+import { TickerData } from "../../../common/types";
+import { getFilteredTickers } from "../helpers";
+import { RecentSearchesHeader } from "./RecentSearchesHeader";
+import { NO_RESULTS_LABEL } from "../constants";
+
+interface ResultViewProps {
+    searchQuery: string,
+    recentSearches: string[],
+    perpsTickerList: TickerData[],
+    onClearRecentSearchesPress: () => void,
+    renderTickerCell: (tickerData: TickerData) => React.JSX.Element,
+}
+
+export const ResultView: React.FC<ResultViewProps> = ({
+    searchQuery,
+    recentSearches,
+    perpsTickerList,
+    onClearRecentSearchesPress,
+    renderTickerCell,
+}) => {
+    return (
+        <ScrollView 
+            style={styles.resultsContainer}
+            keyboardShouldPersistTaps="handled"  // this allows interaction with items while keyboard is open
+        >
+            {searchQuery === '' ? (
+                <View>
+                    <RecentSearchesHeader
+                        hasRecentSearches={recentSearches.length > 0}
+                        onClearRecentSearchesPress={onClearRecentSearchesPress}
+                    />
+                    
+                    {recentSearches.map(ticker => {
+                        const tickerData = perpsTickerList.find(item => item.ticker === ticker);
+                        if (tickerData) {
+                            return <View key={ticker}>{renderTickerCell(tickerData)}</View>;
+                        }
+                        return null;
+                    })}
+            
+                </View>
+            ) : getFilteredTickers(searchQuery, perpsTickerList).length === 0 ? (
+                <Text style={styles.sectionTitle}>{NO_RESULTS_LABEL}</Text>
+            ) : (
+                <View>
+                    {getFilteredTickers(searchQuery, perpsTickerList).map(item => (
+                        <View key={item.ticker}>{renderTickerCell(item)}</View>
+                    ))}
+                </View>
+            )}
+        </ScrollView>
+    );
+}

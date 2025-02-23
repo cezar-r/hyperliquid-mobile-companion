@@ -1,22 +1,16 @@
 import React, { useState, useEffect } from 'react';
 import { 
     View, 
-    Text, 
-    TextInput, 
-    TouchableOpacity, 
-    ScrollView, 
-    TouchableWithoutFeedback, 
     Keyboard 
 } from 'react-native';
-import { LinearGradient } from 'expo-linear-gradient';
-import { Ionicons } from '@expo/vector-icons';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { useGlobalState } from '../../context/GlobalStateContext';
-import { TickerData } from "../../common/types";
-import searchStyles from "../../styles/search_page";
-import { Colors } from "../../styles/colors";
 import { AssetCtx } from 'hyperliquid/dist';
-import AntDesign from '@expo/vector-icons/AntDesign';
+
+import styles from "../../styles/search_page";
+import { LocalStorageKey, PageName } from '../../common/constants';
+import { TickerData } from "../../common/types";
+import { useGlobalState } from '../../context/GlobalStateContext';
+import { SearchBar, TickerCell, ResultView } from "./components";
 
 export const Search = ({ navigation }: { navigation: any }) => {
     const { globalState } = useGlobalState();
@@ -29,21 +23,24 @@ export const Search = ({ navigation }: { navigation: any }) => {
             const tickers: TickerData[] = [];
             for (let index = 0; index < globalState.perpsMeta.perpsMeta[0].universe.length; index++) {
                 const tickerObj = globalState.perpsMeta.perpsMeta[0].universe[index];
+                const tickerPerpsData: AssetCtx = globalState.perpsMeta.perpsMeta[1][index] as unknown as AssetCtx
                 tickers.push({
                     maxLev: Number(tickerObj.maxLeverage),
-                    volume24h: Number((globalState.perpsMeta.perpsMeta[1][index] as unknown as AssetCtx).dayNtlVlm),
+                    volume24h: Number(tickerPerpsData.dayNtlVlm),
                     ticker: tickerObj.name,
                     szDecimals: Number(tickerObj.szDecimals),
-                    price: Number((globalState.perpsMeta.perpsMeta[1][index] as unknown as AssetCtx).markPx)
+                    price: Number(tickerPerpsData.markPx),
+                    funding: Number(tickerPerpsData.funding),
+                    prevDayPx: Number(tickerPerpsData.prevDayPx)
                 });
             }
             setPerpsTickerList(tickers);
         }
-    }
+    };
 
     const loadRecentSearches = async () => {
         try {
-            const searches = await AsyncStorage.getItem('recentSearches');
+            const searches = await AsyncStorage.getItem(LocalStorageKey.RECENT_SEARCHES);
             if (searches) {
                 setRecentSearches(JSON.parse(searches));
             }
@@ -57,14 +54,13 @@ export const Search = ({ navigation }: { navigation: any }) => {
             const updatedSearches = [
                 ticker,
                 ...recentSearches.filter(t => t !== ticker)
-            ].slice(0, 20); // Keep only last 10 searches
+            ].slice(0, 20);
             setRecentSearches(updatedSearches);
-            await AsyncStorage.setItem('recentSearches', JSON.stringify(updatedSearches));
+            await AsyncStorage.setItem(LocalStorageKey.RECENT_SEARCHES, JSON.stringify(updatedSearches));
         } catch (error) {
             return;
         }
     };
-
 
     useEffect(() => {
         loadRecentSearches();
@@ -74,104 +70,43 @@ export const Search = ({ navigation }: { navigation: any }) => {
         updateTickerList();
     }, [globalState.perpsMeta]);
 
-    const formatNumber = (num: number) => {
-        return Number(num).toLocaleString(undefined, {
-            minimumFractionDigits: 2,
-            maximumFractionDigits: 2
-        });
+    const renderTickerCell = (item: TickerData) => {
+        return (
+            <React.Fragment key={item.ticker}>
+                <TickerCell
+                    item={item}
+                    onPress={() => {
+                        addToRecentSearches(item.ticker);
+                        navigation.navigate(PageName.TRADE, { ticker: item.ticker });
+                    }}
+                />
+            </React.Fragment>
+        );
     };
-
-    const getFilteredTickers = () => {
-        if (!searchQuery) return [];
-        return perpsTickerList
-            .filter(item => item.ticker.toLowerCase().startsWith(searchQuery.toLowerCase()))
-            .sort((a, b) => b.volume24h - a.volume24h);
-    };
-
-    const renderTickerCell = (item: any) => (
-        <TouchableOpacity 
-            key={item.ticker}
-            style={searchStyles.tickerCell}
-            onPress={() => {
-                addToRecentSearches(item.ticker);
-                navigation.navigate('Trade', { ticker: item.ticker });
-            }}
-        >
-            <View style={searchStyles.tickerContainer}>
-                <Text style={searchStyles.tickerSymbol}>{item.ticker}</Text>
-                <Text style={[
-                    searchStyles.leverage,
-                    { color: Colors.BRIGHT_GREEN  }
-                ]}>{item.maxLev}x</Text>
-            </View>
-            {/* <View style={searchStyles.tickerInfo}>
-                <Text style={searchStyles.tickerSymbol}>{item.ticker}</Text>
-            </View> */}
-            <Text style={searchStyles.tickerPrice}>${formatNumber(item.price)}</Text>
-        </TouchableOpacity>
-    );
 
     if (!globalState.perpsMeta) return null;
 
     return (
-        <View
-            style={searchStyles.background}
-        >
-            <View style={searchStyles.searchBarContainer}>
-                <Ionicons name="search" size={20} color={Colors.BRIGHT_GREEN} style={searchStyles.searchIcon} />
-                <TextInput
-                    style={searchStyles.searchInput}
-                    value={searchQuery}
-                    onChangeText={setSearchQuery}
-                />
-                {searchQuery.length > 0 && (
-                    <TouchableOpacity 
-                        onPress={() => {
-                            Keyboard.dismiss();
-                            setSearchQuery('');
-                        }}
-                        style={searchStyles.clearButton}
-                    >
-                        <AntDesign name="close" size={20} color={Colors.BRIGHT_GREEN} />
-                    </TouchableOpacity>
-                )}
-            </View>
+        <View style={styles.background}>
+            <SearchBar
+                searchQuery={searchQuery}
+                onChangeText={setSearchQuery}
+                onCloseSearch={() => {
+                    Keyboard.dismiss();
+                    setSearchQuery('');
+                }}
+            />
 
-            <ScrollView 
-                style={searchStyles.resultsContainer}
-                keyboardShouldPersistTaps="handled"  // This allows interaction with items while keyboard is open
-            >
-                {searchQuery === '' ? (
-                    <>
-                        <View style={searchStyles.recentHeaderContainer}>
-                            <Text style={searchStyles.sectionTitle}>Recent Searches</Text>
-                            {recentSearches.length > 0 && (
-                                <TouchableOpacity 
-                                    onPress={async () => {
-                                        await AsyncStorage.removeItem('recentSearches');
-                                        setRecentSearches([]);
-                                    }}
-                                >
-                                    <AntDesign name="closecircle" size={15} color={Colors.LIGHT_GRAY} />
-                                </TouchableOpacity>
-                            )}
-                        </View>
-                       
-                            {recentSearches.map(ticker => {
-                                const tickerData = perpsTickerList.find(item => item.ticker === ticker);
-                                if (tickerData) {
-                                    return renderTickerCell(tickerData);
-                                }
-                                return null;
-                            })}
-              
-                    </>
-                ) : (
-                    <View style={searchStyles.searchResultContainer}>
-                        {getFilteredTickers().map(item => renderTickerCell(item))}
-                    </View>
-                )}
-            </ScrollView>
+            <ResultView
+                searchQuery={searchQuery}
+                recentSearches={recentSearches}
+                perpsTickerList={perpsTickerList}
+                onClearRecentSearchesPress={async () => {
+                    await AsyncStorage.removeItem(LocalStorageKey.RECENT_SEARCHES);
+                    setRecentSearches([]);
+                }}
+                renderTickerCell={renderTickerCell}
+            />
         </View>
     );
 }

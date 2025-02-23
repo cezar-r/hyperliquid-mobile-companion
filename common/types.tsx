@@ -13,4 +13,6 @@ export interface TickerData {
     ticker: string;
     szDecimals: number;
     price: number;
+    funding: number;
+    prevDayPx: number;
 }
