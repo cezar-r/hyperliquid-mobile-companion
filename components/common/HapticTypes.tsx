@@ -1,8 +1,15 @@
 import * as Haptics from 'expo-haptics';
 
-
 export const lightHaptic = async () => {
     await Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
+}
+
+export const defaultHaptic = async () => {
+    await Haptics.impactAsync();
+}
+
+export const selectionHaptic = async () => {
+    await Haptics.selectionAsync();
 }
 
 export const successHaptic = async() => {

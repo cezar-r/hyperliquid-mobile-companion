@@ -21,7 +21,8 @@ export const GIF_LOGO = {
 export enum LocalStorageKey {
     ADDRESS = "address",
     SECRET = "secretKey",
-    RECENT_SEARCHES = 'recentSearches',
+    RECENT_SEARCHES = "recentSearches",
+    BALANCE_HIDDEN = "balanceHidden",
 }
 
 export enum PageName {
@@ -29,6 +30,7 @@ export enum PageName {
     SPLASH_PAGE = "Splash",
     ONBOARDING = "Onboarding",
     TRADE = "Trade",
+    BALANCE = "Balance"
 }
 
 export enum FieldLabels {

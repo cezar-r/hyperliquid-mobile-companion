@@ -42,6 +42,12 @@ export const homeStyles = StyleSheet.create({
         fontSize: 15,
         fontWeight: 'bold',
     },
+    closeAllText: {
+        color: Colors.BRIGHT_GREEN, 
+        fontSize: 14, 
+        fontWeight: 600, 
+        marginRight: 6 
+    },
     scrollView: {
         paddingHorizontal: 10,
         marginBottom: NAVBAR_HEIGHT,
