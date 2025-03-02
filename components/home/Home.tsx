@@ -60,6 +60,18 @@ export const Home = ({ navigation }: { navigation: any }) => {
         b.position.positionValue - a.position.positionValue
     );
 
+    const closeAllOrders = async () => {
+        setIsClosingAll(true);
+        positions.forEach(async (position: any) => {
+            const ticker = position.position.coin;
+            await closeOrder(ticker);
+            await deleteLimitOrder(ticker, true);
+            await deleteLimitOrder(ticker, false);
+        });
+        setIsClosingAll(false);
+        await defaultHaptic();
+    }
+
     return (
         <View style={styles.background}>
             <ScrollView 
@@ -84,17 +96,7 @@ export const Home = ({ navigation }: { navigation: any }) => {
                     <PositionsHeader
                         isClosingAll={isClosingAll}
                         isBalanceHidden={isBalanceHidden}
-                        onCloseAllPress={async () => {
-                            setIsClosingAll(true);
-                            positions.forEach(async (position: any) => {
-                                const ticker = position.position.coin;
-                                await closeOrder(ticker);
-                                await deleteLimitOrder(ticker, true);
-                                await deleteLimitOrder(ticker, false);
-                            });
-                            setIsClosingAll(false);
-                            await defaultHaptic();
-                        }}
+                        onCloseAllPress={closeAllOrders}
                     />
                 ) : (
                     <NoPositions />

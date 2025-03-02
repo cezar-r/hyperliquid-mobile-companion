@@ -30,7 +30,7 @@ export const PositionContainer: React.FC<PositionContainerProps> = ({
 
             <PositionRow
                 label={"Size"}
-                value={String(Math.abs(Number(position.szi))) + position.coin}
+                value={String(Math.abs(Number(position.szi))) + " " +  position.coin}
             />
 
             <PositionRow
@@ -40,17 +40,17 @@ export const PositionContainer: React.FC<PositionContainerProps> = ({
 
             <PositionRow
                 label={"Entry Price"}
-                value={"$" + formatNumber(Number(position.entryPx))}
+                value={"$" + formatNumber(Number(position.entryPx), 5)}
             />
 
             <PositionRow
                 label={"Mark Price"}
-                value={"$" + formatNumber(currentPrice)}
+                value={"$" + formatNumber(currentPrice, 5)}
             />
 
             <PositionRow
                 label={"PnL"}
-                value={"$" + formatNumber(Number(position.unrealizedPnl)) + "(" + formatPercent(Number(position.returnOnEquity)) + ")"}
+                value={"$" + formatNumber(Number(position.unrealizedPnl)) + " (" + formatPercent(Number(position.returnOnEquity)) + ")"}
                 addlStyle={{ 
                     color: Number(position.unrealizedPnl) > 0 
                         ? Colors.BRIGHT_GREEN 
@@ -74,7 +74,7 @@ export const PositionContainer: React.FC<PositionContainerProps> = ({
 
             <PositionRow
                 label={"Liquidation Price"}
-                value={"$" + formatNumber(Number(position.liquidationPx))}
+                value={"$" + formatNumber(Number(position.liquidationPx), 5)}
             />
 
             <PositionRow

@@ -1,16 +1,20 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { View, Text, TouchableOpacity, ActivityIndicator, Switch, TextInput, Animated, PanResponder, TouchableWithoutFeedback, Dimensions, Keyboard } from 'react-native';
-import Slider from '@react-native-community/slider';
+import { View, Animated, PanResponder, TouchableWithoutFeedback, Dimensions, Keyboard } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import Colors from "../../styles/colors";
 import styles from "../../styles/place_order_sheet";
+import { lightHaptic, selectionHaptic, successHaptic } from '../common/HapticTypes';
 import { placeOrder } from '../../services/hyperliquid/place_order.cjs';
-import { limitTpOrSlOrder } from '../../services/hyperliquid/tp_sl_order.cjs';
-import { saveLimitOrderToStorage } from '../../services/save_limit_orders';
-
 import { useGlobalState } from '../../context/GlobalStateContext';
-import * as Haptics from 'expo-haptics';
+import { PlaceOrderHeader } from './place_order_sheet_components/HeaderView';
+import { LeverageSlider } from './place_order_sheet_components/LeverageSlider';
+import { DollarSlider } from './place_order_sheet_components/DollarSlider';
+import { TpSlRow } from './place_order_sheet_components/TpSlInputRow';
+import { MarginTypeSelection } from './place_order_sheet_components/MarginTypeSelection';
+import { OrderDetails } from './place_order_sheet_components/OrderDetails';
+import { ConfirmOrderButton } from './place_order_sheet_components/ConfirmButton';
+import { handleTpSlOrders } from './helpers';
 
 const SCREEN_HEIGHT = Dimensions.get('window').height;
 const DRAG_THRESHOLD = 50;
@@ -169,23 +173,15 @@ const PlaceOrderSheet: React.FC<PlaceOrderSheetProps> = ({
         const orderResponse = await placeOrder(ticker, isBuy, orderSize, leverage, isCross);
         setIsPlacing(false);
         if (orderResponse.status_code === 200) {
-            if (takeProfitPrice !== '' && (
-                isBuy && Number(takeProfitPrice) > currentPrice ||
-                !isBuy && Number(takeProfitPrice) < currentPrice
-            )) {
-                const tpResponse = await limitTpOrSlOrder(ticker, Number(takeProfitPrice), isBuy, Number(orderSize), true);
-                await saveLimitOrderToStorage(ticker, takeProfitPrice, true, tpResponse.message);
-            } 
-            if (stopLossPrice !== '' && (
-                isBuy && Number(stopLossPrice) < currentPrice ||
-                !isBuy && Number(stopLossPrice) > currentPrice
-            )) {
-                const slResponse = await limitTpOrSlOrder(ticker, Number(stopLossPrice), isBuy, Number(orderSize), false);
-                await saveLimitOrderToStorage(ticker, stopLossPrice, false, slResponse.message);
-            }
-            await Haptics.notificationAsync(
-                Haptics.NotificationFeedbackType.Success
+            await handleTpSlOrders(
+              ticker,
+              takeProfitPrice,
+              stopLossPrice,
+              isBuy,
+              currentPrice,
+              Number(orderSize)
             );
+            await successHaptic();
             await refreshData();
             onClose();
         } else {
@@ -216,155 +212,81 @@ const PlaceOrderSheet: React.FC<PlaceOrderSheetProps> = ({
               <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
               <View style={{ flex: 1 }}>
                 <View style={styles.dragIndicator} />
-                
-                <View style={styles.sheetHeader}>
-                    <Text style={styles.sheetTitle}>
-                        {isBuy ? 'Buy / Long' : 'Sell / Short'} {ticker}
-                    </Text>
-                </View>
 
-                <View style={styles.section}>
-                    <Text style={styles.label}>
-                        Leverage: {leverage}x
-                        {position && ` (Current: ${position.leverage.value}x)`}
-                    </Text>
-                    <Slider
-                        minimumValue={minLeverage}
-                        maximumValue={maxLev}
-                        step={1}
-                        value={leverage}
-                        onValueChange={(value) => {
-                            setLeverage(Math.round(value));
-                            Haptics.impactAsync(
-                                Haptics.ImpactFeedbackStyle.Light
-                            );
-                        }}
-                        minimumTrackTintColor={isBuy ? Colors.BRIGHT_GREEN : Colors.RED}
-                        maximumTrackTintColor={Colors.GRAY}
-                        style={{ height: 1 }}
-                    />
-                </View>
+                <PlaceOrderHeader
+                  ticker={ticker}
+                  isBuy={isBuy}
+                />
 
-                <View style={styles.bottomSection}>
-                    <Text style={styles.label}>
-                        Amount: ${dollarAmount.toFixed(2)} / Max: ${(tradeableBalance * 0.99).toFixed(2)}
-                    </Text>
-                    <Slider
-                        minimumValue={0}
-                        maximumValue={tradeableBalance * 0.99}
-                        step={.01}
-                        value={dollarAmount}
-                        onValueChange={async (value) => {
-                            setDollarAmount(value);
-                            Haptics.selectionAsync();
-                        }}
-                        minimumTrackTintColor={isBuy ? Colors.BRIGHT_GREEN : Colors.RED}
-                        maximumTrackTintColor={Colors.GRAY}
-                    />
-                </View>
+                <LeverageSlider
+                  position={position}
+                  leverage={leverage}
+                  minLeverage={minLeverage}
+                  maxLeverage={maxLev}
+                  step={1}
+                  onValueChange={async (value) => {
+                      setLeverage(Math.round(value));
+                      await lightHaptic();
+                  }}
+                  isBuy={isBuy}
+                />
 
-                <View style={styles.tpslContainer}>
-                    <View style={styles.tpslRow}>
-                        <TextInput
-                            style={styles.priceInput}
-                            keyboardType="numeric"
-                            value={takeProfitPrice}
-                            onChangeText={setTakeProfitPrice}
-                            placeholder="TP"
-                            placeholderTextColor={Colors.WHITE}
-                        />
-                        <Text style={styles.percentChange}>
-                            {tpCalculations.percentChange.toFixed(2)}%
-                        </Text>
-                        <Text style={[styles.profitValue, { color: tpCalculations.profit >= 0 ? Colors.BRIGHT_GREEN : Colors.RED }]}>
-                            ${Math.abs(tpCalculations.profit).toFixed(2)}
-                        </Text>
-                    </View>
-                </View>
+                <DollarSlider
+                  dollarAmount={dollarAmount}
+                  tradeableBalance={tradeableBalance}
+                  minAmount={0}
+                  step={.01}
+                  onValueChange={async (value) => {
+                      setDollarAmount(value);
+                      await selectionHaptic();
+                  }}
+                  isBuy={isBuy}
+                />
 
-                <View style={styles.tpslContainer}>
-                    <View style={styles.tpslRow}>
-                        <TextInput
-                            style={styles.priceInput}
-                            keyboardType="numeric"
-                            value={stopLossPrice}
-                            onChangeText={setStopLossPrice}
-                            placeholder="SL"
-                            placeholderTextColor={Colors.WHITE}
-                        />
-                        <Text style={styles.percentChange}>
-                            {slCalculations.percentChange.toFixed(2)}%
-                        </Text>
-                        <Text style={[styles.profitValue, { color: slCalculations.profit >= 0 ? Colors.BRIGHT_GREEN : Colors.RED }]}>
-                            ${Math.abs(slCalculations.profit).toFixed(2)}
-                        </Text>
-                    </View>
-                </View>
+                <TpSlRow
+                  value={takeProfitPrice}
+                  placeholder={"TP"}
+                  onChangeText={setTakeProfitPrice}
+                  pctChange={tpCalculations.percentChange.toFixed(2)}
+                  dollarChangeColor={tpCalculations.profit >= 0 ? Colors.BRIGHT_GREEN : Colors.RED}
+                  dollarChange={Math.abs(tpCalculations.profit).toFixed(2)}
+                />
 
-                <View style={styles.marginTypeSection}>
-                    <Switch
-                        value={isCross}
-                        onValueChange={toggleCrossMargin}
-                        trackColor={{ false: Colors.GRAY, true: Colors.BRIGHT_GREEN }}
-                        thumbColor={isCross ? Colors.WHITE : Colors.LIGHT_GRAY}
-                        style={{ marginRight: 10 }}  // Add spacing between switch and text
-                    />
-                    <Text style={styles.marginLabel}>Cross Margin</Text>
-                </View>
+                <TpSlRow
+                  value={stopLossPrice}
+                  placeholder={"SL"}
+                  onChangeText={setStopLossPrice}
+                  pctChange={slCalculations.percentChange.toFixed(2)}
+                  dollarChangeColor={slCalculations.profit >= 0 ? Colors.BRIGHT_GREEN : Colors.RED}
+                  dollarChange={Math.abs(slCalculations.profit).toFixed(2)}
+                />
 
-                <View style={styles.detailsContainer}>
-                    <DetailItem label="Order Value" value={`$${orderValue.toFixed(2)}`} />
-                    <DetailItem label="Order Size" value={`${orderSize} ${ticker}`} />
-                    <DetailItem label="Margin Required" value={`$${marginRequired.toFixed(2)}`} />
-                </View>
+                <MarginTypeSelection
+                  isCross={isCross}
+                  toggleCrossMargin={toggleCrossMargin}
+                />
 
-                <TouchableOpacity 
-                    style={[
-                        styles.confirmButton, 
-                        { backgroundColor: isBuy 
-                            ? isValidOrder ? Colors.BRIGHT_GREEN : Colors.GREEN
-                            : isValidOrder ? Colors.RED : Colors.DARK_RED
-                        }
-                    ]}
-                    onPressIn={startHold}
-                    onPressOut={cancelHold}
-                    activeOpacity={0.8}
-                    disabled={isPlacing}
-                >
-                    <Animated.View 
-                        style={[
-                            styles.progressBar,
-                            { width: holdProgress.interpolate({
-                                inputRange: [0, 1],
-                                outputRange: ['0%', '100%']
-                            })}
-                        ]}
-                    />
-                    {isPlacing ? (
-                        <ActivityIndicator color={isBuy ? Colors.BLACK : Colors.WHITE} size="small" />
-                    ) : (
-                        <Text style={[styles.confirmButtonText, {color: isBuy ? Colors.BLACK : Colors.WHITE}]}>
-                            Place Order
-                        </Text>
-                    )}
-                </TouchableOpacity>
+                <OrderDetails
+                  orderValue={orderValue.toFixed(2)}
+                  orderSize={orderSize}
+                  ticker={ticker}
+                  marginRequired={marginRequired.toFixed(2)}
+                />
+
+                <ConfirmOrderButton
+                  isBuy={isBuy}
+                  onPressIn={startHold}
+                  onPressOut={cancelHold}
+                  isValidOrder={isValidOrder}
+                  holdProgress={holdProgress}
+                  isPlacing={isPlacing}
+                />
+
                 </View>
                 </TouchableWithoutFeedback>
             </Animated.View>
         </View>
     );
 };
-
-interface DetailItemProps {
-    label: string;
-    value: string;
-}
-
-const DetailItem: React.FC<DetailItemProps> = ({ label, value }) => (
-    <View style={styles.detailItem}>
-        <Text style={styles.detailLabel}>{label}</Text>
-        <Text style={styles.detailValue}>{value}</Text>
-    </View>
-);
 
 export default PlaceOrderSheet;
