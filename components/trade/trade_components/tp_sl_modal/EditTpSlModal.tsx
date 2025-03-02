@@ -2,9 +2,9 @@ import React, { useState, useEffect } from 'react';
 import { View, Text, TouchableOpacity, TextInput } from "react-native";
 import MaterialIcons from '@expo/vector-icons/MaterialIcons';
 
-import tradeStyles from "../../../styles/trade_page";
-import Colors from "../../../styles/colors";
-import { calculateProfitLoss } from '../../../common/helpers';
+import tradeStyles from "../../../../styles/trade_page";
+import Colors from "../../../../styles/colors";
+import { calculateProfitLoss } from '../../../../common/helpers';
 
 interface EditTpSlModalProps {
     position: any;

@@ -11,7 +11,7 @@ export type RootStackParamList = {
     pnlPercent: number;
     pnlValue: number;
     leverage: number;
-    isLong: number
+    isLong: boolean;
   };
 };
 

@@ -14,7 +14,7 @@ import { saveLimitOrderToStorage } from '../../services/save_limit_orders';
 import { cancelOrder } from '../../services/hyperliquid/cancel_order.cjs';
 import { deleteLimitOrder } from '../../services/delete_limit_order';
 import { TradeHeaderView, PositionView } from './trade_components';
-import { EditTpSlModal } from './tp_sl_modal/EditTpSlModal';
+import { EditTpSlModal } from './trade_components/tp_sl_modal/EditTpSlModal';
 import { getTickerUniverseIndex } from '../../common/helpers';
 import { mediumHaptic } from '../common/HapticTypes';
 
