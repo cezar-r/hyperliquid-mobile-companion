@@ -1,16 +1,16 @@
 import { StyleSheet } from 'react-native';
 
-import { Colors } from "./colors";
+import { Colors } from "../../styles/colors";
 
 export const styles = StyleSheet.create({
     background: {
         flex: 1,
-        backgroundColor: Colors.DARK_DARK_GREEN,
+        backgroundColor: Colors.BG_3,
         justifyContent: 'center',
         alignItems: 'center',
     },
     p_text: {
-        color: Colors.WHITE,
+        color: Colors.FG_1,
         fontSize: 12
     },
     inputContainer: {
@@ -20,18 +20,18 @@ export const styles = StyleSheet.create({
     },
     logoText: {
         fontWeight: 200,
-        color: Colors.WHITE,
+        color: Colors.FG_1,
         marginBottom: 80,
         fontSize: 42,
     },
     input: {
-        backgroundColor: Colors.DARK_DARK_GREEN,
-        color: Colors.WHITE,
+        backgroundColor: Colors.BG_3,
+        color: Colors.FG_1,
         padding: 15,
         borderRadius: 5,
         paddingRight: 70,
         borderWidth: 2,
-        borderColor: Colors.BRIGHT_GREEN
+        borderColor: Colors.BRIGHT_ACCENT
     },
     pasteButton: {
         position: 'absolute',
@@ -41,11 +41,11 @@ export const styles = StyleSheet.create({
         padding: 5,
     },
     pasteButtonText: {
-        color: Colors.BRIGHT_GREEN,
+        color: Colors.BRIGHT_ACCENT,
         fontSize: 14,
     },
     submitButton: {
-        backgroundColor: Colors.GREEN,
+        backgroundColor: Colors.ACCENT,
         padding: 15,
         borderRadius: 5,
         width: '80%',
@@ -54,10 +54,10 @@ export const styles = StyleSheet.create({
         marginBottom: 180,
     },
     submitButtonActive: {
-        backgroundColor: Colors.BRIGHT_GREEN,
+        backgroundColor: Colors.BRIGHT_ACCENT,
     },
     submitButtonText: {
-        color: Colors.BLACK,
+        color: Colors.BG_1,
         fontSize: 16,
         fontWeight: 'bold',
     },

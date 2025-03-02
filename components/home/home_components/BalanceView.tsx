@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Animated } from "react-native";
 import { TouchableWithoutFeedback } from "react-native-gesture-handler";
 
-import styles from "../../../styles/home_page";
+import styles from "../styles";
 import { useGlobalState } from '../../../context/GlobalStateContext';
 import { formatNumber } from '../../../common/helpers';
 import { getFontSize } from '../helpers';
@@ -59,7 +59,7 @@ export const BalanceView: React.FC<BalanceViewProps> = ({
     const dynamicFontSize = getFontSize(displayValue);
     const textColor = colorAnim.interpolate({
         inputRange: [0, 1],
-        outputRange: [Colors.WHITE, isIncrease ? Colors.BRIGHT_GREEN : Colors.RED]
+        outputRange: [Colors.FG_1, isIncrease ? Colors.BRIGHT_ACCENT : Colors.RED]
     });
 
     return (

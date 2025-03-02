@@ -1,10 +1,10 @@
 import { StyleSheet } from "react-native";
 
-import Colors from "./colors";
+import Colors from "../../styles/colors";
 
 const historyStyles = StyleSheet.create({
     backgroumd: {
-       backgroundColor:  Colors.DARK_DARK_GREEN,
+       backgroundColor:  Colors.BG_3,
        flex: 1,
        justifyContent: 'center',
     alignItems: 'center',

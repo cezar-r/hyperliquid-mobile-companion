@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, Text, TouchableOpacity } from "react-native";
 
-import styles from "../../../styles/search_page";
+import styles from "../styles";
 import { formatNumber, formatPercent } from "../../../common/helpers";
 import { TickerData } from "../../../common/types"
 import { Colors } from "../../../styles/colors";
@@ -31,7 +31,7 @@ export const TickerCell: React.FC<TickerCellProps> = ({
                         <Text style={styles.tickerPrice}>${formatNumber(item.price, 5)}</Text>
                         <Text style={[
                             styles.pctChange,
-                            { color: pctChange24h > 0 ? Colors.BRIGHT_GREEN : Colors.RED}
+                            { color: pctChange24h > 0 ? Colors.BRIGHT_ACCENT : Colors.RED}
                         ]}>{pctChange24h > 0 ? "+" : "-"}{formatPercent(Math.abs(pctChange24h))}</Text>
                     </View>
                 </TouchableOpacity>

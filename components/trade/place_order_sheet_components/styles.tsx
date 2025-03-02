@@ -1,5 +1,5 @@
 import { StyleSheet } from 'react-native';
-import Colors from "./colors";
+import Colors from "../../../styles/colors";
 
 const styles = StyleSheet.create({
   overlay: {
@@ -19,7 +19,7 @@ const styles = StyleSheet.create({
     marginBottom: 12
 },
   sheet: {
-    backgroundColor: Colors.BLACK,
+    backgroundColor: Colors.BG_1,
     borderTopLeftRadius: 16,
     borderTopRightRadius: 16,
     paddingHorizontal: 20,
@@ -29,12 +29,12 @@ const styles = StyleSheet.create({
   },
   sheetHeader: {
     borderBottomWidth: 1,
-    borderBottomColor: Colors.GRAY,
+    borderBottomColor: Colors.FG_2,
     paddingBottom: 15,
     marginBottom: 15,
   },
   sheetTitle: {
-    color: Colors.WHITE,
+    color: Colors.FG_1,
     fontSize: 22,
     fontWeight: 'bold',
     textAlign: 'center',
@@ -47,18 +47,18 @@ const styles = StyleSheet.create({
   },
   
   label: {
-    color: Colors.LIGHT_GRAY,
+    color: Colors.FG_3,
     marginBottom: 4,
     fontSize: 12,
   },
   marginLabel: {
-    color: Colors.WHITE,
+    color: Colors.FG_1,
     fontSize: 12,
   },
   detailsContainer: {
     marginVertical: 15,
-    backgroundColor: Colors.DARK_DARK_GREEN,
-    borderRadius: 8,
+    backgroundColor: Colors.BG_3,
+    borderRadius: 5,
     padding: 15,
   },
   detailItem: {
@@ -67,10 +67,10 @@ const styles = StyleSheet.create({
     marginBottom: 8,
   },
   detailLabel: {
-    color: Colors.LIGHT_GRAY,
+    color: Colors.FG_3,
   },
   detailValue: {
-    color: Colors.WHITE,
+    color: Colors.FG_1,
     fontWeight: 'bold',
   },
   confirmButton: {
@@ -82,7 +82,7 @@ const styles = StyleSheet.create({
     marginTop: 15,
   },
   confirmButtonText: {
-    color: Colors.BLACK,
+    color: Colors.BG_1,
     fontWeight: 600,
     fontSize: 16,
     position: 'absolute',
@@ -113,8 +113,8 @@ const styles = StyleSheet.create({
     // marginTop: 5,
   },
   priceInput: {
-    backgroundColor: Colors.DARK_DARK_GREEN,
-    color: Colors.WHITE,
+    backgroundColor: Colors.BG_3,
+    color: Colors.FG_1,
     borderRadius: 5,
     padding: 10,
     width: '40%',
@@ -122,7 +122,7 @@ const styles = StyleSheet.create({
   },
   
   percentChange: {
-    color: Colors.LIGHT_GRAY,
+    color: Colors.FG_3,
     width: '25%',
     textAlign: 'right',
     fontSize: 14,

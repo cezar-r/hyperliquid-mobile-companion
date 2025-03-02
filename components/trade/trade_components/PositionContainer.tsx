@@ -1,5 +1,5 @@
 import { View } from "react-native";
-import tradeStyles from "../../../styles/trade_page";
+import styles from "../styles";
 import { PositionRow } from "./PositionRow";
 import Colors from "../../../styles/colors";
 import { formatNumber, formatPercent } from "../../../common/helpers";
@@ -21,11 +21,11 @@ export const PositionContainer: React.FC<PositionContainerProps> = ({
     onTpSlModalPress,
 }) => {
     return (
-        <View style={tradeStyles.tableContainer}>
+        <View style={styles.tableContainer}>
             <PositionRow
                 label={"Leverage"}
                 value={String(position.leverage.value) + "x"}
-                addlStyle={{ color: Number(position.szi) > 0 ? Colors.BRIGHT_GREEN : Colors.RED }}
+                addlStyle={{ color: Number(position.szi) > 0 ? Colors.BRIGHT_ACCENT : Colors.RED }}
             />
 
             <PositionRow
@@ -53,10 +53,10 @@ export const PositionContainer: React.FC<PositionContainerProps> = ({
                 value={"$" + formatNumber(Number(position.unrealizedPnl)) + " (" + formatPercent(Number(position.returnOnEquity)) + ")"}
                 addlStyle={{ 
                     color: Number(position.unrealizedPnl) > 0 
-                        ? Colors.BRIGHT_GREEN 
+                        ? Colors.BRIGHT_ACCENT 
                         : Number(position.unrealizedPnl) < 0 
                             ? Colors.RED 
-                            : Colors.WHITE 
+                            : Colors.FG_1 
                 }}
             />
 

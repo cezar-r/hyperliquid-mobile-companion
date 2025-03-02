@@ -1,43 +1,41 @@
 import { StyleSheet } from 'react-native';
-import { Colors } from "./colors";
+import { Colors } from "../../styles/colors";
 
-export const searchStyles = StyleSheet.create({
+export const styles = StyleSheet.create({
     background: {
         flex: 1,
-        backgroundColor: Colors.DARK_DARK_GREEN,
+        backgroundColor: Colors.BG_3,
         justifyContent: 'center',
         alignItems: 'center',
     },
     searchBarContainer: {
         flexDirection: 'row',
         alignItems: 'center',
-        backgroundColor: Colors.DARK_GREEN,
+        backgroundColor: Colors.DARK_ACCENT,
         margin: 10,
         paddingHorizontal: 15,
         borderRadius: 5,
-        // borderWidth: 1,
-        // borderColor: Colors.GRAY,
     },
     searchIcon: {
         marginRight: 10,
-        color: Colors.BRIGHT_GREEN,
+        color: Colors.BRIGHT_ACCENT,
     },
     searchInput: {
         flex: 1,
-        color: Colors.WHITE,
+        color: Colors.FG_1,
         fontSize: 16,
         paddingVertical: 16,
     },
     clearButton: {
         padding: 8,
-        color: Colors.BRIGHT_GREEN,
+        color: Colors.BRIGHT_ACCENT,
     },
     resultsContainer: {
         paddingHorizontal: 16,
         marginBottom: 80,
     },
     sectionTitle: {
-        color: Colors.LIGHT_GRAY,
+        color: Colors.FG_3,
         fontSize: 15,
         marginTop: 8,
         marginBottom: 8,
@@ -50,10 +48,10 @@ export const searchStyles = StyleSheet.create({
         width: '100%',
         paddingBottom: 14,
         paddingTop: 14,
-        backgroundColor: Colors.DARK_DARK_GREEN
+        backgroundColor: Colors.BG_3
     },
     separator: {
-        borderBottomColor: Colors.BLACK,
+        borderBottomColor: Colors.BG_1,
         borderBottomWidth: 1,
         width: '100%'
     },
@@ -61,7 +59,7 @@ export const searchStyles = StyleSheet.create({
         fontSize: 15,
         marginBottom: 0,
         fontWeight: 'bold',
-        color: Colors.BRIGHT_GREEN
+        color: Colors.BRIGHT_ACCENT
     },
     tickerInfo: {
         flexDirection: 'row',
@@ -74,12 +72,12 @@ export const searchStyles = StyleSheet.create({
         marginBottom: 5,
     },
     tickerSymbol: {
-        color: Colors.WHITE,
+        color: Colors.FG_1,
         fontSize: 15,
         fontWeight: 600,
     },
     tickerPrice: {
-        color: Colors.WHITE,
+        color: Colors.FG_1,
         fontSize: 15,
         fontWeight: 600,
         marginRight: 2
@@ -99,4 +97,4 @@ export const searchStyles = StyleSheet.create({
     }
 });
 
-export default searchStyles;
+export default styles;

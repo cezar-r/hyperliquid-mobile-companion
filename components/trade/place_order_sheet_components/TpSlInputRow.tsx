@@ -1,12 +1,12 @@
 import { TextInput, View, Text } from "react-native"
 
-import styles from "../../../styles/place_order_sheet"
+import styles from "./styles"
 import Colors from "../../../styles/colors"
 
 interface TpSlRowProps {
     value: string,
-    onChangeText: (text: string) => void,
     placeholder: string,
+    onChangeText: (text: string) => void,
     pctChange: string,
     dollarChangeColor: Colors
     dollarChange: string
@@ -14,8 +14,8 @@ interface TpSlRowProps {
 
 export const TpSlRow: React.FC<TpSlRowProps> = ({
     value,
-    onChangeText,
     placeholder,
+    onChangeText,
     pctChange,
     dollarChangeColor,
     dollarChange
@@ -29,7 +29,7 @@ export const TpSlRow: React.FC<TpSlRowProps> = ({
                     value={value}
                     onChangeText={onChangeText}
                     placeholder={placeholder}
-                    placeholderTextColor={Colors.WHITE}
+                    placeholderTextColor={Colors.FG_1}
                 />
                 <Text style={styles.percentChange}>
                     {pctChange}%

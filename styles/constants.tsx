@@ -2,30 +2,24 @@ import { Colors } from "./colors";
 
 export const BORDER_RADIUS = 5;
 
-export const BG_COLOR = Colors.DARK_DARK_GREEN;
+export const BG_COLOR = Colors.BG_3;
 
-export const PasteButtonIconCfg = {
+export const PasteButtonStyle = {
     size: 18,
-    color: Colors.BRIGHT_GREEN
+    color: Colors.BRIGHT_ACCENT
 }
 
-export const TextCfg = {
-    default: {
-        fontSize: 15,
-        boldWeight: 600,
-        colors: {
-            default: Colors.WHITE,
-            highlight: Colors.BRIGHT_GREEN,
-            caption: Colors.LIGHT_GRAY,
-        }
-    },
-    title: {
-        fontSize: 22,
-        boldWeights: {
-            thick: 700,
-            medium: 600,
-            thin: 500
-        },
-        color: Colors.WHITE
-    }
+export const CopyButtonStyle = {
+    size: 18,
+    color: Colors.BRIGHT_ACCENT
+}
+
+export const ShareButtonStyle = {
+    size: 18,
+    color: Colors.BRIGHT_ACCENT
+}
+
+export const BackArrowStyle = {
+    color: Colors.BRIGHT_ACCENT,
+    size: 32,
 }

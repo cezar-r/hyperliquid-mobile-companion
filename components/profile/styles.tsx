@@ -1,11 +1,11 @@
-import { Colors } from './colors';
+import { Colors } from '../../styles/colors';
 import { StyleSheet } from 'react-native';
 
 
-const profileStyles = StyleSheet.create({
+const styles = StyleSheet.create({
     background: {
         flex: 1,
-        backgroundColor: Colors.DARK_DARK_GREEN,
+        backgroundColor: Colors.BG_3,
         alignItems: 'center',
     },
     field: {
@@ -18,7 +18,7 @@ const profileStyles = StyleSheet.create({
         width: '100%',
     },
     box: {
-        backgroundColor: Colors.BLACK,
+        backgroundColor: Colors.BG_1,
         padding: 15,
         borderRadius: 5,
         flexDirection: 'row',
@@ -27,11 +27,11 @@ const profileStyles = StyleSheet.create({
         width: '100%'
     },
     boxLabel: {
-        color: Colors.LIGHT_GRAY,
+        color: Colors.FG_3,
         fontSize: 15,
     },
     value: {
-        color: Colors.WHITE,
+        color: Colors.FG_1,
         fontSize: 15,
         fontWeight: 600,
     },
@@ -39,7 +39,7 @@ const profileStyles = StyleSheet.create({
         padding: 4,
     },
     signOutButton: {
-        backgroundColor: Colors.BRIGHT_GREEN,
+        backgroundColor: Colors.BRIGHT_ACCENT,
         margin: 20,
         padding: 15,
         borderRadius: 5,
@@ -49,7 +49,7 @@ const profileStyles = StyleSheet.create({
         bottom: 100,
     },
     signOutText: {
-        color: Colors.BLACK,
+        color: Colors.BG_1,
         fontSize: 16,
         fontWeight: 'bold',
     },
@@ -60,4 +60,4 @@ const profileStyles = StyleSheet.create({
     }
 });
 
-export default profileStyles;
+export default styles;

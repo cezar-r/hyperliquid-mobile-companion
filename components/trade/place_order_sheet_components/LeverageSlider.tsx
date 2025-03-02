@@ -1,7 +1,7 @@
 import { View, Text } from "react-native";
 import Slider from "@react-native-community/slider";
 
-import styles from "../../../styles/place_order_sheet";
+import styles from "./styles";
 import Colors from "../../../styles/colors";
 import { LEVERAGE_SLIDER_TEXT } from "./constants";
 
@@ -36,8 +36,8 @@ export const LeverageSlider: React.FC<LeverageSliderProps> = ({
                 step={step}
                 value={leverage}
                 onValueChange={onValueChange}
-                minimumTrackTintColor={isBuy ? Colors.BRIGHT_GREEN : Colors.RED}
-                maximumTrackTintColor={Colors.GRAY}
+                minimumTrackTintColor={isBuy ? Colors.BRIGHT_ACCENT : Colors.RED}
+                maximumTrackTintColor={Colors.FG_2}
                 style={{ height: 1 }}
             />
         </View>

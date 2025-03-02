@@ -1,6 +1,6 @@
 import { View, Text, ScrollView } from "react-native";
 
-import styles from "../../../styles/search_page";
+import styles from "../styles";
 import { TickerData } from "../../../common/types";
 import { getFilteredTickers } from "../helpers";
 import { RecentSearchesHeader } from "./RecentSearchesHeader";

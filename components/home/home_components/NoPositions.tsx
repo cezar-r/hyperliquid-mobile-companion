@@ -1,6 +1,6 @@
 import { View, Text } from "react-native"
 
-import styles from "../../../styles/home_page";
+import styles from "../styles";
 import { NO_OPEN_POSITIONS_TEXT } from "../constants";
 
 export const NoPositions = () => {

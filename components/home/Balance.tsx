@@ -1,9 +1,7 @@
 import React from 'react';
-import { View, Text, TouchableOpacity } from 'react-native';
-import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
-import balanceStyles from "../../styles/balance_page";
-import Colors from "../../styles/colors";
-import { Ionicons } from '@expo/vector-icons';
+import { View, Text } from 'react-native';
+import balanceStyles from "./balance_components/styles";
+import { BackArrow } from '../common/icons/BackArrowIcon';
 
 const Balance = ({ route, navigation }: any) => {
 
@@ -18,9 +16,7 @@ const Balance = ({ route, navigation }: any) => {
   return (
     <View style={balanceStyles.background}>
       <View style={balanceStyles.header}>
-        <TouchableOpacity onPress={() => navigation.goBack()}>
-          <Ionicons style={balanceStyles.backArrow} name="chevron-back" size={32} />
-        </TouchableOpacity>
+        <BackArrow onPress={() => navigation.goBack()}/>
       </View>
 
 

@@ -2,7 +2,7 @@
   "expo": {
     "name": "Hyperliquid",
     "slug": "HyperliquidMobileCompanion",
-    "version": "1.0.4",
+    "version": "1.1.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "automatic",
@@ -19,7 +19,7 @@
       "userInterfaceStyle": "automatic",
       "bundleIdentifier": "com.cezarrr.HyperliquidMobileCompanion",
       "supportsTablet": true,
-      "buildNumber": "7",
+      "buildNumber": "8",
       "infoPlist": {
         "ITSAppUsesNonExemptEncryption": false
       }

@@ -1,7 +1,7 @@
 import React from "react";
 import { Text, ActivityIndicator, Animated, GestureResponderEvent, TouchableOpacity } from "react-native";
 
-import styles from "../../../styles/place_order_sheet";
+import styles from "./styles";
 import Colors from "../../../styles/colors";
 import { PLACE_ORDER_BUTTON_TEXT } from "./constants";
 
@@ -27,7 +27,7 @@ export const ConfirmOrderButton: React.FC<ConfirOrdermButtonProps> = ({
             style={[
                 styles.confirmButton, 
                 { backgroundColor: isBuy 
-                    ? isValidOrder ? Colors.BRIGHT_GREEN : Colors.GREEN
+                    ? isValidOrder ? Colors.BRIGHT_ACCENT : Colors.ACCENT
                     : isValidOrder ? Colors.RED : Colors.DARK_RED
                 }
             ]}
@@ -47,9 +47,9 @@ export const ConfirmOrderButton: React.FC<ConfirOrdermButtonProps> = ({
             />
 
             {isPlacing ? (
-                <ActivityIndicator color={isBuy ? Colors.BLACK : Colors.WHITE} size="small" />
+                <ActivityIndicator color={isBuy ? Colors.BG_1 : Colors.FG_1} size="small" />
             ) : (
-                <Text style={[styles.confirmButtonText, {color: isBuy ? Colors.BLACK : Colors.WHITE}]}>
+                <Text style={[styles.confirmButtonText, {color: isBuy ? Colors.BG_1 : Colors.FG_1}]}>
                     {PLACE_ORDER_BUTTON_TEXT}
                 </Text>
             )}

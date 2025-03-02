@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 
 import { View, Image } from "react-native";
-import styles from "../styles/onboarding";
+import styles from "./onboarding/styles";
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useGlobalState } from '../context/GlobalStateContext';
 

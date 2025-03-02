@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { View, Text, TouchableOpacity, TextInput } from "react-native";
 import MaterialIcons from '@expo/vector-icons/MaterialIcons';
 
-import tradeStyles from "../../../../styles/trade_page";
+import styles from "../../styles";
 import Colors from "../../../../styles/colors";
 import { calculateProfitLoss } from '../../../../common/helpers';
 
@@ -25,64 +25,64 @@ export const EditTpSlModal: React.FC<EditTpSlModalProps> = ({
     const [slInput, setSlInput] = useState(initialSlInput);
 
     return (
-        <View style={tradeStyles.modalContainer}>
-            <View style={tradeStyles.modalContent}>
-                <View style={tradeStyles.tpslHeaderRow}>
-                    <Text style={tradeStyles.headerTitle}>
+        <View style={styles.modalContainer}>
+            <View style={styles.modalContent}>
+                <View style={styles.tpslHeaderRow}>
+                    <Text style={styles.headerTitle}>
                         TP/SL for Position
                     </Text>
                     <TouchableOpacity 
-                        style={tradeStyles.modalClose}
+                        style={styles.modalClose}
                         onPress={onClose}
                     >
-                        <MaterialIcons name="close" size={24} color={Colors.WHITE} />
+                        <MaterialIcons name="close" size={24} color={Colors.FG_1} />
                     </TouchableOpacity>
                 </View>
 
-                <View style={tradeStyles.tpslContainer}>
-                    <View style={tradeStyles.tpslRow}>
+                <View style={styles.tpslContainer}>
+                    <View style={styles.tpslRow}>
 
                     <TextInput
-                        style={tradeStyles.priceInput}
+                        style={styles.priceInput}
                         keyboardType="numeric"
                         value={tpInput}
                         onChangeText={setTpInput}
                         placeholder="TP"
-                        placeholderTextColor={Colors.BRIGHT_GREEN}
+                        placeholderTextColor={Colors.BRIGHT_ACCENT}
                     />
                     <Text style={[
-                        tradeStyles.profitValue,
-                        { color: calculateProfitLoss(tpInput, true, position).value >= 0 ? Colors.BRIGHT_GREEN : Colors.RED }
+                        styles.profitValue,
+                        { color: calculateProfitLoss(tpInput, true, position).value >= 0 ? Colors.BRIGHT_ACCENT : Colors.RED }
                     ]}>
                         {calculateProfitLoss(tpInput, true, position).value >= 0 ? '+' : '-'}${Math.abs(calculateProfitLoss(tpInput, true, position).value).toFixed(2)}
                     </Text>
                     <Text style={[
-                        tradeStyles.percentChange,
-                        { color: calculateProfitLoss(tpInput, true, position).value >= 0 ? Colors.BRIGHT_GREEN : Colors.RED }
+                        styles.percentChange,
+                        { color: calculateProfitLoss(tpInput, true, position).value >= 0 ? Colors.BRIGHT_ACCENT : Colors.RED }
                     ]}>
                         {calculateProfitLoss(tpInput, true, position).value >= 0 ? '+' : '-'}{Math.abs(calculateProfitLoss(tpInput, true, position).percent).toFixed(2)}%
                     </Text>
                     </View>
 
-                    <View style={tradeStyles.tpslRow}>
+                    <View style={styles.tpslRow}>
 
                     <TextInput
-                        style={tradeStyles.priceInput}
+                        style={styles.priceInput}
                         keyboardType="numeric"
                         value={slInput}
                         onChangeText={setSlInput}
                         placeholder="SL"
-                        placeholderTextColor={Colors.BRIGHT_GREEN}
+                        placeholderTextColor={Colors.BRIGHT_ACCENT}
                     />
                     <Text style={[
-                        tradeStyles.profitValue,
-                        { color: calculateProfitLoss(slInput, false, position).value >= 0 ? Colors.BRIGHT_GREEN : Colors.RED }
+                        styles.profitValue,
+                        { color: calculateProfitLoss(slInput, false, position).value >= 0 ? Colors.BRIGHT_ACCENT : Colors.RED }
                     ]}>
                         {calculateProfitLoss(slInput, false, position).value >= 0 ? '+' : '-'}${Math.abs(calculateProfitLoss(slInput, false, position).value).toFixed(2)}
                     </Text>
                     <Text style={[
-                        tradeStyles.percentChange,
-                        { color: calculateProfitLoss(slInput, false, position).value >= 0 ? Colors.BRIGHT_GREEN : Colors.RED }
+                        styles.percentChange,
+                        { color: calculateProfitLoss(slInput, false, position).value >= 0 ? Colors.BRIGHT_ACCENT : Colors.RED }
                     ]}>
                         {calculateProfitLoss(slInput, false, position).percent.toFixed(2)}%
                     </Text>
@@ -90,10 +90,10 @@ export const EditTpSlModal: React.FC<EditTpSlModalProps> = ({
                 </View>
 
                 <TouchableOpacity
-                    style={tradeStyles.submitButton}
+                    style={styles.submitButton}
                     onPress={() => onSubmit(tpInput, slInput)}
                 >
-                    <Text style={tradeStyles.submitButtonText}>Confirm</Text>
+                    <Text style={styles.submitButtonText}>Confirm</Text>
                 </TouchableOpacity>
             </View>
         </View>

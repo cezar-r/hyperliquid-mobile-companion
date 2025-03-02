@@ -1,8 +1,8 @@
 // PasteButton.tsx
 import React from "react"
 import { GestureResponderEvent, TouchableOpacity } from "react-native"
-import styles from "../../../styles/onboarding"
-import { PasteButtonIcon } from "../../common/PasteButtonIcon"
+import styles from "../styles"
+import { PasteButtonIcon } from "../../common/icons/PasteButtonIcon"
 
 interface PasteButtonProps {
     onPress: ((event: GestureResponderEvent) => void) | undefined;

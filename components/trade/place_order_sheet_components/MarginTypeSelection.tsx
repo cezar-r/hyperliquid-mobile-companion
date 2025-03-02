@@ -1,6 +1,6 @@
 import { Switch, View, Text } from "react-native";
 
-import styles from "../../../styles/place_order_sheet";
+import styles from "./styles";
 import Colors from "../../../styles/colors";
 import { MARGIN_SELECTION_TEXT } from "./constants";
 
@@ -18,8 +18,8 @@ export const MarginTypeSelection: React.FC<MarginTypeSelectionProps> = ({
             <Switch
                 value={isCross}
                 onValueChange={toggleCrossMargin}
-                trackColor={{ false: Colors.GRAY, true: Colors.BRIGHT_GREEN }}
-                thumbColor={isCross ? Colors.WHITE : Colors.LIGHT_GRAY}
+                trackColor={{ false: Colors.FG_2, true: Colors.BRIGHT_ACCENT }}
+                thumbColor={isCross ? Colors.FG_1 : Colors.FG_3}
                 style={{ marginRight: 10 }}
             />
             <Text style={styles.marginLabel}>{MARGIN_SELECTION_TEXT}</Text>

@@ -1,5 +1,5 @@
 import { StyleSheet } from 'react-native';
-import Colors from "./colors";
+import Colors from "../../../styles/colors";
 
 const styles = StyleSheet.create({
     header: {
@@ -17,7 +17,7 @@ const styles = StyleSheet.create({
     },
 
     headerText: {
-        color: Colors.WHITE, 
+        color: Colors.FG_1, 
         marginRight: 8
     },
 
@@ -25,6 +25,12 @@ const styles = StyleSheet.create({
         alignItems: 'flex-start',
         flex: 1,
         backgroundColor: 'transparent'
+    },
+
+    loading: {
+        flex: 1, 
+        justifyContent: 'center', 
+        alignItems: 'center' 
     },
 
     tickerRow: {
@@ -36,7 +42,7 @@ const styles = StyleSheet.create({
 
     tickerLabel: {
         fontSize: 30,
-        color: Colors.WHITE,
+        color: Colors.FG_1,
         fontWeight: 500,
     },
 
@@ -73,13 +79,13 @@ const styles = StyleSheet.create({
 
     label: {
         fontSize: 16,
-        color: Colors.LIGHT_GRAY,
+        color: Colors.FG_3,
         marginBottom: 10
     },
 
     value: {
        fontSize: 16,
-        color: Colors.WHITE,
+        color: Colors.FG_1,
         fontWeight: 600,
         marginBottom: 10 
     },
@@ -89,8 +95,23 @@ const styles = StyleSheet.create({
     },
 
     urlText: {
-        color: Colors.BRIGHT_GREEN, 
+        color: Colors.BRIGHT_ACCENT, 
         fontWeight: 500
+    },
+
+    button: {
+        backgroundColor: Colors.BRIGHT_ACCENT,
+        paddingVertical: 16,
+        marginHorizontal: 20,
+        marginBottom: 40,
+        borderRadius: 5,
+        alignItems: 'center'
+    },
+
+    buttonLabel: {
+        color: Colors.BG_1,
+        fontSize: 16,
+        fontWeight: 600
     }
 });
 

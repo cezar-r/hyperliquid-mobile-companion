@@ -1,7 +1,7 @@
 import { View, Text } from "react-native";
 import Slider from "@react-native-community/slider";
 
-import styles from "../../../styles/place_order_sheet";
+import styles from "./styles";
 import Colors from "../../../styles/colors";
 
 interface DollarSliderProps {
@@ -32,8 +32,8 @@ export const DollarSlider: React.FC<DollarSliderProps> = ({
                 step={step}
                 value={dollarAmount}
                 onValueChange={onValueChange}
-                minimumTrackTintColor={isBuy ? Colors.BRIGHT_GREEN : Colors.RED}
-                maximumTrackTintColor={Colors.GRAY}
+                minimumTrackTintColor={isBuy ? Colors.BRIGHT_ACCENT : Colors.RED}
+                maximumTrackTintColor={Colors.FG_2}
             />
         </View>
     );

@@ -1,8 +1,8 @@
-import { TouchableOpacity, Text, View, Switch } from "react-native";
-import { Ionicons } from '@expo/vector-icons';
+import { Text, View, Switch } from "react-native";
 
 import Colors from "../../../styles/colors";
-import styles from "../../../styles/share_order";
+import styles from "./styles";
+import { BackArrow } from "../../common/icons/BackArrowIcon";
 
 interface HeaderProps {
     value: boolean,
@@ -10,22 +10,20 @@ interface HeaderProps {
     onBackPress: () => void,
 }
 
-export const Header: React.FC<HeaderProps> = ({
+export const SharePositionHeader: React.FC<HeaderProps> = ({
    value,
    onValueChange,
    onBackPress,
 }) => {
     return (
         <View style={styles.header}>
-            <TouchableOpacity onPress={onBackPress}>
-                <Ionicons name="chevron-back" size={32} color={Colors.BRIGHT_GREEN} />
-            </TouchableOpacity>
+            <BackArrow onPress={onBackPress}/>
             <View style={styles.headerRow}>
                 <Text style={styles.headerText}>Show $ PNL</Text>
                 <Switch
                     value={value}
                     onValueChange={onValueChange}
-                    trackColor={{ false: Colors.DARK_GREEN, true: Colors.BRIGHT_GREEN }}
+                    trackColor={{ false: Colors.DARK_ACCENT, true: Colors.BRIGHT_ACCENT }}
                 />
             </View>
         </View>

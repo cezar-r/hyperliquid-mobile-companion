@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Text, ActivityIndicator, TouchableOpacity } from "react-native";
 
-import tradeStyles from "../../../styles/trade_page";
+import styles from "../styles";
 import Colors from "../../../styles/colors";
 import { useGlobalState } from '../../../context/GlobalStateContext';
 import { closeOrder } from '../../../services/hyperliquid/close_order.cjs';
@@ -20,7 +20,7 @@ export const PositionClose: React.FC<PositionCloseProps> = ({
 
     return (
         <TouchableOpacity
-            style={tradeStyles.closeButton}
+            style={styles.closeButton}
                 onPress={async () => {
                     await defaultHaptic();
                     setIsClosing(true);
@@ -32,9 +32,9 @@ export const PositionClose: React.FC<PositionCloseProps> = ({
                 }}
         >
             {isClosing ? (
-                <ActivityIndicator color={Colors.WHITE} size="small" />
+                <ActivityIndicator color={Colors.FG_1} size="small" />
             ) : (
-                <Text style={tradeStyles.closeButtonText}>Market Close</Text>
+                <Text style={styles.closeButtonText}>Market Close</Text>
             )}
         </TouchableOpacity>
     );

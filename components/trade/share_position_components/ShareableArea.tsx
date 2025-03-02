@@ -3,7 +3,7 @@ import ViewShot from "react-native-view-shot"
 import { LinearGradient } from "expo-linear-gradient";
 import { View, Text } from "react-native";
 
-import styles from "../../../styles/share_order";
+import styles from "./styles";
 import Colors from "../../../styles/colors"
 import { ENTRY_PRICE_LABEL, MARK_PRICE_LABEL, URL } from "./constants";
 
@@ -45,7 +45,7 @@ export const ShareableArea = forwardRef<ViewShot, ShareableAreaProps>((
             }}
         >
             <LinearGradient
-                colors={[Colors.DARK_DARK_GREEN, Colors.DARK_GREEN, Colors.GREEN]}
+                colors={[Colors.BG_3, Colors.DARK_ACCENT, Colors.ACCENT]}
                 locations={[0, 0.5, .99]}
                 start={{ x: .5, y: 1 }}
                 end={{ x: .5, y: 0 }}
@@ -57,11 +57,11 @@ export const ShareableArea = forwardRef<ViewShot, ShareableAreaProps>((
 
                         <View style={[
                             styles.leverageContainer,
-                            { backgroundColor: isLong ? Colors.GREEN : Colors.MAROON }
+                            { backgroundColor: isLong ? Colors.ACCENT : Colors.MAROON }
                         ]}>
                             <Text style={[
                                 styles.leverageLabel,
-                                { color: isLong ? Colors.BRIGHT_GREEN : Colors.PINK }, 
+                                { color: isLong ? Colors.BRIGHT_ACCENT : Colors.PINK }, 
                             ]}>
                                 {isLong ? "Long" : "Short"} {leverage}X
                             </Text>
@@ -70,7 +70,7 @@ export const ShareableArea = forwardRef<ViewShot, ShareableAreaProps>((
                     
                     <Text style={[
                         styles.pnlContainer,
-                        { color: pnlPercent >= 0 ? Colors.BRIGHT_GREEN : Colors.RED },
+                        { color: pnlPercent >= 0 ? Colors.BRIGHT_ACCENT : Colors.RED },
                     ]}>{showDollarPnl ? pnlStr : pnlPctStr}</Text>
 
                     <View style={styles.priceRow}>

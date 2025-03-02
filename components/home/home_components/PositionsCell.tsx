@@ -1,6 +1,6 @@
 import { View, Text, ScrollView, RefreshControl, Animated, TouchableOpacity,ActivityIndicator } from 'react-native';
 
-import styles from "../../../styles/home_page";
+import styles from "../styles";
 import { useGlobalState } from '../../../context/GlobalStateContext';
 import { formatNumber, formatPercent, getTickerUniverseIndex } from '../../../common/helpers';
 import { HIDDEN_NUMBER } from '../constants';
@@ -47,14 +47,14 @@ export const PositionCell :React.FC<PositionCellProps> =({
                     <Text style={styles.ticker}>{ticker}</Text>
                     <Text style={[
                         styles.leverage,
-                        { color: isLong ? Colors.BRIGHT_GREEN : Colors.RED }
+                        { color: isLong ? Colors.BRIGHT_ACCENT : Colors.RED }
                     ]}>{leverage}x</Text>
                 </View>
                 <View style={styles.priceContainer}>
                     <Text style={styles.size}>${formatNumber(price)}</Text>
                     <Text style={[
                                 styles.priceChange,
-                                { color: price24ChangePct > 0 ? Colors.BRIGHT_GREEN : Colors.RED }
+                                { color: price24ChangePct > 0 ? Colors.BRIGHT_ACCENT : Colors.RED }
                             ]}>{price24ChangePct > 0 ? "+" : "-"}{formatPercent(Math.abs(price24ChangePct))}</Text>
                     </View>
                 </View>
@@ -63,10 +63,10 @@ export const PositionCell :React.FC<PositionCellProps> =({
                 <Text style={[
                     styles.pnl,
                     { 
-                        color: isBalanceHidden ? Colors.WHITE : 
-                            pnl > 0 ? Colors.BRIGHT_GREEN : 
+                        color: isBalanceHidden ? Colors.FG_1 : 
+                            pnl > 0 ? Colors.BRIGHT_ACCENT : 
                                 pnl < 0 ? Colors.RED : 
-                                Colors.WHITE 
+                                Colors.FG_1 
                     }
                 ]}>{isBalanceHidden ? HIDDEN_NUMBER : pnl > 0 ? '+' : '-'}{isBalanceHidden ? "" : "$" + formatNumber(Math.abs(pnl), 2)}</Text>
             </View>

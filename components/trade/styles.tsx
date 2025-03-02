@@ -1,10 +1,10 @@
 import { StyleSheet } from 'react-native';
-import Colors from "./colors";
+import Colors from "../../styles/colors";
 
-const tradeStyles = StyleSheet.create({
+const styles = StyleSheet.create({
     background: {
         flex: 1,
-        backgroundColor: Colors.DARK_GREEN,
+        backgroundColor: Colors.DARK_ACCENT,
     },
     header: {
         marginTop: 65,
@@ -13,16 +13,15 @@ const tradeStyles = StyleSheet.create({
     },
     headerSplit: {
         borderBottomWidth: 2,
-        borderBottomColor: Colors.GRAY,
+        borderBottomColor: Colors.FG_2,
     },
     backArrow: {
         top: 60,
         marginLeft: 10,
         marginBottom: 8,
-        color: Colors.BRIGHT_GREEN,
     },
     ticker: {
-        color: Colors.WHITE,
+        color: Colors.FG_1,
         fontSize: 42,
         fontWeight: 700,
         marginBottom: 0,
@@ -33,7 +32,7 @@ const tradeStyles = StyleSheet.create({
         marginBottom: 3,
     },
     sectionTitle: {
-        color: Colors.WHITE,
+        color: Colors.FG_1,
         fontSize: 24,
         marginTop: 30,
         marginLeft: 20,
@@ -43,7 +42,6 @@ const tradeStyles = StyleSheet.create({
     },
     tableContainer: {
         paddingHorizontal: 20,
-        // backgroundColor: Colors.DARK_DARK_GREEN,
         paddingVertical: 6
     },
     row: {
@@ -51,16 +49,14 @@ const tradeStyles = StyleSheet.create({
         justifyContent: 'space-between',
         paddingVertical: 8,
         paddingHorizontal: 2,
-        // borderBottomWidth: 1,
-        // borderBottomColor: Colors.GRAY,
     },
     positionHeader: {
         flexDirection: 'row', 
         alignItems: 'center', 
         paddingHorizontal: 9,
         paddingVertical: 8,
-        backgroundColor: Colors.DARK_GREEN,
-        borderRadius: 8,
+        backgroundColor: Colors.DARK_ACCENT,
+        borderRadius: 5,
         marginRight: 16,
         marginTop: 30,
         marginBottom: 4,
@@ -70,7 +66,7 @@ const tradeStyles = StyleSheet.create({
         justifyContent: 'space-between',
         paddingHorizontal: 3,
         borderBottomWidth: 1,
-        borderBottomColor: Colors.WHITE,
+        borderBottomColor: Colors.FG_1,
     },
     bottomRow: {
         flexDirection: 'row',
@@ -80,7 +76,7 @@ const tradeStyles = StyleSheet.create({
         // borderBottomColor: Colors.GRAY,
     },
     label: {
-        color: Colors.LIGHT_GRAY,
+        color: Colors.FG_3,
         fontSize: 14,
     },
     closeButton: {
@@ -90,12 +86,12 @@ const tradeStyles = StyleSheet.create({
         paddingHorizontal: 20,
     },
     closeButtonText: {
-        color: Colors.BRIGHT_GREEN,
+        color: Colors.BRIGHT_ACCENT,
         fontSize: 16,
         fontWeight: '600',
     },
     value: {
-        color: Colors.WHITE,
+        color: Colors.FG_1,
         fontSize: 15,
         fontWeight: "bold",
     },
@@ -117,18 +113,18 @@ const tradeStyles = StyleSheet.create({
         alignItems: 'center',
     },
     sellButtonText: {
-        color: Colors.WHITE,
+        color: Colors.FG_1,
         fontSize: 15,
         fontWeight: 600,
     },
     buyButtonText: {
-        color: Colors.BLACK,
+        color: Colors.BG_1,
         fontSize: 15,
         fontWeight: 600,
     },
     noPositionText: {
         textAlign: 'center',
-        color: Colors.LIGHT_GRAY,
+        color: Colors.FG_3,
         fontSize: 16,
         marginTop: 40,
         fontWeight: 600,
@@ -139,7 +135,7 @@ const tradeStyles = StyleSheet.create({
         fontWeight: 'bold',
       },
       percetangeLabel: {
-        color: Colors.WHITE,
+        color: Colors.FG_1,
         marginLeft: 4,
         fontSize: 12,
       },
@@ -161,7 +157,7 @@ const tradeStyles = StyleSheet.create({
         alignItems: 'center',
       },
       modalContent: {
-        backgroundColor: Colors.DARK_DARK_GREEN,
+        backgroundColor: Colors.BG_3,
         padding: 18,
         paddingVertical: 20,
         paddingBottom: 30,
@@ -185,15 +181,15 @@ const tradeStyles = StyleSheet.create({
         paddingHorizontal: 4,
       },
       headerTitle: {
-        color: Colors.WHITE,
+        color: Colors.FG_1,
         fontSize: 20,
         fontWeight: 500,
       },
       priceInput: {
         flex: 1,
-        color: Colors.WHITE,
+        color: Colors.FG_1,
         borderBottomWidth: 1,
-        borderBottomColor: Colors.GRAY,
+        borderBottomColor: Colors.FG_2,
         padding: 8,
       },
       percentChange: {
@@ -210,17 +206,17 @@ const tradeStyles = StyleSheet.create({
         fontSize: 16,
       },
       submitButton: {
-        backgroundColor: Colors.BRIGHT_GREEN,
+        backgroundColor: Colors.BRIGHT_ACCENT,
         borderRadius: 5,
         padding: 16,
         alignItems: 'center',
         marginTop: 16,
       },
       submitButtonText: {
-        color: Colors.BLACK,
+        color: Colors.BG_1,
         fontWeight: 600,
         fontSize: 14,
       },
 });
 
-export default tradeStyles
+export default styles

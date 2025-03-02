@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, TextInput } from 'react-native';
 import Colors from '../../../styles/colors';
-import styles from '../../../styles/onboarding';
+import styles from '../styles';
 import { PasteButton } from './PasteButton';
 
 interface InputFieldProps {
@@ -22,7 +22,7 @@ export const InputFieldWithPaste: React.FC<InputFieldProps> = ({
             <TextInput 
                 style={styles.input}
                 placeholder={placeholderText}
-                placeholderTextColor={Colors.WHITE}
+                placeholderTextColor={Colors.FG_1}
                 value={value}
                 onChangeText={setValue}
             />

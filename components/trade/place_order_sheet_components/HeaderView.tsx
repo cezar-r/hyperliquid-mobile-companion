@@ -1,5 +1,5 @@
 import { View, Text } from "react-native";
-import styles from "../../../styles/place_order_sheet";
+import styles from "./styles";
 import { BUY_HEADER_TEXT, SELL_HEADER_TEXT } from "./constants";
 
 interface PlaceOrderHeaderProps {

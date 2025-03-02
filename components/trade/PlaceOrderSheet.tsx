@@ -3,7 +3,7 @@ import { View, Animated, PanResponder, TouchableWithoutFeedback, Dimensions, Key
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import Colors from "../../styles/colors";
-import styles from "../../styles/place_order_sheet";
+import styles from "./place_order_sheet_components/styles";
 import { lightHaptic, selectionHaptic, successHaptic } from '../common/HapticTypes';
 import { placeOrder } from '../../services/hyperliquid/place_order.cjs';
 import { useGlobalState } from '../../context/GlobalStateContext';
@@ -248,7 +248,7 @@ const PlaceOrderSheet: React.FC<PlaceOrderSheetProps> = ({
                   placeholder={"TP"}
                   onChangeText={setTakeProfitPrice}
                   pctChange={tpCalculations.percentChange.toFixed(2)}
-                  dollarChangeColor={tpCalculations.profit >= 0 ? Colors.BRIGHT_GREEN : Colors.RED}
+                  dollarChangeColor={tpCalculations.profit >= 0 ? Colors.BRIGHT_ACCENT : Colors.RED}
                   dollarChange={Math.abs(tpCalculations.profit).toFixed(2)}
                 />
 
@@ -257,7 +257,7 @@ const PlaceOrderSheet: React.FC<PlaceOrderSheetProps> = ({
                   placeholder={"SL"}
                   onChangeText={setStopLossPrice}
                   pctChange={slCalculations.percentChange.toFixed(2)}
-                  dollarChangeColor={slCalculations.profit >= 0 ? Colors.BRIGHT_GREEN : Colors.RED}
+                  dollarChangeColor={slCalculations.profit >= 0 ? Colors.BRIGHT_ACCENT : Colors.RED}
                   dollarChange={Math.abs(slCalculations.profit).toFixed(2)}
                 />
 

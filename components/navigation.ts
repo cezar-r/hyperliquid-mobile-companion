@@ -1,7 +1,7 @@
 import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
 
-export type RootStackParamList = {
-  TabNavigator: undefined;
+export type NavigationArgs = {
+  BottomNavbar: undefined;
   Trade: { ticker: string };
   Balance: undefined;
   SharePosition: {
@@ -15,4 +15,4 @@ export type RootStackParamList = {
   };
 };
 
-export type SharePositionNavigationProp = NativeStackNavigationProp<RootStackParamList, 'SharePosition'>;
+export type SharePositionNavigationProp = NativeStackNavigationProp<NavigationArgs, 'SharePosition'>;

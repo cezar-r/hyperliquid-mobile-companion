@@ -1,6 +1,6 @@
 import { View, Text, TouchableOpacity, ActivityIndicator } from "react-native";
 
-import styles from "../../../styles/home_page";
+import styles from "../styles";
 import Colors from "../../../styles/colors";
 import { useGlobalState } from '../../../context/GlobalStateContext';
 import { formatNumber } from "../../../common/helpers";
@@ -31,7 +31,7 @@ export const PositionsHeader: React.FC<PositionsHeaderProps> = ({
 
             <View>
             {isClosingAll ? (
-                    <ActivityIndicator color={Colors.WHITE} size="small" />
+                    <ActivityIndicator color={Colors.FG_1} size="small" />
                 ) : (
                     <TouchableOpacity>
                         <Text style={styles.closeAllText} onPress={onCloseAllPress}>

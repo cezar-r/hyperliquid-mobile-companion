@@ -1,7 +1,7 @@
 import { View, Text, TouchableOpacity } from "react-native";
 import AntDesign from '@expo/vector-icons/AntDesign';
 
-import styles from "../../../styles/search_page";
+import styles from "../styles";
 import Colors from "../../../styles/colors";
 import { RECENT_SEARCHES_LABEL } from "../constants";
 
@@ -21,7 +21,7 @@ export const RecentSearchesHeader: React.FC<RecentSearchesHeaderProps> = ({
                 <TouchableOpacity 
                     onPress={onClearRecentSearchesPress}
                 >
-                    <AntDesign name="closecircle" size={15} color={Colors.LIGHT_GRAY} />
+                    <AntDesign name="closecircle" size={15} color={Colors.FG_3} />
                 </TouchableOpacity>
             )}
         </View>

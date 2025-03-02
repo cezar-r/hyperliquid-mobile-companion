@@ -1,5 +1,5 @@
 import { Text, View, TextStyle } from "react-native"
-import tradeStyles from "../../../styles/trade_page"
+import styles from "../styles"
 
 interface PositionRowProps {
     label: string,
@@ -12,14 +12,14 @@ export const PositionRow: React.FC<PositionRowProps> = ({
     value,
     addlStyle = null,
 }) => {
-    let valueStyle: TextStyle[] = [tradeStyles.value];
+    let valueStyle: TextStyle[] = [styles.value];
     if (addlStyle) {
         valueStyle.push(addlStyle)
     }
 
     return (
-        <View style={tradeStyles.row}>
-            <Text style={tradeStyles.label}>{label}</Text>
+        <View style={styles.row}>
+            <Text style={styles.label}>{label}</Text>
             <Text style={valueStyle}>{value}</Text>
         </View>
     )

@@ -1,6 +1,6 @@
 import React from 'react';
 import { Text, TouchableOpacity } from 'react-native';
-import styles from '../../../styles/onboarding';
+import styles from '../styles';
 import { CONNECT_BUTTON_TEXT } from '../constants';
 
 interface ConnectButtonProps {

@@ -1,9 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, TouchableOpacity } from 'react-native';
-import { Ionicons } from '@expo/vector-icons';
 import { LinearGradient } from 'expo-linear-gradient';
 
-import tradeStyles from "../../styles/trade_page";
+import styles from "./styles";
 import Colors from "../../styles/colors";
 import { useGlobalState } from '../../context/GlobalStateContext';
 import PlaceOrderSheet from './PlaceOrderSheet';
@@ -17,6 +16,7 @@ import { TradeHeaderView, PositionView } from './trade_components';
 import { EditTpSlModal } from './trade_components/tp_sl_modal/EditTpSlModal';
 import { getTickerUniverseIndex } from '../../common/helpers';
 import { mediumHaptic } from '../common/HapticTypes';
+import { BackArrow } from '../common/icons/BackArrowIcon';
 
 const Trade = ({ route, navigation }: any) => {
     const { globalState } = useGlobalState();
@@ -100,15 +100,15 @@ const Trade = ({ route, navigation }: any) => {
 
     return (
          <LinearGradient
-            colors={[Colors.DARK_DARK_GREEN, Colors.DARK_GREEN, Colors.GREEN]}
+            colors={[Colors.BG_3, Colors.DARK_ACCENT, Colors.ACCENT]}
             locations={[0, 0.5, .99]}
             start={{ x: .5, y: 1 }}
             end={{ x: .5, y: 0 }}
-            style={tradeStyles.background}
+            style={styles.background}
         >
-            <TouchableOpacity onPress={() => navigation.goBack()}>
-                <Ionicons style={tradeStyles.backArrow} name="chevron-back" size={32} />
-            </TouchableOpacity>
+            <View style={styles.backArrow}>
+                <BackArrow onPress={() => navigation.goBack()}/>
+            </View>
 
             <TradeHeaderView
                 ticker={ticker}
@@ -139,30 +139,30 @@ const Trade = ({ route, navigation }: any) => {
                     }}
                 />
             ) : (
-                <Text style={tradeStyles.noPositionText}>No open position</Text>
+                <Text style={styles.noPositionText}>No open position</Text>
             )}
     
             {/* Trade Buttons */}
-            <View style={tradeStyles.buttonContainer}>
+            <View style={styles.buttonContainer}>
                 <TouchableOpacity 
-                    style={[tradeStyles.button, { backgroundColor: Colors.RED }]}
+                    style={[styles.button, { backgroundColor: Colors.RED }]}
                     onPress={async () => {
                         await mediumHaptic();
                         setIsBuyOrder(false);
                         setIsOrderSheetVisible(true);
                     }}
                     >
-                    <Text style={tradeStyles.sellButtonText}>SELL / SHORT</Text>
+                    <Text style={styles.sellButtonText}>SELL / SHORT</Text>
                 </TouchableOpacity>
                 <TouchableOpacity 
-                    style={[tradeStyles.button, { backgroundColor: Colors.BRIGHT_GREEN }]}
+                    style={[styles.button, { backgroundColor: Colors.BRIGHT_ACCENT }]}
                     onPress={async () => {
                         await mediumHaptic();
                         setIsBuyOrder(true);
                         setIsOrderSheetVisible(true);
                     }}
                     >
-                    <Text style={tradeStyles.buyButtonText}>BUY / LONG</Text>
+                    <Text style={styles.buyButtonText}>BUY / LONG</Text>
                 </TouchableOpacity>
             </View>
 

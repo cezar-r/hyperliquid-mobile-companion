@@ -2,7 +2,7 @@ import { View, TouchableOpacity, TextInput } from "react-native";
 import { Ionicons } from '@expo/vector-icons';
 import AntDesign from '@expo/vector-icons/AntDesign';
 
-import styles from "../../../styles/search_page"
+import styles from "../styles"
 import Colors from "../../../styles/colors";
 
 interface SearchBarProps {
@@ -18,7 +18,7 @@ export const SearchBar: React.FC<SearchBarProps> = ({
 }) => {
     return (
         <View style={styles.searchBarContainer}>
-            <Ionicons name="search" size={20} color={Colors.BRIGHT_GREEN}style={styles.searchIcon} />
+            <Ionicons name="search" size={20} color={Colors.BRIGHT_ACCENT}style={styles.searchIcon} />
             <TextInput
                 style={styles.searchInput}
                 value={searchQuery}
@@ -29,7 +29,7 @@ export const SearchBar: React.FC<SearchBarProps> = ({
                     onPress={onCloseSearch}
                     style={styles.clearButton}
                 >
-                    <AntDesign name="close" size={20}  color={Colors.BRIGHT_GREEN}/>
+                    <AntDesign name="close" size={20}  color={Colors.BRIGHT_ACCENT}/>
                 </TouchableOpacity>
             )}
         </View>

@@ -1,12 +1,12 @@
 import { StyleSheet } from 'react-native';
 
-import { Colors } from "./colors";
-import { NAVBAR_HEIGHT } from '../common/constants';
+import { Colors } from "../../styles/colors";
+import { NAVBAR_HEIGHT } from '../../common/constants';
 
-export const homeStyles = StyleSheet.create({
+export const styles = StyleSheet.create({
     background: {
         flex: 1,
-        backgroundColor: Colors.DARK_DARK_GREEN,
+        backgroundColor: Colors.BG_3,
         justifyContent: 'center',
         alignItems: 'center',
     },
@@ -16,12 +16,12 @@ export const homeStyles = StyleSheet.create({
         paddingBottom: 30,
     },
     balanceLabel: {
-        color: Colors.GRAY,
+        color: Colors.FG_2,
         fontSize: 16,
         marginBottom: 8,
     },
     balanceAmount: {
-        color: Colors.WHITE,
+        color: Colors.FG_1,
         fontSize: 48,
         fontWeight: 'bold',
         paddingTop: 12,
@@ -34,16 +34,16 @@ export const homeStyles = StyleSheet.create({
         alignItems: 'center',
     },
     availableBalanceLabel: {
-        color: Colors.WHITE,
+        color: Colors.FG_1,
         fontSize: 14,
     },
     availableBalanceAmount: {
-        color: Colors.WHITE,
+        color: Colors.FG_1,
         fontSize: 15,
         fontWeight: 'bold',
     },
     closeAllText: {
-        color: Colors.BRIGHT_GREEN, 
+        color: Colors.BRIGHT_ACCENT, 
         fontSize: 14, 
         fontWeight: 600, 
         marginRight: 6 
@@ -54,13 +54,12 @@ export const homeStyles = StyleSheet.create({
     },
     noPositionText: {
         textAlign: 'center',
-        color: Colors.LIGHT_GRAY,
+        color: Colors.FG_3,
         fontSize: 15,
         marginTop: 40,
         fontWeight: 600,
     },
     positionCell: {
-        // backgroundColor: Colors.DARK_GREEN,
         borderRadius: 5,
         paddingHorizontal: 10,
         paddingVertical: 7,
@@ -69,7 +68,7 @@ export const homeStyles = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'space-between',
         borderWidth: 2,
-        borderColor: Colors.BLACK,
+        borderColor: Colors.BG_1,
     },
     leftSide: {
         justifyContent: 'space-between',
@@ -79,12 +78,12 @@ export const homeStyles = StyleSheet.create({
         justifyContent: 'space-between',
     },
     ticker: {
-        color: Colors.WHITE,
+        color: Colors.FG_1,
         fontSize: 17,
         fontWeight: 'bold',
     },
     size: {
-        color: Colors.LIGHT_GRAY,
+        color: Colors.FG_3,
         fontSize: 12,
     },
     leverage: {
@@ -109,16 +108,15 @@ export const homeStyles = StyleSheet.create({
         marginBottom: 0,
     },
     priceChange: {
-        // backgroundColor: Colors.DARK_DARK_GREEN,
         fontSize: 10,
         marginTop: 2,
     },
     price: {
-        color: Colors.WHITE,
+        color: Colors.FG_1,
         fontSize: 16,
         marginBottom: 0,
         fontWeight: 'bold'
     },
 });
 
-export default homeStyles;
+export default styles;

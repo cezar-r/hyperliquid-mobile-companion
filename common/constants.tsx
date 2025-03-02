@@ -6,7 +6,7 @@ export const Pages = {
     HOME: 'Home',
     HISTORY: 'History',
     SEARCH: 'Search',
-    X_FEED: 'X Feed',
+    CHART: 'Chart',
     PROFILE: 'Profile',
     TRADE: 'Trade',
     BALANCE: 'Balance',

@@ -15,9 +15,7 @@ interface GlobalContextType {
     refreshData: () => Promise<void>;
 }
 
-
 const GlobalStateContext = createContext<GlobalContextType | undefined>(undefined);
-
 
 export const GlobalStateProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
     const [globalState, setGlobalState] = useState<GlobalState>({

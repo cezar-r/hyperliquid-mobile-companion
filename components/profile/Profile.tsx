@@ -5,7 +5,7 @@ import * as Clipboard from 'expo-clipboard';
 import { useNavigation } from '@react-navigation/native';
 import * as Haptics from 'expo-haptics';
 
-import styles from "../../styles/profile_page";
+import styles from "./styles";
 import { lightHaptic } from '../common/HapticTypes';
 import { CredentialField } from './components/CredentialField';
 import { DisonnectButton } from './components/DisconnetButton';

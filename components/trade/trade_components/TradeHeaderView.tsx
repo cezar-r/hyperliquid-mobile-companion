@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 
 import { View, Text, Animated } from "react-native"
 
-import styles from "../../../styles/trade_page";
+import styles from "../styles";
 import { formatNumber } from "../../../common/helpers";
 import Colors from "../../../styles/colors";
 
@@ -52,7 +52,7 @@ export const TradeHeaderView: React.FC<TradeHeaderViewProps> = ({
 
     const textColor = colorAnim.interpolate({
         inputRange: [0, 1],
-        outputRange: [Colors.WHITE, isIncrease ? Colors.BRIGHT_GREEN : Colors.RED]
+        outputRange: [Colors.FG_1, isIncrease ? Colors.BRIGHT_ACCENT : Colors.RED]
     });
 
     return (
@@ -66,7 +66,7 @@ export const TradeHeaderView: React.FC<TradeHeaderViewProps> = ({
                     style={[
                         styles.percentageChange,
                         {
-                        color: price24ChangePct >= 0 ? Colors.BRIGHT_GREEN : Colors.RED,
+                        color: price24ChangePct >= 0 ? Colors.BRIGHT_ACCENT : Colors.RED,
                         },
                     ]}>
                     {price24ChangePct >= 0 ? '▲ ' : '▼ '}

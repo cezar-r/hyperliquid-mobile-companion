@@ -1,8 +1,9 @@
 import { View, Text, TouchableOpacity } from "react-native"
 import { Ionicons } from '@expo/vector-icons';
 
-import styles from "../../../styles/trade_page";
+import styles from "../styles";
 import Colors from "../../../styles/colors";
+import { ShareButtonicon } from "../../common/icons/ShareButtonIcon";
 
 interface PositionHeader {
     onSharePositionPress: () => void;
@@ -18,7 +19,7 @@ export const PositionHeader: React.FC<PositionHeader> = ({
                 style={styles.positionHeader}
                 onPress={onSharePositionPress}
             >
-                <Ionicons name="share-outline" size={18} color={Colors.BRIGHT_GREEN} />
+                <ShareButtonicon/>
             </TouchableOpacity>
         </View>
     )

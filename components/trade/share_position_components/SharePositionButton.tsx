@@ -1,5 +1,5 @@
 import { Text, TouchableOpacity } from "react-native";
-import styles from "../../../styles/share_order";
+import styles from "./styles";
 import { SHARE_POSITION_BUTTON_LABEL } from "./constants";
 
 interface SharePositionButtonProps {

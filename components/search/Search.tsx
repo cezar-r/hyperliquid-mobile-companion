@@ -6,7 +6,7 @@ import {
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { AssetCtx } from 'hyperliquid/dist';
 
-import styles from "../../styles/search_page";
+import styles from "./styles";
 import { LocalStorageKey, PageName } from '../../common/constants';
 import { TickerData } from "../../common/types";
 import { useGlobalState } from '../../context/GlobalStateContext';

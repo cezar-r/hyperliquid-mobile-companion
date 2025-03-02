@@ -3,7 +3,7 @@ import React, { useState, useEffect } from 'react';
 import { View, ScrollView, RefreshControl } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-import styles from "../../styles/home_page";
+import styles from "./styles";
 import Colors from "../../styles/colors";
 import { useGlobalState } from '../../context/GlobalStateContext';
 import { deleteLimitOrder } from '../../services/delete_limit_order';
@@ -81,8 +81,8 @@ export const Home = ({ navigation }: { navigation: any }) => {
                     <RefreshControl
                         refreshing={refreshing}
                         onRefresh={onRefresh}
-                        tintColor={Colors.BRIGHT_GREEN}
-                        colors={[Colors.BRIGHT_GREEN]}
+                        tintColor={Colors.BRIGHT_ACCENT}
+                        colors={[Colors.BRIGHT_ACCENT]}
                     />
                 }
             >  

@@ -13,7 +13,7 @@ import {
     ConnectButton
 } from './components';
 
-import styles from "../../styles/onboarding";
+import styles from "./styles";
 import { useGlobalState } from '../../context/GlobalStateContext';
 import { lightHaptic, successHaptic } from "../common/HapticTypes"
 import { isFormValid } from './helpers';
