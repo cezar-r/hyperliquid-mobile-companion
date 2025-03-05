@@ -65,7 +65,7 @@ export const Search = ({ navigation }: { navigation: any }) => {
                     comparison = aChange - bChange;
                     break;
                 case SortType.ALPHABETICAL:
-                    comparison = a.ticker.localeCompare(b.ticker);
+                    comparison = b.ticker.localeCompare(a.ticker);
                     break;
                 case SortType.FUNDING:
                     comparison = a.funding - b.funding;

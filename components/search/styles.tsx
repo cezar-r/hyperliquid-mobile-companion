@@ -99,7 +99,7 @@ export const styles = StyleSheet.create({
         flexDirection: 'row',
         paddingHorizontal: 16,
         backgroundColor: Colors.BG_3,
-        marginBottom: 16,
+        marginBottom: 12,
         marginTop: 4,
     },
     sortButton: {

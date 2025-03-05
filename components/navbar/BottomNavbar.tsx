@@ -3,7 +3,7 @@ import { Pages } from '../../common/constants';
 import Colors from '../../styles/colors';
 import  styles  from "./styles";
 
-import { HeaderComponent } from './Header';
+import { Header } from './Header';
 import { TabButton } from './tabs/BaseTab';
 import { Home } from '../home';
 import { HomeTabIcon } from './tabs/HomeTab';
@@ -26,7 +26,7 @@ export const BottomNavbar = () => (
       tabBarShowLabel: false,
       headerStyle: styles.headerStyle,
       headerTintColor: Colors.FG_1,
-      headerTitle: () => <HeaderComponent/>,
+      headerTitle: () => <Header />,
       tabBarButton: (props) => <TabButton {...props}/>,
     }}>
 

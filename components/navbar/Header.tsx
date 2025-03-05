@@ -2,14 +2,13 @@ import React from 'react';
 import { Image } from 'react-native';
 import styles from './styles';
 
-const PersistentHeader = () => {
-  // Using React.memo to prevent unnecessary re-renders
-  return React.memo(() => (
-      <Image 
-          source={require('../../assets/blob_green.gif')}
-          style={styles.header}
-      />
-  ));
-};
+// Create a singleton instance of the header component
+const HeaderComponent = () => (
+    <Image 
+        source={require('../../assets/blob_green.gif')}
+        style={styles.header}
+    />
+);
 
-export const HeaderComponent = PersistentHeader();
+// Export the memoized singleton instance
+export const Header = React.memo(HeaderComponent);

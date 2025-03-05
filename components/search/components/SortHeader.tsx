@@ -6,12 +6,12 @@ import styles from "../styles";
 import Colors from "../../../styles/colors";
 
 export enum SortType {
+    ALPHABETICAL = 'A-Z',
     VOLUME = '24h Volume',
     CHANGE = '24h Change %',
     FUNDING = 'Funding',
     LEVERAGE = 'Leverage',
     OPEN_INTEREST = 'Open Interest',
-    ALPHABETICAL = 'A-Z'
 }
 
 interface SortHeaderProps {
