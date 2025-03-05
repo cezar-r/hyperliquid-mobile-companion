@@ -38,7 +38,7 @@ export const styles = StyleSheet.create({
         color: Colors.FG_3,
         fontSize: 15,
         marginTop: 8,
-        marginBottom: 8,
+        // marginBottom: 8,
     },
     tickerCell: {
         flexDirection: 'row',
@@ -46,8 +46,8 @@ export const styles = StyleSheet.create({
         alignItems: 'center',
         paddingHorizontal: 4,
         width: '100%',
-        paddingBottom: 14,
-        paddingTop: 14,
+        paddingBottom: 12,
+        paddingTop: 12,
         backgroundColor: Colors.BG_3
     },
     separator: {
@@ -93,8 +93,44 @@ export const styles = StyleSheet.create({
         paddingRight: 10,
     },
     searchResultContainer: {
-        marginTop: 26,
-    }
+        // marginTop: 26,
+    },
+    sortHeaderContainer: {
+        flexDirection: 'row',
+        paddingHorizontal: 16,
+        backgroundColor: Colors.BG_3,
+        marginBottom: 16,
+        marginTop: 4,
+    },
+    sortButton: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'center',
+        // width: 100,
+        height: 32,
+        marginRight: 8,
+        borderRadius: 5,
+        paddingHorizontal: 12,
+        backgroundColor: Colors.BG_1,
+        marginBottom: 16,
+    },
+    sortButtonActive: {
+        backgroundColor: Colors.BRIGHT_ACCENT,
+    },
+    sortButtonText: {
+        color: Colors.FG_1,
+        fontSize: 14,
+        fontWeight: 600,
+        textAlign: 'center',
+    },
+    sortButtonTextActive: {
+        color: Colors.BG_1,
+        fontWeight: 600,
+    },
+    sortIcon: {
+        marginLeft: 4,
+        color: Colors.BG_1,
+    },
 });
 
 export default styles;

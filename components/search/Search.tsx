@@ -3,20 +3,21 @@ import {
     View, 
     Keyboard 
 } from 'react-native';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import { AssetCtx } from 'hyperliquid/dist';
 
 import styles from "./styles";
-import { LocalStorageKey, PageName } from '../../common/constants';
+import { PageName } from '../../common/constants';
 import { TickerData } from "../../common/types";
 import { useGlobalState } from '../../context/GlobalStateContext';
 import { SearchBar, TickerCell, ResultView } from "./components";
+import { SortHeader, SortType } from './components/SortHeader';
 
 export const Search = ({ navigation }: { navigation: any }) => {
     const { globalState } = useGlobalState();
     const [perpsTickerList, setPerpsTickerList] = useState<TickerData[]>([]);
     const [searchQuery, setSearchQuery] = useState('');
-    const [recentSearches, setRecentSearches] = useState<string[]>([]);
+    const [currentSort, setCurrentSort] = useState<SortType>(SortType.VOLUME);
+    const [isAscending, setIsAscending] = useState(false);
 
     const updateTickerList = () => {
         if (globalState.perpsMeta) {
@@ -31,40 +32,51 @@ export const Search = ({ navigation }: { navigation: any }) => {
                     szDecimals: Number(tickerObj.szDecimals),
                     price: Number(tickerPerpsData.markPx),
                     funding: Number(tickerPerpsData.funding),
-                    prevDayPx: Number(tickerPerpsData.prevDayPx)
+                    prevDayPx: Number(tickerPerpsData.prevDayPx),
+                    openInterest: Number(tickerPerpsData.openInterest)
                 });
             }
             setPerpsTickerList(tickers);
         }
     };
 
-    const loadRecentSearches = async () => {
-        try {
-            const searches = await AsyncStorage.getItem(LocalStorageKey.RECENT_SEARCHES);
-            if (searches) {
-                setRecentSearches(JSON.parse(searches));
+    const handleSortPress = (sortType: SortType) => {
+        if (currentSort === sortType) {
+            setIsAscending(!isAscending);
+        } else {
+            setCurrentSort(sortType);
+            setIsAscending(false);
+        }
+    };
+
+    const getSortedTickers = (tickers: TickerData[]) => {
+        return [...tickers].sort((a, b) => {
+            let comparison = 0;
+            switch (currentSort) {
+                case SortType.VOLUME:
+                    comparison = a.volume24h - b.volume24h;
+                    break;
+                case SortType.LEVERAGE:
+                    comparison = a.maxLev - b.maxLev;
+                    break;
+                case SortType.CHANGE:
+                    const aChange = (a.price - a.prevDayPx) / a.prevDayPx;
+                    const bChange = (b.price - b.prevDayPx) / b.prevDayPx;
+                    comparison = aChange - bChange;
+                    break;
+                case SortType.ALPHABETICAL:
+                    comparison = a.ticker.localeCompare(b.ticker);
+                    break;
+                case SortType.FUNDING:
+                    comparison = a.funding - b.funding;
+                    break;
+                case SortType.OPEN_INTEREST:
+                    comparison = a.openInterest - b.openInterest;
+                    break;
             }
-        } catch (error) {
-            console.error('Error loading recent searches:', error);
-        }
+            return isAscending ? comparison : -comparison;
+        });
     };
-
-    const addToRecentSearches = async (ticker: string) => {
-        try {
-            const updatedSearches = [
-                ticker,
-                ...recentSearches.filter(t => t !== ticker)
-            ].slice(0, 20);
-            setRecentSearches(updatedSearches);
-            await AsyncStorage.setItem(LocalStorageKey.RECENT_SEARCHES, JSON.stringify(updatedSearches));
-        } catch (error) {
-            return;
-        }
-    };
-
-    useEffect(() => {
-        loadRecentSearches();
-    }, []);
 
     useEffect(() => {
         updateTickerList();
@@ -75,8 +87,8 @@ export const Search = ({ navigation }: { navigation: any }) => {
             <React.Fragment key={item.ticker}>
                 <TickerCell
                     item={item}
+                    currentSort={currentSort}
                     onPress={() => {
-                        addToRecentSearches(item.ticker);
                         navigation.navigate(PageName.TRADE, { ticker: item.ticker });
                     }}
                 />
@@ -97,14 +109,15 @@ export const Search = ({ navigation }: { navigation: any }) => {
                 }}
             />
 
+            <SortHeader
+                currentSort={currentSort}
+                isAscending={isAscending}
+                onSortPress={handleSortPress}
+            />
+
             <ResultView
                 searchQuery={searchQuery}
-                recentSearches={recentSearches}
-                perpsTickerList={perpsTickerList}
-                onClearRecentSearchesPress={async () => {
-                    await AsyncStorage.removeItem(LocalStorageKey.RECENT_SEARCHES);
-                    setRecentSearches([]);
-                }}
+                perpsTickerList={getSortedTickers(perpsTickerList)}
                 renderTickerCell={renderTickerCell}
             />
         </View>

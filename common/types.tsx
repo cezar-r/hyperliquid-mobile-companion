@@ -15,4 +15,5 @@ export interface TickerData {
     price: number;
     funding: number;
     prevDayPx: number;
+    openInterest: number;
 }
