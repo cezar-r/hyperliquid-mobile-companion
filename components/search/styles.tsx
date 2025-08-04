@@ -5,8 +5,8 @@ export const styles = StyleSheet.create({
     background: {
         flex: 1,
         backgroundColor: Colors.BG_3,
-        justifyContent: 'center',
-        alignItems: 'center',
+        justifyContent: 'flex-start',
+        alignItems: 'stretch',
     },
     searchBarContainer: {
         flexDirection: 'row',
@@ -92,21 +92,15 @@ export const styles = StyleSheet.create({
         alignItems: 'center',
         paddingRight: 10,
     },
-    searchResultContainer: {
-        // marginTop: 26,
-    },
     sortHeaderContainer: {
-        flexDirection: 'row',
         paddingHorizontal: 16,
-        backgroundColor: Colors.BG_3,
-        marginBottom: 12,
+        marginBottom: 4,
         marginTop: 4,
     },
     sortButton: {
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'center',
-        // width: 100,
         height: 32,
         marginRight: 8,
         borderRadius: 5,

@@ -1,9 +1,5 @@
 tos
 
-fix search page stuff
-
-make the gif at the top be consistent
-
 add websocket for chart data and user order history and active orders
     once this user history works, remove the current way it works for tp/sl
 

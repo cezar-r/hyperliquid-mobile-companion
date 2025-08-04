@@ -28,36 +28,38 @@ export const SortHeader: React.FC<SortHeaderProps> = ({
     const sortButtons = Object.values(SortType);
 
     return (
-        <ScrollView 
-            horizontal 
-            showsHorizontalScrollIndicator={false}
-            style={styles.sortHeaderContainer}
-        >
-            {sortButtons.map((sortType) => (
-                <TouchableOpacity
-                    key={sortType}
-                    style={[
-                        styles.sortButton,
-                        currentSort === sortType && styles.sortButtonActive
-                    ]}
-                    onPress={() => onSortPress(sortType)}
-                >
-                    <Text style={[
-                        styles.sortButtonText,
-                        currentSort === sortType && styles.sortButtonTextActive
-                    ]}>
-                        {sortType}
-                    </Text>
-                    {currentSort === sortType && (
-                        <Ionicons 
-                            name={isAscending ? "chevron-up" : "chevron-down"} 
-                            size={16} 
-                            color={Colors.BRIGHT_ACCENT}
-                            style={styles.sortIcon}
-                        />
-                    )}
-                </TouchableOpacity>
-            ))}
-        </ScrollView>
+        <View style={styles.sortHeaderContainer}>
+            <ScrollView 
+                horizontal 
+                showsHorizontalScrollIndicator={false}
+                contentContainerStyle={{ flexDirection: 'row' }}
+            >
+                {sortButtons.map((sortType) => (
+                    <TouchableOpacity
+                        key={sortType}
+                        style={[
+                            styles.sortButton,
+                            currentSort === sortType && styles.sortButtonActive
+                        ]}
+                        onPress={() => onSortPress(sortType)}
+                    >
+                        <Text style={[
+                            styles.sortButtonText,
+                            currentSort === sortType && styles.sortButtonTextActive
+                        ]}>
+                            {sortType}
+                        </Text>
+                        {currentSort === sortType && (
+                            <Ionicons 
+                                name={isAscending ? "chevron-up" : "chevron-down"} 
+                                size={16} 
+                                color={Colors.BRIGHT_ACCENT}
+                                style={styles.sortIcon}
+                            />
+                        )}
+                    </TouchableOpacity>
+                ))}
+            </ScrollView>
+        </View>
     );
 }; 
