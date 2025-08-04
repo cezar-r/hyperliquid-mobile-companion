@@ -1,5 +1,5 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { HYPERLIQUID_LAMBDA_URL } from '@env';
+import { config } from '../config';
 
 export const closeOrder = async (
     ticker
@@ -7,7 +7,7 @@ export const closeOrder = async (
     const secretKey = await AsyncStorage.getItem('secretKey');
     const address = await AsyncStorage.getItem('address');
 
-    const url = HYPERLIQUID_LAMBDA_URL;
+    const url = config.HYPERLIQUID_LAMBDA_URL;
 
     const payload = {
         action: "close",

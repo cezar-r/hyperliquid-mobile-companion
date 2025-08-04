@@ -1,6 +1,6 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { fetchWithTimeout } from '../fetch_with_timeout';
-import { HYPERLIQUID_LAMBDA_URL } from '@env';
+import { config } from '../config';
 
 export const placeOrder = async (
     ticker,
@@ -12,7 +12,7 @@ export const placeOrder = async (
     const secretKey = await AsyncStorage.getItem('secretKey');
     const address = await AsyncStorage.getItem('address');
 
-    const url = HYPERLIQUID_LAMBDA_URL;
+    const url = config.HYPERLIQUID_LAMBDA_URL;
 
     const payload = {
         action: "place",
@@ -28,6 +28,7 @@ export const placeOrder = async (
             address: address
         }
     };
+    console.log(payload);
 
     const response = await fetchWithTimeout(url, {
         method: 'POST',

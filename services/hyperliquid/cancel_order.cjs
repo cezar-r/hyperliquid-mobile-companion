@@ -1,6 +1,6 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { fetchWithTimeout } from '../fetch_with_timeout';
-import { HYPERLIQUID_LAMBDA_URL } from '@env';
+import { config } from '../config';
 
 export const cancelOrder = async (
     ticker,
@@ -9,7 +9,7 @@ export const cancelOrder = async (
     const secretKey = await AsyncStorage.getItem('secretKey');
     const address = await AsyncStorage.getItem('address');
 
-    const url = HYPERLIQUID_LAMBDA_URL;
+    const url = config.HYPERLIQUID_LAMBDA_URL;
 
     const payload = {
         action: "cancel",
