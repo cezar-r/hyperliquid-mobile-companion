@@ -1,13 +1,10 @@
 import React from 'react';
-import { Image } from 'react-native';
+import { View } from 'react-native';
 import styles from './styles';
 
-// Create a singleton instance of the header component
+// Header component now just provides spacing - GIF is rendered at app level
 const HeaderComponent = () => (
-    <Image 
-        source={require('../../assets/blob_green.gif')}
-        style={styles.header}
-    />
+    <View style={styles.header} />
 );
 
 // Export the memoized singleton instance

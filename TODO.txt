@@ -1,33 +1,18 @@
-make placeordersheet smoother
-
-when keyboard is open, should still be able to select the search item
-
-tp/sl on orders
-
-choose between cross and isolated
-
-export button for order to take ss
-
-fix app icon
-
-splash page
-
 tos
 
-refactor
+fix search page stuff
 
-tap on balance on home page to hide $ amounts
+make the gif at the top be consistent
 
-feed page
-    filter button that shows list of accounts
-        can check/uncheck/remove accounts or add a new username
+add websocket for chart data and user order history and active orders
+    once this user history works, remove the current way it works for tp/sl
 
-add spot options
+add additional info to each tickers page (funding, etc)
+
+add spot option
     text in top left
     on top, bring up sheet that has options, show current highlighted
         chaneg refresh logic to fetch spot data
-
-add perps <-> swap funcyionality
 
 multiple accounts
     user can remove each one from profile
